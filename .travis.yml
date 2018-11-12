@@ -5,6 +5,11 @@ jdk:
 
 env:
   global:
+     # OSS_NEXUS_USER
+     - secure: "hIDtqv+IcHACHLrvioRM3pOsanAdXOEFqRGWsdyEFwT/i2Jd6YIfFQk+RZLS+GwppfqDxH+pkQh6XtLJrahOb8JnMHc6/Rij5MccNIFwACd301jCuPcVe4mvVbhHe0qyLqopflEKbfmEL0DS1dXfevWsM9DFCl2vL799Z9QHlZo8gcYakjgnH23WRYz5ei+sVdW9rm9PDsC8LEx22XMeLhcGYokAoEzURrLRGV9B+0jFxqExPVWOtPEDPO0OqR5m3MR3dNmpr9yjkBZE2cwCI/WtMi6DmdL/kX0I88RBlCogPduUwo+82vu0uWMdd1pgWYsYuUx40kiYz5FJtaKdvAOx5eyF85QKsRdzweLg+sDGZ9GmcWjEaQVWksKBtowgChjYjt42nThXTuzteTyZFyScYyo218GFr/mQuUAd/6InUx3+6P1afTxRDQ0g933SThgESL6xgMCzCKWl1h+Hk2Re0ZeCaBd6nyBWfjqU7szQeS7ungCGGX1f4+611GWoWu9vfJlvBq66mqbfNyDZs2/Ml66kR99Uj/mhIm27zGqx8EqqeWwLj8OZYZBsLdRKVdvgPK4kDL9CTFCvLvy3mc2NDnf33k5yOJGONsIThfYgdur/Mz43jZ2YgZAyWQ4apkgaowIS/8lSUgzBixveODuwzXxmlewS/e+XhkST7h0="
+     # OSS_NEXUS_PASS
+     - secure: "BpwJ5S8N3XvK6RviBzqRDm05fe425X22TtoGk3H0KGuDKgXPdh+ioExdiIpDJQtQCz4gYnGxC3zeqTaO372J1i8jyZ7bou+Jiummdh9dBUgR1hhB4izEwo3qAObfUWYY6p9UV5Y+txMIak120KOINhPz8L0PKbq3dCk8p8NtfhG94+u84EvXkhsmoGDL2jjjUTdMHrAch3ygVCNGJH+SG80rD5btEYjxE40BE03c2jZw3PYu3mY7uKOb31FB410yeMFc7ybHYmOqfUxu1fd5peXiOTS0Ft8jR10VptAztnPqrt/7r9DPO+iifrEnVoaXs7o9FQppnx2IVuxDERGLk1PyqAuOO+twN4jkhfTtsGiOz7YVduqfRSfiQHLzh83Lr/fEDSHQXIuu48hBX3R8RTgHEAxr5urbvFSVmO7Mf/ClFZINhTidzcgzCRvlQhHzDu68U8Kdc31FBniISzaRCYEtO1g07E0stnMmHFsw1vLBKSCk8XgpkbQvWJdny5hmoiToZ1Bu886zMbKgPCMJiCpLTTG58aGE4BpuBzgjqaCuzkvygI9rc8BANDNY4rlG3G8hcIpasO7PWdAjZQ8oY6fjH32WV8RyJB6J1KDAQpfO+KJVaFyUe5tofqtbpRawzhAT2BmbzOACb7VV2/g8Qdxx/5hsD8WdxYymHeY4BNs="
+
 #    # BINTRAY_USER
 #    - secure: "Yq+1rj9WV5DYzwhoM4dbNvoo7LgNfqfRjq3Z2E4YXzd7fd17y7NSlzIW1MzEU1Egi4rhmmu2qa/N8/0I4g3efwHHCZPgmqJzAkOuJK81y6QvnoXh2Q2WV5R7wvGzZ3W3M4AoYhrKpBCdTP2c94dfGb90TtjRo16KfqFCZPLawYsxjhknkhVFJm+z1B04VhgX5ePEQNgF23Tlg02tGuffKOGQjM2fwiK0wub5QGSlg8htmLtJ5QAW17LnOgyiSws8aiSg6lyB173i5SsjMoO9qCO48JTkh5y58JFSR2gYB9PNBY5xwISkfkFOoz7+UmeRczZxf5kNec39BTkhBfivS/co7rDMWFlm68YlNUJFFQZK8neq9mUDL5iLe7kod5MWp7+gwckdkw4Nkdadr8UGjHXY9tNxBLur/Xa9z3mGESlNFfd3TvHGFYWfCvYWs4bBd06XwldubyjPEwtHIb5u8zV7CdDHokKj4VZrrCB7UavC2+yH4/mSp9dzTbFjBK6JMkAU9GsJQS4HbvvR86SFooNKp0cmSVft63PVEnhJKyKcIh2mnJ8nVa5QzSBsZogPKNlqf094/XsDHdAjoyQYUvMgi9sAYtkrDdPTq78nY2lDNfJyFy4w40/I38z7lt6QkNkKpBiVnJqm2vvH9CyTJv27K779mV14gQTJegJMl4g="
 #    # BINTRAY_KEY
@@ -15,11 +20,11 @@ env:
 install: ./gradlew clean
 script: ./gradlew test
 
-#deploy:
-#  - provider: script
-#    script: ./gradlew bintrayUpload -p core
-#    on:
-#      tags: true
+deploy:
+  - provider: script
+    script: ./gradlew upload
+    on:
+      tags: false
 
 cache:
   directories:
