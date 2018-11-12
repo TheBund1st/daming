@@ -1,0 +1,76 @@
+apply plugin: 'maven-publish'
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "https://github.com/TheBund1st/daming/blob/master/LICENSE"
+            distribution "repo"
+        }
+    }
+
+    developers {
+        developer {
+            id 'hippoom'
+            name 'Yugang Zhou'
+        }
+    }
+
+    scm {
+        url 'scm:https://github.com/TheBund1st/daming'
+        connection 'scm:https://github.com/TheBund1st/daming'
+        developerConnection 'scm:https://github.com/TheBund1st/daming'
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+            credentials {
+                username System.getenv('OSS_NEXUS_USER')
+                password System.getenv('OSS_NEXUS_PASS')
+            }
+        }
+    }
+
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            groupId project.group
+            artifactId project.name
+
+            version project.version
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'Your description of the lib')
+                root.appendNode('name', 'Your name of the lib')
+                root.appendNode('url', 'https://site_for_lib.tld')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    pkg {
+        repo = 'maven'
+        name = project.name
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/TheBund1st/daming.git'
+        version {
+            gpg {
+                sign = false
+                passphrase = System.getenv('GPG_PASSPHRASE')
+            }
+        }
+    }
+    publications = ['MyPublication']
+}
+

@@ -1,0 +1,16 @@
+plugins {
+    id "com.jfrog.bintray" version "1.7.1"
+}
+
+apply from: "${rootProject.projectDir}/gradle/maven-publish.gradle"
+
+dependencies {
+
+    compile("org.springframework.boot:spring-boot:${springBootVersion}")
+    //sms verification
+    compile project(':sms-verification-core')
+
+}
+
+
+

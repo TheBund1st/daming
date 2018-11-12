@@ -1,0 +1,28 @@
+buildscript {
+    ext {
+    }
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.github.lkishalmi.gatling:gradle-gatling-plugin:3.0.1"
+    }
+}
+
+apply plugin: 'idea'
+apply plugin: "com.github.lkishalmi.gatling"
+
+idea {
+    module {
+        testSourceDirs += project.file('src/gatling/simulations')
+        scopes.TEST.plus += [project.configurations.gatlingCompile]
+        scopes.TEST.plus += [project.configurations.gatlingRuntime]
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}

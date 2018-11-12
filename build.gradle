@@ -1,0 +1,62 @@
+def subProjectsUsingBintray = ['sms-verification-core', 'sms-verification-starter']
+// sub-projects using java
+configure(subprojects.findAll { it.name != 'gatling' }) {
+    buildscript {
+        ext {
+            lombokVersion = '1.16.20'
+            springBootVersion = '2.0.5.RELEASE'
+        }
+        repositories {
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
+            mavenCentral()
+        }
+    }
+
+    apply plugin: 'java'
+
+    group = 'com.github.hippoom'
+    version = '0.1.0-SNAPSHOT'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    }
+
+    // sub-projects using bintray
+    if (subProjectsUsingBintray.contains(project.name)) {
+
+        jar {
+            archiveName "${project.name}-${project.version}.jar"
+        }
+
+        task javadocJar(type: Jar, dependsOn: javadoc) {
+            archiveName "${project.name}-${project.version}-javadoc.jar"
+            classifier = 'javadoc'
+            from 'build/docs/javadoc'
+        }
+
+        task sourcesJar(type: Jar) {
+            archiveName "${project.name}-${project.version}-sources.jar"
+            from sourceSets.main.allSource
+            classifier = 'sources'
+        }
+
+        artifacts {
+            archives jar
+            archives sourcesJar
+            archives javadocJar
+        }
+    }
+}
+
+
+
