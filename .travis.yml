@@ -22,7 +22,7 @@ script: ./gradlew test
 
 deploy:
   - provider: script
-    script: ./gradlew upload
+    script: ./gradlew publish
     on:
       tags: false
 
