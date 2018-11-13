@@ -15,8 +15,17 @@ env:
      # BINTRAY_KEY
      - secure: "wagTTF6AXFGxQm14dl7uHSd6gD/Zd2Aqs5IyZLr75Vvku8jnGrcRMNHdHi3y2Ayzo3lmN2o0LvEnJH94euGIWD8P3k6ttBimbPQLMsrsKYKYrfyeSJKZK8bB/RL0TJsLDzoK5RFLXowmcS6emuw31YPZGHAem4Rr9P5/2dDChapql8xodH0A3KgEK/fdvExVPfjko46cx1phdX/vts01Q3tWDkihZvntrKdZsS2ZyuhV/OherPnQTRaDKrw8+YgHo7eJVWKdhNR081pYRrSLqwzaf+ComdAdbfVDTqGHS658KnAFG5AeFdQexjyspv5Tz4mB/+Cp7I1tp7rxNK3aO7TZrsdBlmefrUlIjplz6tRiM8CoppXeKleXamzTOxDaVA5s6KVv9FjY7mY3goeiO8ZkIGIc+nXimyBbkMPVvLshaoeuFjJdaNBFw660hTbkU7/xTBVzHKhpLa3VWizbyw5V4AF1KxfdF+jxIzuFI9bfCtsaU9utWGEf30O+nvbwfw20mEQ0xusnDJn4ei+TWKKKRKf+5JhMU9mRsfzyYgxoAo1B2ChtgyIr+aaOblPVnetbLJCR/TqLs94aDczmlhIfeL4X0x1Li9sQcVzeS+4YI6GC3O+hyA+1WaUSu+yVntwIP8bGp4jd8OscWhr4biSFJAzBpAXtgnVCjbBHHEU="
 
+     # CC_TEST_REPORTER_ID
+     - secure: "lWfkzogsYiBZEHe1UvGJa1e2/MksVt79NHO8AamM7riGGbIIy9b5fhRNDY12VJtvEcqXlD6Ty9JilgPhtaJgJ9R9TOmbdjWJ33XcbMNo+VUJ02CqdbFPaKJZHQi5MDNagmXGOSAnjSzpvUpoi3oPYhbCk5PY72NkBLPOWxERgBMRPtcy5A8cZ11XKR9hlMKZ4oEI8iqihdRDjWK4kxspIM4jpB0WfEeFZ8gIYwilWXft/JQnYQEixm74rDC+Ke4zdTowyIR7cA4IwqeEnttICTa3W6pBOH4Vug48NaytKU1ZE7JtfLiG9YTebkKlWkMXfZ0WtN2iRYJ+TlbSves6Ux6guqN7I5D8etQh//QYI/HgGGLWzre7Cp0wFDUtFratscpbCMwtP+0jU0m+PjEf7D2wN0DrPcvGZJdwA/nlnIJgNs+P4IrRZ32vrvYWvXYN7zeUY7xpw5li2EzO5GVuxTbx5C2btCGR6121DPNJ+awP5QoDx22jQ4twFvns8KfU2AD2Yn4QaDhb55YVF/F/rjlRtG52Q2Jj+nhPyMfwx+E2ZrImHNxEtfmLKc7+j7LB922kbAaBQMpYN/ytPL8K8FSEHlPppnKkQgSAlzH+XwIaO/Ze1rMYh1802MvaCU9/hcoFpeylIVPCrh+p7O88KbyY7f8sXiQCz7cUcWAoKMs="
+
 install: ./gradlew clean
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 script: ./gradlew test
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 deploy:
   - provider: script
