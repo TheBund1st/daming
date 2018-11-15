@@ -5,6 +5,9 @@ build/
 ## local
 application-local.properties
 
+## redis
+dump.rdb
+
 
 ### STS ###
 .apt_generated

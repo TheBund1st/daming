@@ -31,6 +31,8 @@ dependencies {
     //aop
     compile('org.springframework.boot:spring-boot-starter-aop')
 
+    compile "org.springframework.data:spring-data-redis:2.1.2.RELEASE"
+
     //sms verification
     compile project(':sms-verification-starter')
 
