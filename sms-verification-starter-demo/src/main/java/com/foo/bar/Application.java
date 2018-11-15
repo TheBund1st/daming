@@ -1,4 +1,5 @@
-package com.thebund1st.daming;
+package com.foo.bar;
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

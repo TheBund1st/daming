@@ -32,7 +32,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-aop')
 
     //sms verification
-    testCompile project(':sms-verification-starter')
+    compile project(':sms-verification-starter')
 
     //devtools
     compile("org.springframework.boot:spring-boot-devtools")
