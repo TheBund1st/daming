@@ -16,11 +16,13 @@ import static org.springframework.http.HttpStatus.ACCEPTED;
 
 @RequiredArgsConstructor
 @RestController
+//TODO make the url path configurable
 public class SmsVerificationRestController {
 
     private final SmsVerificationCommandHandler smsVerificationCommandHandler;
 
     private final SmsVerifiedJwtIssuer smsVerifiedJwtIssuer;
+
 
     @PostMapping("/api/sms/verification/code")
     @ResponseStatus(ACCEPTED)

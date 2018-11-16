@@ -24,7 +24,7 @@ public class SmsVerificationCommandHandler {
     private final SmsVerificationCodeGenerator smsVerificationCodeGenerator;
 
     @Transactional
-    @SmsSender(delegateTo = "smsVerificationSender")
+    @SmsSender(delegateTo = "smsVerificationSender") //TODO make it configurable
     public SmsVerification handle(SendSmsVerificationCodeCommand command) {
         if (smsVerificationStore.exists(command.getMobile())) {
             throw new MobileIsStillUnderVerificationException(command.getMobile());

@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import static com.thebund1st.daming.core.SmsVerificationCode.smsVerificationCodeOf;
 import static java.time.Duration.ofSeconds;
 
+//TODO make it optional
 @Slf4j
 @Component
 @Setter

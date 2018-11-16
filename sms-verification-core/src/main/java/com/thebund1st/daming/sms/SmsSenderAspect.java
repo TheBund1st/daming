@@ -27,6 +27,7 @@ public class SmsSenderAspect implements ApplicationContextAware {
     private void delegateTo(SmsSender smsSender, Object returning)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         Object delegate = applicationContext.getBean(smsSender.delegateTo());
+        // TODO make the method configurable
         Method method = delegate.getClass().getDeclaredMethod("send", returning.getClass());
         method.invoke(delegate, returning);
     }

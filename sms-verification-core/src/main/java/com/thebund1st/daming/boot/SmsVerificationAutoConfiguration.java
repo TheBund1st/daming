@@ -7,7 +7,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SmsVerificationAutoConfiguration {
 
-    public SmsVerificationAutoConfiguration() {
-        System.out.println("xxxx");
-    }
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO make this implementation optional
 @Slf4j
 @RequiredArgsConstructor
 @Component(value = "smsVerificationSender")

@@ -18,9 +18,10 @@ import java.util.Date;
 @RequiredArgsConstructor
 @Component
 public class SmsVerifiedJwtIssuer {
-
+    // make it configurable
     @Setter
     private int expiresInSeconds = 900;
+    // make it configurable
     @Setter
     private String privateKeyFileLocation = "./sms-verification-private.der";
 
