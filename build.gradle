@@ -12,6 +12,9 @@ configure(subprojects.findAll { it.name != 'gatling' }) {
             }
             mavenCentral()
         }
+        dependencies {
+            classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
+        }
     }
 
     apply plugin: 'java'

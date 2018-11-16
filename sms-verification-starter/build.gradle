@@ -1,7 +1,3 @@
-plugins {
-    id "com.jfrog.bintray" version "1.8.1"
-}
-
 apply from: "${rootProject.projectDir}/gradle/maven-publish.gradle"
 
 dependencies {

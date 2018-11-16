@@ -9,10 +9,6 @@ buildscript {
     }
 }
 
-plugins {
-    id "com.jfrog.bintray" version "1.8.1"
-}
-
 apply plugin: 'idea'
 apply plugin: 'groovy'
 apply plugin: 'io.spring.dependency-management'
