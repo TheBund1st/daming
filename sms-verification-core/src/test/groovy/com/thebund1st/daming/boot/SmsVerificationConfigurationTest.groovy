@@ -1,15 +1,10 @@
 package com.thebund1st.daming.boot
 
 import com.thebund1st.daming.application.SmsVerificationCommandHandler
-import org.springframework.boot.autoconfigure.AutoConfigurations
-import org.springframework.boot.test.context.runner.ApplicationContextRunner
-import spock.lang.Specification
 
 import java.time.Duration
 
-class SmsVerificationConfigurationTest extends Specification {
-    private final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
-            .withConfiguration(AutoConfigurations.of(SmsVerificationAutoConfiguration.class))
+class SmsVerificationConfigurationTest extends AbstractAutoConfigurationTest {
 
     def "it should provide one bean of RedisTemplate<String, SmsVerification> given no customized configuration"() {
 
