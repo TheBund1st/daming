@@ -8,6 +8,7 @@ import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationExcep
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,8 @@ public class RedisSmsVerificationStore implements SmsVerificationStore {
     private String keyPrefix = "sms.verification.";
 
     @Autowired
-    public RedisSmsVerificationStore(RedisTemplate<String, SmsVerification> redisTemplate) {
+    public RedisSmsVerificationStore(@Qualifier("smsVerificationRedisTemplate")
+                                             RedisTemplate<String, SmsVerification> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

@@ -1,8 +1,10 @@
 package com.thebund1st.daming
 
+
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
+//TODO Can I test without a @SpringBootApplication?
 @SpringBootApplication
 class TestApplication {
 

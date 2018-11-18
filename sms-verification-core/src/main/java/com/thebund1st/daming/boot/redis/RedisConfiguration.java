@@ -6,8 +6,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.json.mixin.SmsVerificationMixin;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
@@ -16,15 +19,18 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 // make it optional
 @Slf4j
 @Configuration
+@Import(RedisAutoConfiguration.class)
 public class RedisConfiguration {
 
-    @Bean
+    @ConditionalOnMissingBean(name = "smsVerificationRedisTemplate")
+    @Bean(name = "smsVerificationRedisTemplate")
     public RedisTemplate<String, SmsVerification> smsVerificationRedisTemplate(RedisConnectionFactory
                                                                                        redisConnectionFactory) {
 
         ObjectMapper objectMapper = buildMapper();
         RedisTemplate<String, SmsVerification> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
+        redisTemplate.setEnableDefaultSerializer(false);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(smsVerificationJackson2JsonRedisSerializer(objectMapper));
         return redisTemplate;
