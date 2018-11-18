@@ -1,0 +1,10 @@
+{
+  "properties": [
+    {
+      "name": "daming.sms.verification.code.expires",
+      "type": "java.lang.Integer",
+      "description": "The sms verification code is going to expire in x seconds.",
+      "defaultValue": 60
+    }
+  ]
+}

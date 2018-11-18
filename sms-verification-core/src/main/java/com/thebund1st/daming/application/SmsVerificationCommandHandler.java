@@ -26,7 +26,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-@ConfigurationProperties(prefix = "daming.sms.verification")
+@ConfigurationProperties(prefix = "daming.sms.verification.code")
 public class SmsVerificationCommandHandler {
 
     private final SmsVerificationStore smsVerificationStore;

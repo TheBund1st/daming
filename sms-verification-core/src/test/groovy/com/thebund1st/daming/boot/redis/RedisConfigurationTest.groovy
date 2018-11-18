@@ -29,14 +29,12 @@ class RedisConfigurationTest extends Specification {
     def "it should skip default instance of RedisTemplate<String, SmsVerification> given customized one is provided"() {
 
         when:
-        this.contextRunner
+        def contextRunner = this.contextRunner
+                .withUserConfiguration(WithCustomizedRedisTemplate)
 
         then:
-        this.contextRunner
-                .withUserConfiguration(WithCustomizedRedisTemplate)
-                .run { it ->
-            //FIXME this does not work
-            //assert it.getBeanNamesForType(ResolvableType.forClassWithGenerics(RedisTemplate, String, SmsVerification)).length == 1
+
+        contextRunner.run { it ->
             RedisTemplate<String, SmsVerification> actual = it.getBean("smsVerificationRedisTemplate")
             assert actual != null
             assert actual instanceof CustomizedRedisTemplate

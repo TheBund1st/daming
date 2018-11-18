@@ -62,5 +62,8 @@ dependencies {
 
     // json
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
+    // spring boot meta data
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor"
 }
 
