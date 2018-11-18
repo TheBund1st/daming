@@ -1,20 +1,26 @@
 package com.thebund1st.daming.application
 
+import com.thebund1st.daming.core.SmsVerification
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator
 import com.thebund1st.daming.core.SmsVerificationStore
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
 import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
+import com.thebund1st.daming.time.Clock
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
+
+import java.time.ZonedDateTime
 
 import static com.thebund1st.daming.commands.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
 import static com.thebund1st.daming.commands.VerifySmsVerificationCodeCommandFixture.aVerifySmsVerificationCodeCommand
 import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
 
 @SpringBootTest
+@ActiveProfiles("commit")
 class SmsVerificationCommandHandlerTest extends Specification {
 
     @Autowired
@@ -29,23 +35,33 @@ class SmsVerificationCommandHandlerTest extends Specification {
     @SpringBean
     private SmsVerificationSender smsVerificationSender = Mock()
 
+    @SpringBean
+    private Clock clock = Mock()
+
 
     def "it should store and send verification code"() {
         given:
-        def verification = aSmsVerification().build()
+        def now = ZonedDateTime.now()
+        def verification = aSmsVerification().createdAt(now.toLocalDateTime()).build()
         def command = aSendSmsVerificationCodeCommand().sendTo(verification.mobile).build()
 
         and:
         smsVerificationCodeGenerator.generate() >> verification.getCode()
+        clock.now() >> now
 
         when: "it handles send sms verification code"
-        subject.handle(command)
+        def actual = subject.handle(command)
 
         then: "it should store the code"
 
         with(smsVerificationStore) {
-            1 * store(verification)
+            1 * store(_ as SmsVerification)
         }
+
+        assert actual.mobile == verification.mobile
+        assert actual.code == verification.code
+        assert actual.createdAt == now.toLocalDateTime()
+        assert actual.expires == subject.expires
 
         and:
         1 * smsVerificationSender.send(verification)

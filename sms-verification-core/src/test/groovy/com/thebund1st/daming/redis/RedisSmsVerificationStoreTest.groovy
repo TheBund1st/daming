@@ -1,6 +1,6 @@
 package com.thebund1st.daming.redis
 
-//import ai.grakn.redismock.RedisServer
+
 import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -8,8 +8,10 @@ import org.springframework.test.context.ActiveProfiles
 import redis.embedded.RedisServer
 import spock.lang.Specification
 
+import java.util.concurrent.TimeUnit
+
 import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
-import static java.util.concurrent.TimeUnit.SECONDS
+import static java.time.temporal.ChronoUnit.SECONDS
 import static org.awaitility.Awaitility.await
 
 @SpringBootTest
@@ -32,14 +34,19 @@ class RedisSmsVerificationStoreTest extends Specification {
 
     def "it should store sms verification"() {
         given:
-        def smsVerification = aSmsVerification().build()
+        def smsVerification = aSmsVerification().expiresIn(60, SECONDS).build()
+        assert !subject.exists(smsVerification.mobile)
 
         when:
         subject.store(smsVerification)
 
         then:
         assert subject.exists(smsVerification.mobile)
-        assert subject.shouldFindBy(smsVerification.mobile).code == smsVerification.code
+
+        and:
+        def found = subject.shouldFindBy(smsVerification.mobile)
+        assert found.code == smsVerification.code
+        assert found.expires == smsVerification.expires
     }
 
     def "it should throw exception when store sms verification given it exists"() {
@@ -70,7 +77,7 @@ class RedisSmsVerificationStoreTest extends Specification {
 
     def "it should expire sms verification"() {
         given:
-        def smsVerification = aSmsVerification().build()
+        def smsVerification = aSmsVerification().expiresIn(2, SECONDS).build()
 
         when:
         subject.store(smsVerification)
@@ -79,6 +86,6 @@ class RedisSmsVerificationStoreTest extends Specification {
         assert subject.exists(smsVerification.mobile)
 
         and:
-        await().atMost(3, SECONDS).until { !subject.exists(smsVerification.mobile) }
+        await().atMost(3, TimeUnit.SECONDS).until { !subject.exists(smsVerification.mobile) }
     }
 }

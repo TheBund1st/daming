@@ -8,12 +8,8 @@ import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationExcep
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-
-import static com.thebund1st.daming.core.SmsVerificationCode.smsVerificationCodeOf;
-import static java.time.Duration.ofSeconds;
 
 //TODO make it optional
 @Slf4j
@@ -21,12 +17,11 @@ import static java.time.Duration.ofSeconds;
 @Setter
 public class RedisSmsVerificationStore implements SmsVerificationStore {
 
-    private final StringRedisTemplate redisTemplate;
+    private final RedisTemplate<String, SmsVerification> redisTemplate;
     private String keyPrefix = "sms.verification.";
-    private int expiresInSeconds = 2;
 
     @Autowired
-    public RedisSmsVerificationStore(StringRedisTemplate redisTemplate) {
+    public RedisSmsVerificationStore(RedisTemplate<String, SmsVerification> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
@@ -34,7 +29,7 @@ public class RedisSmsVerificationStore implements SmsVerificationStore {
     public void store(SmsVerification smsVerification) {
         MobilePhoneNumber mobile = smsVerification.getMobile();
         Boolean ifAbsent = redisTemplate.opsForValue()
-                .setIfAbsent(toKey(mobile), smsVerification.getCode().getValue(), ofSeconds(expiresInSeconds));
+                .setIfAbsent(toKey(mobile), smsVerification, smsVerification.getExpires());
         if (ifAbsent) {
             // do nothing as we don't overwrite the entry
         } else {
@@ -53,14 +48,11 @@ public class RedisSmsVerificationStore implements SmsVerificationStore {
 
     @Override
     public SmsVerification shouldFindBy(MobilePhoneNumber mobile) {
-        String codeMaybe = redisTemplate.opsForValue().get(toKey(mobile));
-        if (StringUtils.isEmpty(codeMaybe)) {
+        SmsVerification codeMaybe = redisTemplate.opsForValue().get(toKey(mobile));
+        if (codeMaybe == null) {
             throw new MobileIsNotUnderVerificationException(mobile);
         } else {
-            SmsVerification verification = new SmsVerification();
-            verification.setMobile(mobile);
-            verification.setCode(smsVerificationCodeOf(codeMaybe));
-            return verification;
+            return codeMaybe;
         }
     }
 
