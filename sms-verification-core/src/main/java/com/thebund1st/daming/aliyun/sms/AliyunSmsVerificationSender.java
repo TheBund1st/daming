@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thebund1st.daming.application.SmsVerificationSender;
 import com.thebund1st.daming.core.SmsVerification;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -21,8 +22,10 @@ public class AliyunSmsVerificationSender implements SmsVerificationSender {
 
     private final IAcsClient acsClient;
 
+    @Getter
     @Setter
     private String signature;
+    @Getter
     @Setter
     private String templateCode;
     @Setter

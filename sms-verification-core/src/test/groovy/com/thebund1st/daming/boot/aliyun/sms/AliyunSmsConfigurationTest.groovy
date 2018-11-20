@@ -8,7 +8,7 @@ import com.thebund1st.daming.boot.aliyun.AliyunConfiguration
 import com.thebund1st.daming.boot.aliyun.CustomizedAcsClient
 import foo.bar.WithCustomizedAcsClient
 
-class AliyunSmsProviderConfigurationTest extends AbstractAutoConfigurationTest {
+class AliyunSmsConfigurationTest extends AbstractAutoConfigurationTest {
 
     def "it should provide a default IAcsClient instance given no customized one"() {
 
@@ -23,9 +23,9 @@ class AliyunSmsProviderConfigurationTest extends AbstractAutoConfigurationTest {
             IAcsClient actual = it.getBean(IAcsClient)
             assert actual != null
 
-            def aliyunSmsConfiguration = it.getBean(AliyunConfiguration)
-            assert aliyunSmsConfiguration.accessKeyId == 'foo'
-            assert aliyunSmsConfiguration.accessKeySecret == 'bar'
+            def configuration = it.getBean(AliyunConfiguration)
+            assert configuration.accessKeyId == 'foo'
+            assert configuration.accessKeySecret == 'bar'
         }
     }
 
@@ -47,12 +47,16 @@ class AliyunSmsProviderConfigurationTest extends AbstractAutoConfigurationTest {
 
         when:
         def contextRunner = this.contextRunner
-                .withPropertyValues("daming.sms.provider=aliyun")
+                .withPropertyValues("daming.sms.provider=aliyun",
+                "daming.aliyun.sms.signature=foo",
+                "daming.aliyun.sms.templateCode=bar")
 
         then:
         contextRunner.run { it ->
             AliyunSmsVerificationSender actual = it.getBean(AliyunSmsVerificationSender)
             assert actual != null
+            assert actual.getSignature() == "foo"
+            assert actual.getTemplateCode() == "bar"
         }
     }
 }
