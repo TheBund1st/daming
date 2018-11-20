@@ -5,6 +5,11 @@
       "type": "java.lang.Integer",
       "description": "The sms verification code is going to expire in x seconds.",
       "defaultValue": 60
+    },
+    {
+      "name": "daming.jwt.privateKeyFileLocation",
+      "type": "java.nio.Paths",
+      "description": "The path of private key file which will be used to sign the verified mobile phone number"
     }
   ]
 }
