@@ -1,4 +1,4 @@
-package com.thebund1st.daming.sms.aliyun;
+package com.thebund1st.daming.aliyun.sms;
 
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
@@ -11,17 +11,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO make this implementation optional
 @Slf4j
 @RequiredArgsConstructor
-@Component(value = "smsVerificationSender")
-@ConfigurationProperties(prefix = "daming.aliyun.sms")
 public class AliyunSmsVerificationSender implements SmsVerificationSender {
 
     private final IAcsClient acsClient;

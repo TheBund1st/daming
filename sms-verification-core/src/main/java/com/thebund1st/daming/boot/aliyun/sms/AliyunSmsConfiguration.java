@@ -1,38 +1,32 @@
 package com.thebund1st.daming.boot.aliyun.sms;
 
-import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
-import com.aliyuncs.profile.DefaultProfile;
-import com.aliyuncs.profile.IClientProfile;
+import com.thebund1st.daming.aliyun.sms.AliyunSmsVerificationSender;
+import com.thebund1st.daming.boot.aliyun.AliyunConfiguration;
 import lombok.Setter;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
-// make it optional
 @Slf4j
-@ConfigurationProperties(prefix = "daming.aliyun")
+@ConfigurationProperties(prefix = "daming.aliyun.sms")
+@ConditionalOnProperty(prefix = "daming.sms", name = "provider", havingValue = "aliyun")
+@Import(AliyunConfiguration.class)
 @Configuration
 public class AliyunSmsConfiguration {
-    private String product = "Dysmsapi";
-    private String domain = "dysmsapi.aliyuncs.com";
-    private String regionId = "cn-hangzhou";
-
     @Setter
-    private String accessKeyId;
+    private String signature;
     @Setter
-    private String accessKeySecret;
+    private String templateCode;
 
-
-    @ConditionalOnMissingBean(name = "acsClient")
-    @SneakyThrows
     @Bean
-    public IAcsClient acsClient() {
-        IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyId, accessKeySecret);
-        DefaultProfile.addEndpoint(regionId, regionId, product, domain);
-        return new DefaultAcsClient(profile);
+    public AliyunSmsVerificationSender aliyunSmsVerificationSender(IAcsClient acsClient) {
+        AliyunSmsVerificationSender sender = new AliyunSmsVerificationSender(acsClient);
+        sender.setSignature(signature);
+        sender.setTemplateCode(templateCode);
+        return sender;
     }
 }

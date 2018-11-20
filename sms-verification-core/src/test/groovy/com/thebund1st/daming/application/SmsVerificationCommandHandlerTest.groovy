@@ -33,7 +33,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
     private SmsVerificationStore smsVerificationStore = Mock()
 
     @SpringBean
-    private SmsVerificationSender smsVerificationSender = Mock()
+    private SmsVerificationSender smsVerificationSender = Mock(name: "smsVerificationSender")
 
     @SpringBean
     private Clock clock = Mock()
