@@ -18,6 +18,9 @@ dependencyManagement {
     imports {
         mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Finchley.SR1'
     }
+    dependencies {
+        dependency "org.springframework.data:spring-data-redis:2.1.2.RELEASE"
+    }
 }
 
 dependencies {
@@ -38,18 +41,17 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
     testCompile('com.h2database:h2:1.4.197')
 
-    //devtools
-    compile("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
-
     // test mobile number generator
     testCompile('com.github.binarywang:java-testdata-generator:1.1.2')
 
     // redis
-    compile("org.springframework.boot:spring-boot-starter-data-redis:${springBootVersion}") {
+    compileOnly("org.springframework.boot:spring-boot-starter-data-redis:${springBootVersion}")
+    testCompile("org.springframework.boot:spring-boot-starter-data-redis:${springBootVersion}") {
         exclude group: 'org.springframework.data', module: 'spring-data-redis'
     }
-    compile "org.springframework.data:spring-data-redis:2.1.2.RELEASE"
-    compile 'redis.clients:jedis:2.9.0'
+    compileOnly "org.springframework.data:spring-data-redis"
+    testCompile "org.springframework.data:spring-data-redis"
+    testCompile 'redis.clients:jedis:2.9.0'
     testCompile 'com.github.kstyrc:embedded-redis:0.6'
 
     // jwt
