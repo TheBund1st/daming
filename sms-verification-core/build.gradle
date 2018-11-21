@@ -35,8 +35,8 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
 
     //jdbc
-    compile("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
-    compile('com.h2database:h2:1.4.197')
+    testCompile("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
+    testCompile('com.h2database:h2:1.4.197')
 
     //devtools
     compile("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
@@ -65,6 +65,6 @@ dependencies {
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
     // spring boot meta data
-    compileOnly ("org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}")
+    compileOnly("org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}")
 }
 
