@@ -31,7 +31,8 @@ dependencies {
     testCompile 'org.awaitility:awaitility-groovy:3.1.2'
 
     //aop
-    compile("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
+    compileOnly("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
+    testCompile("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
 
     //jdbc
     compile("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
