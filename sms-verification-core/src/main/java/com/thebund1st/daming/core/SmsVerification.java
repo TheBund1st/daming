@@ -22,4 +22,7 @@ public class SmsVerification {
         return getCode().equals(code);
     }
 
+    public boolean matches(MobilePhoneNumber mobilePhoneNumber) {
+        return getMobile().equals(mobilePhoneNumber);
+    }
 }

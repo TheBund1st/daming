@@ -1,10 +1,23 @@
 {
+  "groups": [
+    {
+      "name": "daming.sms.verification.code",
+      "type": "com.thebund1st.daming.boot.SmsVerificationCodeProperties",
+      "sourceType": "com.thebund1st.daming.boot.SmsVerificationAutoConfiguration",
+      "sourceMethod": "smsVerificationCodeProperties()"
+    }
+  ],
   "properties": [
     {
       "name": "daming.sms.verification.code.expires",
       "type": "java.lang.Integer",
       "description": "The sms verification code is going to expire in x seconds.",
       "defaultValue": 60
+    },
+    {
+      "name": "daming.sms.verification.code.whitelist",
+      "type": "java.util.List",
+      "description": "Whitelist for verification code sending, disabled if not set. Use '.whitelist[0]=' if you're using .properties",
     },
     {
       "name": "daming.jwt.privateKeyFileLocation",

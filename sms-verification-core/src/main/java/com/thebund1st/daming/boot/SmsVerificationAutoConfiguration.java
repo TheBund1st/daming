@@ -2,7 +2,9 @@ package com.thebund1st.daming.boot;
 
 import com.thebund1st.daming.boot.aliyun.sms.AliyunSmsConfiguration;
 import com.thebund1st.daming.boot.redis.RedisConfiguration;
-import com.thebund1st.daming.sms.SmsProviderConfiguration;
+import com.thebund1st.daming.boot.sms.SmsWhitelistConfiguration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -18,8 +20,14 @@ import org.springframework.context.annotation.Import;
         "com.thebund1st.daming.web",
 }
 )
-@Import({AliyunSmsConfiguration.class, RedisConfiguration.class, SmsProviderConfiguration.class})
+@Import({AliyunSmsConfiguration.class, RedisConfiguration.class, SmsWhitelistConfiguration.class})
 @Configuration
 public class SmsVerificationAutoConfiguration {
+
+    @ConfigurationProperties(prefix = "daming.sms.verification.code")
+    @Bean
+    public SmsVerificationCodeProperties smsVerificationCodeProperties() {
+        return new SmsVerificationCodeProperties();
+    }
 
 }
