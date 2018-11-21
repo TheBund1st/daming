@@ -79,6 +79,13 @@ daming.aliyun.accessKeyId={your key id}
 daming.aliyun.accessKeySecret={your key secret}
 ```
 
+Do remember to include aliyun sdk in your dependencies
+
+```groovy
+    compile("com.aliyun:aliyun-java-sdk-core:4.0.6")
+    compile("com.aliyun:aliyun-java-sdk-dysmsapi:1.1.0")
+```
+
 or with a configured IAcsClient instance named `acsClient`
 
 ```java

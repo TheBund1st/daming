@@ -20,11 +20,14 @@ dependencyManagement {
     }
     dependencies {
         dependency "org.springframework.data:spring-data-redis:2.1.2.RELEASE"
+        dependency "com.aliyun:aliyun-java-sdk-core:4.0.6"
+        dependency "com.aliyun:aliyun-java-sdk-dysmsapi:1.1.0"
     }
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compileOnly("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    testCompile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 
     // spock
@@ -60,8 +63,10 @@ dependencies {
     runtime "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
 
     // aliyun sms
-    compile("com.aliyun:aliyun-java-sdk-core:4.0.6")
-    compile("com.aliyun:aliyun-java-sdk-dysmsapi:1.1.0")
+    compileOnly("com.aliyun:aliyun-java-sdk-core")
+    testCompile("com.aliyun:aliyun-java-sdk-core")
+    compileOnly("com.aliyun:aliyun-java-sdk-dysmsapi")
+    testCompile("com.aliyun:aliyun-java-sdk-dysmsapi")
 
     // json
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
