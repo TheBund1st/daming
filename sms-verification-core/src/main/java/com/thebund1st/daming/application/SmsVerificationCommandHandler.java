@@ -14,19 +14,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.convert.DurationUnit;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 
-import static java.time.temporal.ChronoUnit.SECONDS;
-
 @Slf4j
 @RequiredArgsConstructor
-@Component
-@ConfigurationProperties(prefix = "daming.sms.verification.code")
+@Transactional
 public class SmsVerificationCommandHandler {
 
     private final SmsVerificationStore smsVerificationStore;
@@ -35,13 +29,10 @@ public class SmsVerificationCommandHandler {
 
     private final Clock clock;
 
-    //TODO extract it to a dedicated Properties
-    @DurationUnit(SECONDS)
     @Setter
     @Getter
     private Duration expires = Duration.ofSeconds(60);
 
-    @Transactional
     @SmsSender(delegateTo = "smsVerificationSender") //TODO make it configurable
     public SmsVerification handle(SendSmsVerificationCodeCommand command) {
         if (smsVerificationStore.exists(command.getMobile())) {

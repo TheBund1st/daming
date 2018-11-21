@@ -6,8 +6,6 @@ import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,13 +15,9 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Date;
 
 @RequiredArgsConstructor
-@Component
-@ConfigurationProperties(prefix = "daming.jwt")
 public class SmsVerifiedJwtIssuer {
-    // make it configurable
     @Setter
     private int expiresInSeconds = 900;
-    // make it configurable
     @Setter
     private String privateKeyFileLocation = "./sms-verification-private.der";
 
