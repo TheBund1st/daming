@@ -9,6 +9,8 @@ import foo.bar.WithTooManySmsVerificationSender
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException
 import org.springframework.boot.test.context.assertj.AssertableApplicationContext
 
+import static com.thebund1st.daming.core.MobilePhoneNumber.mobilePhoneNumberOf
+
 class SmsWhitelistConfigurationTest extends AbstractAutoConfigurationTest {
 
     def "it should provide WhitelistSmsVerificationSender as primary SmsVerificationSender instance"() {
@@ -28,7 +30,7 @@ class SmsWhitelistConfigurationTest extends AbstractAutoConfigurationTest {
             assert actual instanceof WhitelistSmsVerificationSender
 
             WhitelistSmsVerificationSender whitelist = (WhitelistSmsVerificationSender) actual
-            assert whitelist.getWhitelist() == ['13917777711', '13917777712']
+            assert whitelist.getWhitelist() == ['13917777711', '13917777712'].collect { mobilePhoneNumberOf(it) }
             assert whitelist.getTarget() instanceof SmsVerificationSenderStub
         }
     }

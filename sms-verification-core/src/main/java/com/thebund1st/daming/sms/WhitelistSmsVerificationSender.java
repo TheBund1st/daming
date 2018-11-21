@@ -18,7 +18,7 @@ public class WhitelistSmsVerificationSender implements SmsVerificationSender {
 
     @Getter
     @Setter
-    private List<String> whitelist = new ArrayList<>();
+    private List<MobilePhoneNumber> whitelist = new ArrayList<>();
 
     public WhitelistSmsVerificationSender(SmsVerificationSender target) {
         this.target = target;
@@ -34,7 +34,7 @@ public class WhitelistSmsVerificationSender implements SmsVerificationSender {
     }
 
     private boolean sentToWhitelist(SmsVerification verification) {
-        return whitelist.stream().map(MobilePhoneNumber::mobilePhoneNumberOf).anyMatch(verification::matches);
+        return whitelist.stream().anyMatch(verification::matches);
     }
 
     private boolean whitelistIsDisabled() {
