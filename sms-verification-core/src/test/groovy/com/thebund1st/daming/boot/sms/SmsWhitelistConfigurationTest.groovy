@@ -3,7 +3,7 @@ package com.thebund1st.daming.boot.sms
 import com.thebund1st.daming.application.SmsVerificationSender
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 import com.thebund1st.daming.boot.SmsVerificationCodeProperties
-import com.thebund1st.daming.sms.SmsVerificationSenderStub
+import com.thebund1st.daming.sms.LoggingSmsVerificationSender
 import com.thebund1st.daming.sms.WhitelistSmsVerificationSender
 import foo.bar.WithCustomizedSmsVerificationSender
 import foo.bar.WithTooManySmsVerificationSender
@@ -34,7 +34,7 @@ class SmsWhitelistConfigurationTest extends AbstractAutoConfigurationTest {
 
             WhitelistSmsVerificationSender whitelist = (WhitelistSmsVerificationSender) actual
             assert whitelist.getWhitelist() == ['13917777711', '13917777712'].collect { mobilePhoneNumberOf(it) }
-            assert whitelist.getTarget() instanceof SmsVerificationSenderStub
+            assert whitelist.getTarget() instanceof LoggingSmsVerificationSender
         }
     }
 
