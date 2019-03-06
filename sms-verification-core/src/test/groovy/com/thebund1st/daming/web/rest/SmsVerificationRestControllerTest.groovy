@@ -27,7 +27,8 @@ class SmsVerificationRestControllerTest extends AbstractWebMvcTest {
                         .contentType(APPLICATION_JSON_UTF8)
                         .content("""
                             {
-                                "mobile": "${command.getMobile().getValue()}"
+                                "mobile": "${command.getMobile().getValue()}",
+                                "scope": "${command.getScope().getValue()}"
                             }
                         """)
         )
@@ -56,7 +57,8 @@ class SmsVerificationRestControllerTest extends AbstractWebMvcTest {
                         .contentType(APPLICATION_JSON_UTF8)
                         .content("""
                             {
-                                "mobile": "${command.getMobile().getValue()}"
+                                "mobile": "${command.getMobile().getValue()}",
+                                "scope": "${command.getScope().getValue()}"
                             }
                         """)
         )
