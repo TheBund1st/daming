@@ -2,6 +2,7 @@ package com.thebund1st.daming.boot;
 
 import com.thebund1st.daming.boot.aliyun.sms.AliyunSmsConfiguration;
 import com.thebund1st.daming.boot.application.ApplicationConfiguration;
+import com.thebund1st.daming.boot.core.CoreConfiguration;
 import com.thebund1st.daming.boot.redis.RedisConfiguration;
 import com.thebund1st.daming.boot.sms.SmsWhitelistConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,7 +13,6 @@ import org.springframework.context.annotation.Import;
 
 //TODO figure out is @ComponentScan is a good practice or not?
 @ComponentScan(basePackages = {
-        "com.thebund1st.daming.core",
         "com.thebund1st.daming.time",
         "com.thebund1st.daming.web",
 }
@@ -21,7 +21,8 @@ import org.springframework.context.annotation.Import;
         AliyunSmsConfiguration.class,
         RedisConfiguration.class,
         SmsWhitelistConfiguration.class,
-        ApplicationConfiguration.class
+        ApplicationConfiguration.class,
+        CoreConfiguration.class
 })
 @Configuration
 public class SmsVerificationAutoConfiguration {
