@@ -26,9 +26,10 @@ public class MobilePhoneNumber {
             } else {
                 result = value.substring(0, 3) + "****" + value.substring(value.length() - 4, value.length());
             }
-        } else {
-            //FIXME, if length < 4
+        } else if (value.length() > 4) {
             result = "****" + value.substring(value.length() - 4, value.length());
+        } else {
+            result = value;
         }
         return result;
     }
