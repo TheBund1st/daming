@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Import;
 //TODO figure out is @ComponentScan is a good practice or not?
 @ComponentScan(basePackages = {
         "com.thebund1st.daming.core",
-        "com.thebund1st.daming.redis",
         "com.thebund1st.daming.time",
         "com.thebund1st.daming.web",
 }

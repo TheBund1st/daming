@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.thebund1st.daming.core.SmsVerification;
+import com.thebund1st.daming.core.SmsVerificationStore;
 import com.thebund1st.daming.json.mixin.SmsVerificationMixin;
+import com.thebund1st.daming.redis.RedisSmsVerificationStore;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +37,14 @@ public class RedisConfiguration {
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(smsVerificationJackson2JsonRedisSerializer(objectMapper));
         return redisTemplate;
+    }
+
+    @ConditionalOnMissingBean(SmsVerificationStore.class)
+    @Bean(name = "redisSmsVerificationStore")
+    public RedisSmsVerificationStore redisSmsVerificationStore(@Qualifier("smsVerificationRedisTemplate")
+                                                                       RedisTemplate<String, SmsVerification> redisTemplate) {
+        RedisSmsVerificationStore bean = new RedisSmsVerificationStore(redisTemplate);
+        return bean;
     }
 
     private Jackson2JsonRedisSerializer<SmsVerification> smsVerificationJackson2JsonRedisSerializer(ObjectMapper objectMapper) {
