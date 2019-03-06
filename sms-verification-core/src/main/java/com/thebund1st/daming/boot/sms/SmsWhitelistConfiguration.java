@@ -1,10 +1,10 @@
 package com.thebund1st.daming.boot.sms;
 
-import com.thebund1st.daming.application.SmsVerificationSender;
+import com.thebund1st.daming.core.SmsVerificationCodeSender;
 import com.thebund1st.daming.boot.SmsVerificationCodeProperties;
+import com.thebund1st.daming.sms.LoggingSmsVerificationCodeSender;
 import com.thebund1st.daming.sms.SmsSenderAspect;
-import com.thebund1st.daming.sms.LoggingSmsVerificationSender;
-import com.thebund1st.daming.sms.WhitelistSmsVerificationSender;
+import com.thebund1st.daming.sms.WhitelistSmsVerificationCodeSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,25 +24,25 @@ public class SmsWhitelistConfiguration {
      */
     @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
-    private Map<String, SmsVerificationSender> senders = new HashMap<>();
+    private Map<String, SmsVerificationCodeSender> senders = new HashMap<>();
 
     private final SmsVerificationCodeProperties smsVerificationCodeProperties;
 
     @Bean(name = "smsVerificationSender")
-    public WhitelistSmsVerificationSender smsVerificationSender() {
+    public WhitelistSmsVerificationCodeSender smsVerificationSender() {
         if (senders.size() > 1) {
-            throw new NoUniqueBeanDefinitionException(SmsVerificationSender.class, senders.keySet());
+            throw new NoUniqueBeanDefinitionException(SmsVerificationCodeSender.class, senders.keySet());
         }
         if (CollectionUtils.isEmpty(senders)) {
-            this.senders.put("loggingSmsVerificationSender", new LoggingSmsVerificationSender());
+            this.senders.put("loggingSmsVerificationSender", new LoggingSmsVerificationCodeSender());
         }
-        WhitelistSmsVerificationSender sender = new WhitelistSmsVerificationSender(findUnique());
+        WhitelistSmsVerificationCodeSender sender = new WhitelistSmsVerificationCodeSender(findUnique());
         sender.setWhitelist(smsVerificationCodeProperties.whitelist());
         return sender;
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")//a default stub is added
-    private SmsVerificationSender findUnique() {
+    private SmsVerificationCodeSender findUnique() {
         return senders.values().stream().findFirst().get();
     }
 

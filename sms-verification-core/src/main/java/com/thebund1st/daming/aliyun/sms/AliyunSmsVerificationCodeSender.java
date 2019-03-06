@@ -5,7 +5,7 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thebund1st.daming.application.SmsVerificationSender;
+import com.thebund1st.daming.core.SmsVerificationCodeSender;
 import com.thebund1st.daming.core.SmsVerification;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
-public class AliyunSmsVerificationSender implements SmsVerificationSender {
+public class AliyunSmsVerificationCodeSender implements SmsVerificationCodeSender {
 
     private final IAcsClient acsClient;
 

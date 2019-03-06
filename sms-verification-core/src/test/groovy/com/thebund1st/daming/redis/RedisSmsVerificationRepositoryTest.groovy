@@ -2,10 +2,8 @@ package com.thebund1st.daming.redis
 
 
 import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException
-import org.springframework.beans.PropertyValues
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.util.TestPropertyValues
 import org.springframework.test.context.ActiveProfiles
 import redis.embedded.RedisServer
 import spock.lang.Specification
@@ -18,7 +16,7 @@ import static org.awaitility.Awaitility.await
 
 @SpringBootTest
 @ActiveProfiles("commit")
-class RedisSmsVerificationStoreTest extends Specification {
+class RedisSmsVerificationRepositoryTest extends Specification {
 
     private RedisServer redisServer
 
@@ -32,7 +30,7 @@ class RedisSmsVerificationStoreTest extends Specification {
     }
 
     @Autowired
-    private RedisSmsVerificationStore subject
+    private RedisSmsVerificationRepository subject
 
     def "it should store sms verification"() {
         given:

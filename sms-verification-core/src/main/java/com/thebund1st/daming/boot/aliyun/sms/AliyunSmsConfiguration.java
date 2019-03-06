@@ -1,7 +1,7 @@
 package com.thebund1st.daming.boot.aliyun.sms;
 
 import com.aliyuncs.IAcsClient;
-import com.thebund1st.daming.aliyun.sms.AliyunSmsVerificationSender;
+import com.thebund1st.daming.aliyun.sms.AliyunSmsVerificationCodeSender;
 import com.thebund1st.daming.boot.aliyun.AliyunConfiguration;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +23,8 @@ public class AliyunSmsConfiguration {
     private String templateCode;
 
     @Bean
-    public AliyunSmsVerificationSender aliyunSmsVerificationSender(IAcsClient acsClient) {
-        AliyunSmsVerificationSender sender = new AliyunSmsVerificationSender(acsClient);
+    public AliyunSmsVerificationCodeSender aliyunSmsVerificationSender(IAcsClient acsClient) {
+        AliyunSmsVerificationCodeSender sender = new AliyunSmsVerificationCodeSender(acsClient);
         sender.setSignature(signature);
         sender.setTemplateCode(templateCode);
         return sender;

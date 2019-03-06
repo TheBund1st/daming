@@ -13,7 +13,7 @@ public class Application {
     }
 
     @Bean
-    public SmsVerificationSenderStub smsVerificationSenderStub() {
-        return new SmsVerificationSenderStub();
+    public SmsVerificationCodeSenderStub smsVerificationSenderStub() {
+        return new SmsVerificationCodeSenderStub();
     }
 }

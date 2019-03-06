@@ -2,7 +2,7 @@ package com.thebund1st.daming.boot.aliyun.sms
 
 
 import com.aliyuncs.IAcsClient
-import com.thebund1st.daming.aliyun.sms.AliyunSmsVerificationSender
+import com.thebund1st.daming.aliyun.sms.AliyunSmsVerificationCodeSender
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 import com.thebund1st.daming.boot.aliyun.AliyunConfiguration
 import com.thebund1st.daming.boot.aliyun.CustomizedAcsClient
@@ -53,7 +53,7 @@ class AliyunSmsConfigurationTest extends AbstractAutoConfigurationTest {
 
         then:
         contextRunner.run { it ->
-            AliyunSmsVerificationSender actual = it.getBean(AliyunSmsVerificationSender)
+            AliyunSmsVerificationCodeSender actual = it.getBean(AliyunSmsVerificationCodeSender)
             assert actual != null
             assert actual.getSignature() == "foo"
             assert actual.getTemplateCode() == "bar"

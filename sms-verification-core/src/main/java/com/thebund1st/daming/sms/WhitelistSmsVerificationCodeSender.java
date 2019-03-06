@@ -1,6 +1,6 @@
 package com.thebund1st.daming.sms;
 
-import com.thebund1st.daming.application.SmsVerificationSender;
+import com.thebund1st.daming.core.SmsVerificationCodeSender;
 import com.thebund1st.daming.core.MobilePhoneNumber;
 import com.thebund1st.daming.core.SmsVerification;
 import lombok.Getter;
@@ -11,16 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class WhitelistSmsVerificationSender implements SmsVerificationSender {
+public class WhitelistSmsVerificationCodeSender implements SmsVerificationCodeSender {
 
     @Getter
-    private final SmsVerificationSender target;
+    private final SmsVerificationCodeSender target;
 
     @Getter
     @Setter
     private List<MobilePhoneNumber> whitelist = new ArrayList<>();
 
-    public WhitelistSmsVerificationSender(SmsVerificationSender target) {
+    public WhitelistSmsVerificationCodeSender(SmsVerificationCodeSender target) {
         this.target = target;
     }
 

@@ -3,7 +3,7 @@ package foo.bar
 
 import com.thebund1st.daming.core.MobilePhoneNumber
 import com.thebund1st.daming.core.SmsVerification
-import com.thebund1st.daming.core.SmsVerificationStore
+import com.thebund1st.daming.core.SmsVerificationRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -11,11 +11,11 @@ import org.springframework.context.annotation.Configuration
 class WithCustomizedSmsVerificationStore {
 
     @Bean
-    SmsVerificationStore smsVerificationStore() {
-        new SmsVerificationStoreStub()
+    SmsVerificationRepository smsVerificationStore() {
+        new SmsVerificationRepositoryStub()
     }
 
-    class SmsVerificationStoreStub implements SmsVerificationStore {
+    class SmsVerificationRepositoryStub implements SmsVerificationRepository {
 
         @Override
         void store(SmsVerification code) {

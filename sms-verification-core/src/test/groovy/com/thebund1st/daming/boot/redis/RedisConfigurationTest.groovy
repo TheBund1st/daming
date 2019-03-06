@@ -2,8 +2,8 @@ package com.thebund1st.daming.boot.redis
 
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 import com.thebund1st.daming.core.SmsVerification
-import com.thebund1st.daming.core.SmsVerificationStore
-import com.thebund1st.daming.redis.RedisSmsVerificationStore
+import com.thebund1st.daming.core.SmsVerificationRepository
+import com.thebund1st.daming.redis.RedisSmsVerificationRepository
 import foo.bar.WithCustomizedRedisTemplate
 import foo.bar.WithCustomizedSmsVerificationStore
 import org.springframework.data.redis.core.RedisTemplate
@@ -46,8 +46,8 @@ class RedisConfigurationTest extends AbstractAutoConfigurationTest {
 
         then:
         this.contextRunner.run { it ->
-            SmsVerificationStore actual = it.getBean(SmsVerificationStore)
-            assert actual instanceof RedisSmsVerificationStore
+            SmsVerificationRepository actual = it.getBean(SmsVerificationRepository)
+            assert actual instanceof RedisSmsVerificationRepository
         }
     }
 
@@ -58,8 +58,8 @@ class RedisConfigurationTest extends AbstractAutoConfigurationTest {
 
         then:
         contextRunner.run { it ->
-            def actual = it.getBean(SmsVerificationStore)
-            assert actual instanceof WithCustomizedSmsVerificationStore.SmsVerificationStoreStub
+            def actual = it.getBean(SmsVerificationRepository)
+            assert actual instanceof WithCustomizedSmsVerificationStore.SmsVerificationRepositoryStub
         }
     }
 }

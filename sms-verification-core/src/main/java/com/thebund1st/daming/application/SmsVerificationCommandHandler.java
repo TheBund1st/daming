@@ -5,7 +5,7 @@ import com.thebund1st.daming.commands.VerifySmsVerificationCodeCommand;
 import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationCode;
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator;
-import com.thebund1st.daming.core.SmsVerificationStore;
+import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException;
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException;
 import com.thebund1st.daming.sms.SmsSender;
@@ -23,7 +23,7 @@ import java.time.Duration;
 @Transactional
 public class SmsVerificationCommandHandler {
 
-    private final SmsVerificationStore smsVerificationStore;
+    private final SmsVerificationRepository smsVerificationRepository;
 
     private final SmsVerificationCodeGenerator smsVerificationCodeGenerator;
 
@@ -35,7 +35,7 @@ public class SmsVerificationCommandHandler {
 
     @SmsSender(delegateTo = "smsVerificationSender") //TODO make it configurable
     public SmsVerification handle(SendSmsVerificationCodeCommand command) {
-        if (smsVerificationStore.exists(command.getMobile())) {
+        if (smsVerificationRepository.exists(command.getMobile())) {
             throw new MobileIsStillUnderVerificationException(command.getMobile());
         } else {
             SmsVerificationCode code = smsVerificationCodeGenerator.generate();
@@ -44,15 +44,15 @@ public class SmsVerificationCommandHandler {
             verification.setMobile(command.getMobile());
             verification.setCode(code);
             verification.setExpires(expires);
-            smsVerificationStore.store(verification);
+            smsVerificationRepository.store(verification);
             return verification;
         }
     }
 
     public void handle(VerifySmsVerificationCodeCommand command) {
-        SmsVerification smsVerification = smsVerificationStore.shouldFindBy(command.getMobile());
+        SmsVerification smsVerification = smsVerificationRepository.shouldFindBy(command.getMobile());
         if (smsVerification.matches(command.getCode())) {
-            smsVerificationStore.remove(smsVerification);
+            smsVerificationRepository.remove(smsVerification);
         } else {
             throw new SmsVerificationCodeMismatchException(smsVerification, command.getCode());
         }

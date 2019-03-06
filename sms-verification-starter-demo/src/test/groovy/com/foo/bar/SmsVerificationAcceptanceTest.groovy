@@ -27,7 +27,7 @@ class SmsVerificationAcceptanceTest extends Specification {
     private MockMvc mockMvc
 
     @Autowired
-    private SmsVerificationSenderStub senderStub
+    private SmsVerificationCodeSenderStub senderStub
 
     private RedisServer redisServer
 

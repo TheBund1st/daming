@@ -1,19 +1,19 @@
 package com.thebund1st.daming.sms
 
-import com.thebund1st.daming.application.SmsVerificationSender
+import com.thebund1st.daming.core.SmsVerificationCodeSender
 import com.thebund1st.daming.core.SmsVerification
 import spock.lang.Specification
 
 import static com.thebund1st.daming.core.MobilePhoneNumber.mobilePhoneNumberOf
 import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
 
-class WhitelistSmsVerificationSenderTest extends Specification {
+class WhitelistSmsVerificationCodeSenderTest extends Specification {
 
-    private WhitelistSmsVerificationSender subject
-    private SmsVerificationSender target = Mock()
+    private WhitelistSmsVerificationCodeSender subject
+    private SmsVerificationCodeSender target = Mock()
 
     def setup() {
-        subject = new WhitelistSmsVerificationSender(target)
+        subject = new WhitelistSmsVerificationCodeSender(target)
     }
 
     def "it should block sms verification code sending given whitelist is enabled and the mobile is not in the list"() {

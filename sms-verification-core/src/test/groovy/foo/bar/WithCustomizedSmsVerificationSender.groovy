@@ -1,6 +1,7 @@
 package foo.bar
 
-import com.thebund1st.daming.application.SmsVerificationSender
+
+import com.thebund1st.daming.core.SmsVerificationCodeSender
 import com.thebund1st.daming.core.SmsVerification
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -9,11 +10,11 @@ import org.springframework.context.annotation.Configuration
 class WithCustomizedSmsVerificationSender {
 
     @Bean
-    SmsVerificationSender anotherSmsVerificationSender() {
-        new AnotherSmsVerificationSender()
+    SmsVerificationCodeSender anotherSmsVerificationSender() {
+        new AnotherSmsVerificationCodeSender()
     }
 
-    static class AnotherSmsVerificationSender implements SmsVerificationSender {
+    static class AnotherSmsVerificationCodeSender implements SmsVerificationCodeSender {
 
         @Override
         void send(SmsVerification verification) {

@@ -1,6 +1,6 @@
 package com.thebund1st.daming.core;
 
-public interface SmsVerificationStore {
+public interface SmsVerificationRepository {
     void store(SmsVerification code);
 
     boolean exists(MobilePhoneNumber mobile);

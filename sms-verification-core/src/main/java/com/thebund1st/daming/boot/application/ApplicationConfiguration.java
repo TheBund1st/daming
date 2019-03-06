@@ -4,7 +4,7 @@ import com.thebund1st.daming.application.SmsVerificationCommandHandler;
 import com.thebund1st.daming.application.SmsVerifiedJwtIssuer;
 import com.thebund1st.daming.boot.SmsVerificationCodeProperties;
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator;
-import com.thebund1st.daming.core.SmsVerificationStore;
+import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.time.Clock;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -19,7 +19,7 @@ public class ApplicationConfiguration {
 
     private final SmsVerificationCodeProperties smsVerificationCodeProperties;
 
-    private final SmsVerificationStore smsVerificationStore;
+    private final SmsVerificationRepository smsVerificationRepository;
 
     private final SmsVerificationCodeGenerator smsVerificationCodeGenerator;
 
@@ -35,7 +35,7 @@ public class ApplicationConfiguration {
     @Bean
     public SmsVerificationCommandHandler smsVerificationCommandHandler() {
         SmsVerificationCommandHandler commandHandler =
-                new SmsVerificationCommandHandler(smsVerificationStore, smsVerificationCodeGenerator, clock);
+                new SmsVerificationCommandHandler(smsVerificationRepository, smsVerificationCodeGenerator, clock);
         commandHandler.setExpires(smsVerificationCodeProperties.getExpires());
         return commandHandler;
     }

@@ -2,7 +2,8 @@ package com.thebund1st.daming.application
 
 import com.thebund1st.daming.core.SmsVerification
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator
-import com.thebund1st.daming.core.SmsVerificationStore
+import com.thebund1st.daming.core.SmsVerificationCodeSender
+import com.thebund1st.daming.core.SmsVerificationRepository
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
 import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
@@ -30,10 +31,10 @@ class SmsVerificationCommandHandlerTest extends Specification {
     private SmsVerificationCodeGenerator smsVerificationCodeGenerator = Mock()
 
     @SpringBean
-    private SmsVerificationStore smsVerificationStore = Mock()
+    private SmsVerificationRepository smsVerificationStore = Mock()
 
     @SpringBean
-    private SmsVerificationSender smsVerificationSender = Mock(name: "smsVerificationSender")
+    private SmsVerificationCodeSender smsVerificationSender = Mock(name: "smsVerificationSender")
 
     @SpringBean
     private Clock clock = Mock()

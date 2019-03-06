@@ -1,10 +1,10 @@
 package com.thebund1st.daming.boot.sms
 
-import com.thebund1st.daming.application.SmsVerificationSender
+import com.thebund1st.daming.core.SmsVerificationCodeSender
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 import com.thebund1st.daming.boot.SmsVerificationCodeProperties
-import com.thebund1st.daming.sms.LoggingSmsVerificationSender
-import com.thebund1st.daming.sms.WhitelistSmsVerificationSender
+import com.thebund1st.daming.sms.LoggingSmsVerificationCodeSender
+import com.thebund1st.daming.sms.WhitelistSmsVerificationCodeSender
 import foo.bar.WithCustomizedSmsVerificationSender
 import foo.bar.WithTooManySmsVerificationSender
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException
@@ -18,7 +18,7 @@ class SmsWhitelistConfigurationTest extends AbstractAutoConfigurationTest {
 
     def "it should provide WhitelistSmsVerificationSender as primary SmsVerificationSender instance"() {
 
-        given: "no other SmsVerificationSender is provided"
+        given: "no other SmsVerificationCodeSender is provided"
 
         when:
         def contextRunner = this.contextRunner
@@ -29,12 +29,12 @@ class SmsWhitelistConfigurationTest extends AbstractAutoConfigurationTest {
 
         then:
         contextRunner.run { it ->
-            SmsVerificationSender actual = it.getBean("smsVerificationSender", SmsVerificationSender)
-            assert actual instanceof WhitelistSmsVerificationSender
+            SmsVerificationCodeSender actual = it.getBean("smsVerificationSender", SmsVerificationCodeSender)
+            assert actual instanceof WhitelistSmsVerificationCodeSender
 
-            WhitelistSmsVerificationSender whitelist = (WhitelistSmsVerificationSender) actual
+            WhitelistSmsVerificationCodeSender whitelist = (WhitelistSmsVerificationCodeSender) actual
             assert whitelist.getWhitelist() == ['13917777711', '13917777712'].collect { mobilePhoneNumberOf(it) }
-            assert whitelist.getTarget() instanceof LoggingSmsVerificationSender
+            assert whitelist.getTarget() instanceof LoggingSmsVerificationCodeSender
         }
     }
 
@@ -46,11 +46,11 @@ class SmsWhitelistConfigurationTest extends AbstractAutoConfigurationTest {
 
         then:
         contextRunner.run { it ->
-            SmsVerificationSender actual = it.getBean("smsVerificationSender", SmsVerificationSender)
-            assert actual instanceof WhitelistSmsVerificationSender
+            SmsVerificationCodeSender actual = it.getBean("smsVerificationSender", SmsVerificationCodeSender)
+            assert actual instanceof WhitelistSmsVerificationCodeSender
 
-            WhitelistSmsVerificationSender whitelist = (WhitelistSmsVerificationSender) actual
-            assert whitelist.getTarget() instanceof WithCustomizedSmsVerificationSender.AnotherSmsVerificationSender
+            WhitelistSmsVerificationCodeSender whitelist = (WhitelistSmsVerificationCodeSender) actual
+            assert whitelist.getTarget() instanceof WithCustomizedSmsVerificationSender.AnotherSmsVerificationCodeSender
         }
     }
 
