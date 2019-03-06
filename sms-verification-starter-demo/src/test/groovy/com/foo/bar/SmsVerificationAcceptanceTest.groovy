@@ -53,7 +53,7 @@ class SmsVerificationAcceptanceTest extends Specification {
 
         resultActions
                 .andExpect(status().isAccepted())
-        assert senderStub.sendCount(command.getMobile()) == 1
+        assert senderStub.sendCount(command.getMobile(), command.scope) == 1
     }
 
     private ResultActions askFor(SendSmsVerificationCodeCommand command) {
@@ -83,6 +83,7 @@ class SmsVerificationAcceptanceTest extends Specification {
                         .content("""
                             {
                                 "mobile": "${command.getMobile().getValue()}",
+                                "scope": "${command.getScope().getValue()}",
                                 "code": "${code.getValue()}"
                             }
                         """)
@@ -98,8 +99,8 @@ class SmsVerificationAcceptanceTest extends Specification {
 
     private SmsVerificationCode receiveSmsVerificationCode(SendSmsVerificationCodeCommand command) {
         askFor(command).andExpect(status().isAccepted())
-        assert senderStub.sendCount(command.getMobile()) == 1
-        senderStub.getTheOnly(command.getMobile()).get().getCode()
+        assert senderStub.sendCount(command.getMobile(), command.scope) == 1
+        senderStub.getTheOnly(command.getMobile(), command.scope).get().getCode()
     }
 
 }

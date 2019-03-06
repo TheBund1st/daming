@@ -35,7 +35,7 @@ public class RedisSmsVerificationRepository implements SmsVerificationRepository
     }
 
     private String toKey(MobilePhoneNumber mobile, SmsVerificationScope scope) {
-        return String.format("%s.%s", keyPrefix, mobile.getValue());
+        return String.format("%s.%s.%s", keyPrefix, mobile.getValue(), scope.getValue());
     }
 
     @Override
@@ -48,7 +48,7 @@ public class RedisSmsVerificationRepository implements SmsVerificationRepository
     public SmsVerification shouldFindBy(MobilePhoneNumber mobile, SmsVerificationScope scope) {
         SmsVerification codeMaybe = redisTemplate.opsForValue().get(toKey(mobile, scope));
         if (codeMaybe == null) {
-            throw new MobileIsNotUnderVerificationException(mobile);
+            throw new MobileIsNotUnderVerificationException(mobile, scope);
         } else {
             return codeMaybe;
         }

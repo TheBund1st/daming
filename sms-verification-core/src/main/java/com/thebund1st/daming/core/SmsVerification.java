@@ -26,4 +26,8 @@ public class SmsVerification {
     public boolean matches(MobilePhoneNumber mobilePhoneNumber) {
         return getMobile().equals(mobilePhoneNumber);
     }
+
+    public boolean matches(SmsVerificationScope scope) {
+        return getScope().equals(scope);
+    }
 }

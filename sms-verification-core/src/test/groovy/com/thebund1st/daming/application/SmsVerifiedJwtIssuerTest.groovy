@@ -22,7 +22,7 @@ class SmsVerifiedJwtIssuerTest extends Specification {
         def mobile = aMobilePhoneNumber()
 
         when:
-        def actual = subject.issue(mobile)
+        def actual = subject.issue(mobile, null)
 
         then:
         assert Jwts.parser().setClock({

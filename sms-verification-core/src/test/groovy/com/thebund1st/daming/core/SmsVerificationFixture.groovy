@@ -6,6 +6,7 @@ import java.time.temporal.ChronoUnit
 
 import static SmsVerificationCode.smsVerificationCodeOf
 import static com.thebund1st.daming.core.MobilePhoneNumber.mobilePhoneNumberOf
+import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationScopeOf
 import static com.thebund1st.daming.core.TestingMobile.aMobilePhoneNumber
 import static com.thebund1st.daming.core.TestingSmsVerificationScope.anyScope
 import static com.thebund1st.daming.core.TestingVerificationCode.aVerificationCodeOf
@@ -31,6 +32,10 @@ class SmsVerificationFixture {
     def with(SmsVerificationScope scope) {
         target.setScope(scope)
         this
+    }
+
+    def withScope(String value) {
+        this.with(smsVerificationScopeOf(value))
     }
 
     def createdAt(LocalDateTime localDateTime) {

@@ -76,7 +76,7 @@ class SmsVerificationRestControllerTest extends AbstractWebMvcTest {
         def jwt = "This is a JWT token"
 
         and:
-        smsVerifiedJwtIssuer.issue(command.getMobile()) >> jwt
+        smsVerifiedJwtIssuer.issue(command.getMobile(), command.scope) >> jwt
 
         when:
         def resultActions = mockMvc.perform(
@@ -85,6 +85,7 @@ class SmsVerificationRestControllerTest extends AbstractWebMvcTest {
                         .content("""
                             {
                                 "mobile": "${command.getMobile().getValue()}",
+                                "scope": "${command.getScope().getValue()}",
                                 "code": "${command.getCode().getValue()}"
                             }
                         """)
@@ -106,7 +107,10 @@ class SmsVerificationRestControllerTest extends AbstractWebMvcTest {
     def "it should return 412 when verifying sms verification code given code mismatches"() {
         given:
         def verification = aSmsVerification().build()
-        def command = aVerifySmsVerificationCodeCommand().sendTo(verification.mobile).build()
+        def command = aVerifySmsVerificationCodeCommand()
+                .sendTo(verification.mobile)
+                .with(verification.scope)
+                .build()
 
         and:
         smsVerificationHandler.handle(command) >> {
@@ -120,6 +124,7 @@ class SmsVerificationRestControllerTest extends AbstractWebMvcTest {
                         .content("""
                             {
                                 "mobile": "${command.getMobile().getValue()}",
+                                "scope": "${command.getScope().getValue()}",
                                 "code": "${command.getCode().getValue()}"
                             }
                         """)

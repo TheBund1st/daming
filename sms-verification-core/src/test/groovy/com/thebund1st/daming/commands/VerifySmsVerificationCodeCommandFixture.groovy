@@ -3,9 +3,11 @@ package com.thebund1st.daming.commands
 import com.thebund1st.daming.core.MobilePhoneNumber
 import com.thebund1st.daming.core.SmsVerificationCode
 import com.thebund1st.daming.core.SmsVerificationFixture
+import com.thebund1st.daming.core.SmsVerificationScope
 
 import static com.thebund1st.daming.core.MobilePhoneNumber.mobilePhoneNumberOf
 import static com.thebund1st.daming.core.SmsVerificationCode.smsVerificationCodeOf
+import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationScopeOf
 
 class VerifySmsVerificationCodeCommandFixture {
     private VerifySmsVerificationCodeCommand target = new VerifySmsVerificationCodeCommand()
@@ -28,6 +30,15 @@ class VerifySmsVerificationCodeCommandFixture {
         this.codeIs(code.value)
     }
 
+    def with(SmsVerificationScope scope) {
+        target.setScope(scope)
+        this
+    }
+
+    def withScope(String value) {
+        this.with(smsVerificationScopeOf(value))
+    }
+
     def build() {
         target
     }
@@ -37,6 +48,7 @@ class VerifySmsVerificationCodeCommandFixture {
         new VerifySmsVerificationCodeCommandFixture()
                 .sendTo(verification.getMobile())
                 .codeIs(verification.getCode())
+                .with(verification.scope)
     }
 
 }

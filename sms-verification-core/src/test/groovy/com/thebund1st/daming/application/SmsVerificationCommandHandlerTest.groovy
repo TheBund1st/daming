@@ -91,10 +91,13 @@ class SmsVerificationCommandHandlerTest extends Specification {
         given:
         def verification = aSmsVerification().build()
         def command = aVerifySmsVerificationCodeCommand()
-                .sendTo(verification.mobile).codeIs(verification.code).build()
+                .sendTo(verification.mobile)
+                .with(verification.scope)
+                .codeIs(verification.code)
+                .build()
 
         and:
-        smsVerificationStore.shouldFindBy(verification.mobile, null) >> verification
+        smsVerificationStore.shouldFindBy(command.mobile, command.scope) >> verification
 
         when: "it verified send sms verification code"
         subject.handle(command)
@@ -108,12 +111,14 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
     def "it should throw given the verification code does not match"() {
         given:
-        def verification = aSmsVerification().sendTo("13411116789").codeIs('123456').build()
+        def verification = aSmsVerification()
+                .sendTo("13411116789").withScope("Login")
+                .codeIs('123456').build()
         def command = aVerifySmsVerificationCodeCommand()
                 .sendTo(verification.mobile).codeIs("654321").build()
 
         and:
-        smsVerificationStore.shouldFindBy(verification.mobile, null) >> verification
+        smsVerificationStore.shouldFindBy(command.mobile, command.scope) >> verification
 
         when: "it verifies sms verification code"
         subject.handle(command)
@@ -126,18 +131,20 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
         and: "throw"
         def thrown = thrown(SmsVerificationCodeMismatchException)
-        assert thrown.getMessage() == "The actual code [654321] does not match the code [123456] sent to [134****6789]."
+        assert thrown.getMessage() ==
+                "The actual code [654321] does not match the code [123456] sent to [134****6789][Login]."
     }
 
     def "it should throw given the verification does not exist"() {
         given:
-        def verification = aSmsVerification().sendTo("13411116789").build()
+        def verification = aSmsVerification()
+                .sendTo("13411116789").withScope("Login").build()
         def command = aVerifySmsVerificationCodeCommand()
-                .sendTo(verification.mobile).codeIs(verification.code).build()
+                .sendTo(verification.mobile).with(verification.scope).codeIs(verification.code).build()
 
         and:
-        smsVerificationStore.shouldFindBy(verification.mobile, null) >> {
-            throw new MobileIsNotUnderVerificationException(verification.mobile)
+        smsVerificationStore.shouldFindBy(command.mobile, command.scope) >> {
+            throw new MobileIsNotUnderVerificationException(command.mobile, command.scope)
         }
 
         when: "it verifies sms verification code"
@@ -151,6 +158,6 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
         and: "throw"
         def thrown = thrown(MobileIsNotUnderVerificationException)
-        assert thrown.getMessage() == "The mobile [134****6789] is not under verification."
+        assert thrown.getMessage() == "The mobile [134****6789] is not under [Login] verification."
     }
 }

@@ -33,6 +33,6 @@ public class SmsVerificationRestController {
     @DeleteMapping("/api/sms/verification/code")
     public SmsVerifiedJwtResource handle(@RequestBody VerifySmsVerificationCodeCommand command) {
         smsVerificationCommandHandler.handle(command);
-        return new SmsVerifiedJwtResource(smsVerifiedJwtIssuer.issue(command.getMobile()));
+        return new SmsVerifiedJwtResource(smsVerifiedJwtIssuer.issue(command.getMobile(), command.getScope()));
     }
 }

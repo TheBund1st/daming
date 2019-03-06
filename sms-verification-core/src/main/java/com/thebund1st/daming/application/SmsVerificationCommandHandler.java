@@ -51,7 +51,8 @@ public class SmsVerificationCommandHandler {
     }
 
     public void handle(VerifySmsVerificationCodeCommand command) {
-        SmsVerification smsVerification = smsVerificationRepository.shouldFindBy(command.getMobile(), null);
+        SmsVerification smsVerification = smsVerificationRepository
+                .shouldFindBy(command.getMobile(), command.getScope());
         if (smsVerification.matches(command.getCode())) {
             smsVerificationRepository.remove(smsVerification);
         } else {

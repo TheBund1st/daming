@@ -1,6 +1,7 @@
 package com.thebund1st.daming.application;
 
 import com.thebund1st.daming.core.MobilePhoneNumber;
+import com.thebund1st.daming.core.SmsVerificationScope;
 import com.thebund1st.daming.time.Clock;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class SmsVerifiedJwtIssuer {
 
     private final Clock clock;
 
-    public String issue(MobilePhoneNumber mobilePhoneNumber) {
+    public String issue(MobilePhoneNumber mobilePhoneNumber, SmsVerificationScope scope) {
         return Jwts.builder().setSubject("verifiedMobilePhoneNumber")
                 .claim("mobile", mobilePhoneNumber.getValue())
                 .signWith(get(privateKeyFileLocation))

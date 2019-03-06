@@ -10,8 +10,8 @@ import static org.springframework.http.HttpStatus.PRECONDITION_FAILED;
 public class SmsVerificationCodeMismatchException extends RuntimeException {
 
     public SmsVerificationCodeMismatchException(SmsVerification smsVerification, SmsVerificationCode actual) {
-        super(String.format("The actual code [%s] does not match the code [%s] sent to [%s].",
-                actual, smsVerification.getCode(), smsVerification.getMobile()));
+        super(String.format("The actual code [%s] does not match the code [%s] sent to [%s][%s].",
+                actual, smsVerification.getCode(), smsVerification.getMobile(), smsVerification.getScope()));
     }
 
 }
