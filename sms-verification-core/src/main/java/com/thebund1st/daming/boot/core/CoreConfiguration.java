@@ -1,5 +1,6 @@
 package com.thebund1st.daming.boot.core;
 
+import com.thebund1st.daming.core.MobilePhoneNumberPattern;
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,11 @@ public class CoreConfiguration {
     @Bean
     public SmsVerificationCodeGenerator smsVerificationCodeGenerator() {
         return new SmsVerificationCodeGenerator();
+    }
+
+    @Bean
+    public MobilePhoneNumberPattern mobilePhoneNumberPattern() {
+        return new MobilePhoneNumberPattern();
     }
 
 }

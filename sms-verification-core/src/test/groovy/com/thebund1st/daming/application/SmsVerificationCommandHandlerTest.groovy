@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
+import javax.validation.ConstraintDefinitionException
+import javax.validation.ConstraintViolationException
 import java.time.ZonedDateTime
 
 import static com.thebund1st.daming.commands.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
@@ -66,6 +68,20 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
         and:
         1 * smsVerificationSender.send(verification)
+    }
+
+    def "it should skip given invalid mobile"() {
+        given:
+        def command = aSendSmsVerificationCodeCommand()
+                .sendTo('12345').build()
+
+        when: "it handles send sms verification code"
+        subject.handle(command)
+
+        then: "it throw"
+
+        def thrown = thrown(ConstraintViolationException.class)
+        assert thrown.getMessage().contains("Invalid mobile phone number")
     }
 
     def "it should skip given the mobile is under verification"() {
