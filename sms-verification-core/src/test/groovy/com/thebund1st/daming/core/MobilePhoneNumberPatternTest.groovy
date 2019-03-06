@@ -23,5 +23,6 @@ class MobilePhoneNumberPatternTest extends Specification {
         '11917777766' | false
         '10917777766' | false
         '1091777776X' | false
+        'a'           | false
     }
 }

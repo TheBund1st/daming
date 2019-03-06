@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
-import javax.validation.ConstraintDefinitionException
 import javax.validation.ConstraintViolationException
 import java.time.ZonedDateTime
 
@@ -117,6 +116,20 @@ class SmsVerificationCommandHandlerTest extends Specification {
         with(smsVerificationStore) {
             1 * remove(verification)
         }
+    }
+
+    def "it should skip verifying given invalid mobile"() {
+        given:
+        def command = aVerifySmsVerificationCodeCommand()
+                .sendTo('12345').build()
+
+        when: "it handles send sms verification code"
+        subject.handle(command)
+
+        then: "it throw"
+
+        def thrown = thrown(ConstraintViolationException.class)
+        assert thrown.getMessage().contains("Invalid mobile phone number")
     }
 
     def "it should throw given the verification code does not match"() {

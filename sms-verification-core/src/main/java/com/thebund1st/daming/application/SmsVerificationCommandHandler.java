@@ -52,7 +52,7 @@ public class SmsVerificationCommandHandler {
         }
     }
 
-    public void handle(VerifySmsVerificationCodeCommand command) {
+    public void handle(@Valid VerifySmsVerificationCodeCommand command) {
         SmsVerification smsVerification = smsVerificationRepository.shouldFindBy(command.getMobile());
         if (smsVerification.matches(command.getCode())) {
             smsVerificationRepository.remove(smsVerification);
