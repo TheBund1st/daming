@@ -4,6 +4,7 @@ package foo.bar
 import com.thebund1st.daming.core.MobilePhoneNumber
 import com.thebund1st.daming.core.SmsVerification
 import com.thebund1st.daming.core.SmsVerificationRepository
+import com.thebund1st.daming.core.SmsVerificationScope
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -23,12 +24,12 @@ class WithCustomizedSmsVerificationStore {
         }
 
         @Override
-        boolean exists(MobilePhoneNumber mobile) {
+        boolean exists(MobilePhoneNumber mobile, SmsVerificationScope scope) {
             return false
         }
 
         @Override
-        SmsVerification shouldFindBy(MobilePhoneNumber mobile) {
+        SmsVerification shouldFindBy(MobilePhoneNumber mobile, SmsVerificationScope scope) {
             return null
         }
 

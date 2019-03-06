@@ -44,7 +44,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
         given:
         def now = ZonedDateTime.now()
         def verification = aSmsVerification().createdAt(now.toLocalDateTime()).build()
-        def command = aSendSmsVerificationCodeCommand().sendTo(verification.mobile).build()
+        def command = aSendSmsVerificationCodeCommand().sendTo(verification.mobile).with(verification.scope).build()
 
         and:
         smsVerificationCodeGenerator.generate() >> verification.getCode()
@@ -60,6 +60,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
         }
 
         assert actual.mobile == verification.mobile
+        assert actual.scope == verification.scope
         assert actual.code == verification.code
         assert actual.createdAt == now.toLocalDateTime()
         assert actual.expires == subject.expires
@@ -70,10 +71,12 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
     def "it should skip given the mobile is under verification"() {
         given:
-        def command = aSendSmsVerificationCodeCommand().sendTo('13411116789').build()
+        def command = aSendSmsVerificationCodeCommand()
+                .sendTo('13411116789').withScope("Login")
+                .build()
 
         and:
-        smsVerificationStore.exists(command.mobile) >> true
+        smsVerificationStore.exists(command.mobile, command.scope) >> true
 
         when: "it handles send sms verification code"
         subject.handle(command)
@@ -81,7 +84,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
         then: "it should store the code"
 
         def thrown = thrown(MobileIsStillUnderVerificationException.class)
-        assert thrown.getMessage() == "The mobile [134****6789] is under verification."
+        assert thrown.getMessage() == "The mobile [134****6789] is under [Login] verification."
     }
 
     def "it should verify the verification code"() {
@@ -91,7 +94,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
                 .sendTo(verification.mobile).codeIs(verification.code).build()
 
         and:
-        smsVerificationStore.shouldFindBy(verification.mobile) >> verification
+        smsVerificationStore.shouldFindBy(verification.mobile, null) >> verification
 
         when: "it verified send sms verification code"
         subject.handle(command)
@@ -110,7 +113,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
                 .sendTo(verification.mobile).codeIs("654321").build()
 
         and:
-        smsVerificationStore.shouldFindBy(verification.mobile) >> verification
+        smsVerificationStore.shouldFindBy(verification.mobile, null) >> verification
 
         when: "it verifies sms verification code"
         subject.handle(command)
@@ -133,7 +136,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
                 .sendTo(verification.mobile).codeIs(verification.code).build()
 
         and:
-        smsVerificationStore.shouldFindBy(verification.mobile) >> {
+        smsVerificationStore.shouldFindBy(verification.mobile, null) >> {
             throw new MobileIsNotUnderVerificationException(verification.mobile)
         }
 

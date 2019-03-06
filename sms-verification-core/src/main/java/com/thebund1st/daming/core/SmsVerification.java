@@ -8,13 +8,14 @@ import lombok.ToString;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-@EqualsAndHashCode(of = "mobile")
-@ToString(of = "mobile")
+@EqualsAndHashCode(of = {"mobile", "scope"})
+@ToString(of = {"mobile", "scope"})
 @Getter
 @Setter
 public class SmsVerification {
     private LocalDateTime createdAt;
     private MobilePhoneNumber mobile;
+    private SmsVerificationScope scope;
     private SmsVerificationCode code;
     private Duration expires = Duration.ofSeconds(60);
 

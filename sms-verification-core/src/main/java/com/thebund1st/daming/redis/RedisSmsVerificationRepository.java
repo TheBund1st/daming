@@ -3,6 +3,7 @@ package com.thebund1st.daming.redis;
 import com.thebund1st.daming.core.MobilePhoneNumber;
 import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationRepository;
+import com.thebund1st.daming.core.SmsVerificationScope;
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException;
 import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException;
 import lombok.Setter;
@@ -22,28 +23,30 @@ public class RedisSmsVerificationRepository implements SmsVerificationRepository
 
     @Override
     public void store(SmsVerification smsVerification) {
-        MobilePhoneNumber mobile = smsVerification.getMobile();
         Boolean ifAbsent = redisTemplate.opsForValue()
-                .setIfAbsent(toKey(mobile), smsVerification, smsVerification.getExpires());
+                .setIfAbsent(toKey(smsVerification.getMobile(), smsVerification.getScope()),
+                        smsVerification,
+                        smsVerification.getExpires());
         if (ifAbsent) {
             // do nothing as we don't overwrite the entry
         } else {
-            throw new MobileIsStillUnderVerificationException(smsVerification.getMobile());
+            throw new MobileIsStillUnderVerificationException(smsVerification.getMobile(), smsVerification.getScope());
         }
     }
 
-    private String toKey(MobilePhoneNumber mobile) {
-        return keyPrefix + mobile.getValue();
+    private String toKey(MobilePhoneNumber mobile, SmsVerificationScope scope) {
+        return String.format("%s.%s", keyPrefix, mobile.getValue());
     }
 
     @Override
-    public boolean exists(MobilePhoneNumber mobile) {
-        return redisTemplate.hasKey(toKey(mobile));
+    public boolean exists(MobilePhoneNumber mobile, SmsVerificationScope scope) {
+        Boolean aBoolean = redisTemplate.hasKey(toKey(mobile, scope));
+        return aBoolean == null ? false : aBoolean;
     }
 
     @Override
-    public SmsVerification shouldFindBy(MobilePhoneNumber mobile) {
-        SmsVerification codeMaybe = redisTemplate.opsForValue().get(toKey(mobile));
+    public SmsVerification shouldFindBy(MobilePhoneNumber mobile, SmsVerificationScope scope) {
+        SmsVerification codeMaybe = redisTemplate.opsForValue().get(toKey(mobile, scope));
         if (codeMaybe == null) {
             throw new MobileIsNotUnderVerificationException(mobile);
         } else {
@@ -53,6 +56,6 @@ public class RedisSmsVerificationRepository implements SmsVerificationRepository
 
     @Override
     public void remove(SmsVerification smsVerification) {
-        redisTemplate.delete(toKey(smsVerification.getMobile()));
+        redisTemplate.delete(toKey(smsVerification.getMobile(), smsVerification.getScope()));
     }
 }

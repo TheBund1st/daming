@@ -35,16 +35,16 @@ class RedisSmsVerificationRepositoryTest extends Specification {
     def "it should store sms verification"() {
         given:
         def smsVerification = aSmsVerification().expiresIn(60, SECONDS).build()
-        assert !subject.exists(smsVerification.mobile)
+        assert !subject.exists(smsVerification.mobile, smsVerification.scope)
 
         when:
         subject.store(smsVerification)
 
         then:
-        assert subject.exists(smsVerification.mobile)
+        assert subject.exists(smsVerification.mobile, smsVerification.scope)
 
         and:
-        def found = subject.shouldFindBy(smsVerification.mobile)
+        def found = subject.shouldFindBy(smsVerification.mobile, smsVerification.scope)
         assert found.code == smsVerification.code
         assert found.expires == smsVerification.expires
     }
@@ -66,13 +66,13 @@ class RedisSmsVerificationRepositoryTest extends Specification {
         def smsVerification = aSmsVerification().build()
         subject.store(smsVerification)
 
-        assert subject.exists(smsVerification.getMobile())
+        assert subject.exists(smsVerification.getMobile(), smsVerification.scope)
 
         when:
         subject.remove(smsVerification)
 
         then:
-        assert !subject.exists(smsVerification.mobile)
+        assert !subject.exists(smsVerification.mobile, smsVerification.scope)
     }
 
     def "it should expire sms verification"() {
@@ -83,9 +83,11 @@ class RedisSmsVerificationRepositoryTest extends Specification {
         subject.store(smsVerification)
 
         then:
-        assert subject.exists(smsVerification.mobile)
+        assert subject.exists(smsVerification.mobile, smsVerification.scope)
 
         and:
-        await().atMost(3, TimeUnit.SECONDS).until { !subject.exists(smsVerification.mobile) }
+        await().atMost(3, TimeUnit.SECONDS).until {
+            !subject.exists(smsVerification.mobile, smsVerification.scope)
+        }
     }
 }

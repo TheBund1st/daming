@@ -5,6 +5,7 @@ import com.thebund1st.daming.core.SmsVerificationScope
 import com.thebund1st.daming.core.TestingSmsVerificationScope
 
 import static com.thebund1st.daming.core.MobilePhoneNumber.mobilePhoneNumberOf
+import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationScopeOf
 import static com.thebund1st.daming.core.TestingMobile.aMobilePhoneNumber
 import static com.thebund1st.daming.core.TestingSmsVerificationScope.anyScope
 
@@ -25,6 +26,10 @@ class SendSmsVerificationCodeCommandFixture {
         this
     }
 
+    def withScope(String value) {
+        this.with(smsVerificationScopeOf(value))
+    }
+
     def build() {
         target
     }
@@ -34,5 +39,4 @@ class SendSmsVerificationCodeCommandFixture {
                 .sendTo(aMobilePhoneNumber())
                 .with(anyScope())
     }
-
 }

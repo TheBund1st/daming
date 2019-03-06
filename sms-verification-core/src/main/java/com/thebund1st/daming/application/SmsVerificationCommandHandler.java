@@ -35,13 +35,14 @@ public class SmsVerificationCommandHandler {
 
     @SmsSender(delegateTo = "smsVerificationSender") //TODO make it configurable
     public SmsVerification handle(SendSmsVerificationCodeCommand command) {
-        if (smsVerificationRepository.exists(command.getMobile())) {
-            throw new MobileIsStillUnderVerificationException(command.getMobile());
+        if (smsVerificationRepository.exists(command.getMobile(), command.getScope())) {
+            throw new MobileIsStillUnderVerificationException(command.getMobile(), command.getScope());
         } else {
             SmsVerificationCode code = smsVerificationCodeGenerator.generate();
             SmsVerification verification = new SmsVerification();
             verification.setCreatedAt(clock.now().toLocalDateTime());
             verification.setMobile(command.getMobile());
+            verification.setScope(command.getScope());
             verification.setCode(code);
             verification.setExpires(expires);
             smsVerificationRepository.store(verification);
@@ -50,7 +51,7 @@ public class SmsVerificationCommandHandler {
     }
 
     public void handle(VerifySmsVerificationCodeCommand command) {
-        SmsVerification smsVerification = smsVerificationRepository.shouldFindBy(command.getMobile());
+        SmsVerification smsVerification = smsVerificationRepository.shouldFindBy(command.getMobile(), null);
         if (smsVerification.matches(command.getCode())) {
             smsVerificationRepository.remove(smsVerification);
         } else {

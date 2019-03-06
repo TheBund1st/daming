@@ -48,7 +48,7 @@ class SmsVerificationRestControllerTest extends AbstractWebMvcTest {
 
         and:
         smsVerificationHandler.handle(command) >> {
-            throw new MobileIsStillUnderVerificationException(command.getMobile())
+            throw new MobileIsStillUnderVerificationException(command.getMobile(), command.getScope())
         }
 
         when:
