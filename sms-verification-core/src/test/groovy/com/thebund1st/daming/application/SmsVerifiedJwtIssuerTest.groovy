@@ -16,7 +16,7 @@ import static com.thebund1st.daming.core.TestingMobile.aMobilePhoneNumber
 class SmsVerifiedJwtIssuerTest extends Specification {
 
     private Clock clock = new Clock()
-    private SmsVerifiedJwtIssuer subject = new SmsVerifiedJwtIssuer(clock, new FileJwtKeyLoader())
+    private SmsVerifiedJwtIssuer subject = new SmsVerifiedJwtIssuer(clock, new FileJwtKeyLoader().getKey())
 
     def "it should generate a JWS with verified mobile phone number"() {
         given:

@@ -51,7 +51,7 @@ public class ApplicationConfiguration {
 
     @Bean
     public SmsVerifiedJwtIssuer smsVerifiedJwtIssuer() {
-        SmsVerifiedJwtIssuer issuer = new SmsVerifiedJwtIssuer(clock, fileJwtKeyLoader());
+        SmsVerifiedJwtIssuer issuer = new SmsVerifiedJwtIssuer(clock, fileJwtKeyLoader().getKey());
         issuer.setExpiresInSeconds(expiresInSeconds);
         return issuer;
     }

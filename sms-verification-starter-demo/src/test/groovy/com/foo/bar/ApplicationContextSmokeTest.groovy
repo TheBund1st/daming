@@ -1,9 +1,11 @@
 package com.foo.bar
 
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
 @SpringBootTest
+@ActiveProfiles("test")
 class ApplicationContextSmokeTest extends Specification {
 
     def "it should load application context"() {
