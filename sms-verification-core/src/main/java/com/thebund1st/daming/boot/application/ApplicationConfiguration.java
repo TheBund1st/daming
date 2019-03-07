@@ -3,6 +3,7 @@ package com.thebund1st.daming.boot.application;
 import com.thebund1st.daming.application.SmsVerificationCommandHandler;
 import com.thebund1st.daming.application.SmsVerifiedJwtIssuer;
 import com.thebund1st.daming.boot.SmsVerificationCodeProperties;
+import com.thebund1st.daming.core.RandomNumberSmsVerificationCode;
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator;
 import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.time.Clock;

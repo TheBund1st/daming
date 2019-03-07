@@ -1,5 +1,6 @@
 package com.thebund1st.daming.application
 
+import com.thebund1st.daming.core.RandomNumberSmsVerificationCode
 import com.thebund1st.daming.core.SmsVerification
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator
 import com.thebund1st.daming.core.SmsVerificationCodeSender
@@ -29,9 +30,6 @@ class SmsVerificationCommandHandlerTest extends Specification {
     private SmsVerificationCommandHandler subject
 
     @SpringBean
-    private SmsVerificationCodeGenerator smsVerificationCodeGenerator = Mock()
-
-    @SpringBean
     private SmsVerificationRepository smsVerificationStore = Mock()
 
     @SpringBean
@@ -48,7 +46,6 @@ class SmsVerificationCommandHandlerTest extends Specification {
         def command = aSendSmsVerificationCodeCommand().sendTo(verification.mobile).build()
 
         and:
-        smsVerificationCodeGenerator.generate() >> verification.getCode()
         clock.now() >> now
 
         when: "it handles send sms verification code"
@@ -61,7 +58,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
         }
 
         assert actual.mobile == verification.mobile
-        assert actual.code == verification.code
+        assert actual.code != null
         assert actual.createdAt == now.toLocalDateTime()
         assert actual.expires == subject.expires
 
@@ -130,6 +127,20 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
         def thrown = thrown(ConstraintViolationException.class)
         assert thrown.getMessage().contains("Invalid mobile phone number")
+    }
+
+    def "it should skip verifying given invalid code"() {
+        given:
+        def command = aVerifySmsVerificationCodeCommand()
+                .codeIs("Not a code").build()
+
+        when: "it handles send sms verification code"
+        subject.handle(command)
+
+        then: "it throw"
+
+        def thrown = thrown(ConstraintViolationException.class)
+        assert thrown.getMessage().contains("Invalid sms verification code")
     }
 
     def "it should throw given the verification code does not match"() {
