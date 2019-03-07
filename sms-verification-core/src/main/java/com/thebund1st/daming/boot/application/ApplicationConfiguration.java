@@ -5,6 +5,8 @@ import com.thebund1st.daming.application.SmsVerifiedJwtIssuer;
 import com.thebund1st.daming.boot.SmsVerificationCodeProperties;
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator;
 import com.thebund1st.daming.core.SmsVerificationRepository;
+import com.thebund1st.daming.jwt.FileJwtKeyLoader;
+import com.thebund1st.daming.jwt.JwtKeyLoader;
 import com.thebund1st.daming.time.Clock;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -41,10 +43,16 @@ public class ApplicationConfiguration {
     }
 
     @Bean
+    public JwtKeyLoader fileJwtKeyLoader() {
+        FileJwtKeyLoader jwtKeyLoader = new FileJwtKeyLoader();
+        jwtKeyLoader.setPrivateKeyFileLocation(privateKeyFileLocation);
+        return jwtKeyLoader;
+    }
+
+    @Bean
     public SmsVerifiedJwtIssuer smsVerifiedJwtIssuer() {
-        SmsVerifiedJwtIssuer issuer = new SmsVerifiedJwtIssuer(clock);
+        SmsVerifiedJwtIssuer issuer = new SmsVerifiedJwtIssuer(clock, fileJwtKeyLoader());
         issuer.setExpiresInSeconds(expiresInSeconds);
-        issuer.setPrivateKeyFileLocation(privateKeyFileLocation);
         return issuer;
     }
 

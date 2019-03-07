@@ -1,5 +1,6 @@
 package com.thebund1st.daming.application
 
+import com.thebund1st.daming.jwt.FileJwtKeyLoader
 import com.thebund1st.daming.time.Clock
 import io.jsonwebtoken.Jwts
 import spock.lang.Specification
@@ -15,7 +16,7 @@ import static com.thebund1st.daming.core.TestingMobile.aMobilePhoneNumber
 class SmsVerifiedJwtIssuerTest extends Specification {
 
     private Clock clock = new Clock()
-    private SmsVerifiedJwtIssuer subject = new SmsVerifiedJwtIssuer(clock)
+    private SmsVerifiedJwtIssuer subject = new SmsVerifiedJwtIssuer(clock, new FileJwtKeyLoader())
 
     def "it should generate a JWS with verified mobile phone number"() {
         given:
