@@ -1,4 +1,4 @@
-package com.thebund1st.daming.jwt;
+package com.thebund1st.daming.jwt.key;
 
 import java.security.Key;
 

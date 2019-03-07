@@ -1,5 +1,6 @@
-package com.thebund1st.daming.jwt;
+package com.thebund1st.daming.jwt.key.file;
 
+import com.thebund1st.daming.jwt.key.JwtKeyLoader;
 import lombok.Setter;
 import lombok.SneakyThrows;
 

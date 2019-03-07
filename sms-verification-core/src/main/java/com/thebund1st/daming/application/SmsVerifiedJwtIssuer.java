@@ -7,12 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.security.Key;
+import java.time.Duration;
 import java.util.Date;
 
 @RequiredArgsConstructor
 public class SmsVerifiedJwtIssuer {
     @Setter
-    private int expiresInSeconds = 900;
+    private Duration expires = Duration.ofSeconds(900);
 
     private final Clock clock;
 
@@ -22,7 +23,7 @@ public class SmsVerifiedJwtIssuer {
         return Jwts.builder().setSubject("verifiedMobilePhoneNumber")
                 .claim("mobile", mobilePhoneNumber.getValue())
                 .signWith(key)
-                .setExpiration(Date.from(clock.now().plusSeconds(expiresInSeconds).toInstant()))
+                .setExpiration(Date.from(clock.now().plusSeconds(expires.getSeconds()).toInstant()))
                 .compact();
     }
 

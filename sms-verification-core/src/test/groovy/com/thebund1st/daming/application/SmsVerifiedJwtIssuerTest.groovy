@@ -1,6 +1,6 @@
 package com.thebund1st.daming.application
 
-import com.thebund1st.daming.jwt.FileJwtKeyLoader
+import com.thebund1st.daming.jwt.key.file.FileJwtKeyLoader
 import com.thebund1st.daming.time.Clock
 import io.jsonwebtoken.Jwts
 import spock.lang.Specification

@@ -3,6 +3,7 @@ package com.thebund1st.daming.boot;
 import com.thebund1st.daming.boot.aliyun.sms.AliyunSmsConfiguration;
 import com.thebund1st.daming.boot.application.ApplicationConfiguration;
 import com.thebund1st.daming.boot.core.CoreConfiguration;
+import com.thebund1st.daming.boot.jwt.JwtConfiguration;
 import com.thebund1st.daming.boot.redis.RedisConfiguration;
 import com.thebund1st.daming.boot.sms.SmsWhitelistConfiguration;
 import com.thebund1st.daming.boot.time.TimeConfiguration;
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.Import;
         RedisConfiguration.class,
         SmsWhitelistConfiguration.class,
         TimeConfiguration.class,
+        JwtConfiguration.class,
         ApplicationConfiguration.class,
         CoreConfiguration.class,
 })
