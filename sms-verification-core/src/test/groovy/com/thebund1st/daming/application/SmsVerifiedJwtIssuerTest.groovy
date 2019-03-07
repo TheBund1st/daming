@@ -11,6 +11,7 @@ import java.security.PublicKey
 import java.security.spec.X509EncodedKeySpec
 
 import static com.thebund1st.daming.core.TestingMobile.aMobilePhoneNumber
+import static com.thebund1st.daming.core.TestingSmsVerificationScope.anyScope
 
 class SmsVerifiedJwtIssuerTest extends Specification {
 
@@ -20,15 +21,19 @@ class SmsVerifiedJwtIssuerTest extends Specification {
     def "it should generate a JWS with verified mobile phone number"() {
         given:
         def mobile = aMobilePhoneNumber()
+        def scope = anyScope()
 
         when:
-        def actual = subject.issue(mobile, null)
+        def actual = subject.issue(mobile, scope)
 
         then:
-        assert Jwts.parser().setClock({
+        def claims = Jwts.parser().setClock({
             return Date.from(clock.now().toInstant())
         }).setSigningKey(get("./sms-verification-public.der"))
-                .parseClaimsJws(actual).getBody().get("mobile") == mobile.value
+                .parseClaimsJws(actual).getBody()
+
+        assert claims.get("mobile") == mobile.value
+        assert claims.get("scope") == scope.value
     }
 
     private PublicKey get(String filename) throws Exception {

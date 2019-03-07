@@ -27,6 +27,7 @@ public class SmsVerifiedJwtIssuer {
     public String issue(MobilePhoneNumber mobilePhoneNumber, SmsVerificationScope scope) {
         return Jwts.builder().setSubject("verifiedMobilePhoneNumber")
                 .claim("mobile", mobilePhoneNumber.getValue())
+                .claim("scope", scope.getValue())
                 .signWith(get(privateKeyFileLocation))
                 .setExpiration(Date.from(clock.now().plusSeconds(expiresInSeconds).toInstant()))
                 .compact();
