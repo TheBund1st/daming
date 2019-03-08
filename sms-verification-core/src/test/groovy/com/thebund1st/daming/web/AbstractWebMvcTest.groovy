@@ -1,7 +1,7 @@
 package com.thebund1st.daming.web
 
 import com.thebund1st.daming.application.SmsVerificationCommandHandler
-import com.thebund1st.daming.application.SmsVerifiedJwtIssuer
+import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest

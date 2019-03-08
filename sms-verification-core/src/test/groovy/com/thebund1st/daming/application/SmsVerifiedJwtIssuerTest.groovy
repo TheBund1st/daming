@@ -1,5 +1,6 @@
 package com.thebund1st.daming.application
 
+import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer
 import com.thebund1st.daming.jwt.key.JwtPrivateKeyLoader
 import com.thebund1st.daming.jwt.key.file.FileKeyLoader
 import com.thebund1st.daming.time.Clock

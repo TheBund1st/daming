@@ -1,7 +1,7 @@
 package com.thebund1st.daming.web.rest;
 
 import com.thebund1st.daming.application.SmsVerificationCommandHandler;
-import com.thebund1st.daming.application.SmsVerifiedJwtIssuer;
+import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer;
 import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand;
 import com.thebund1st.daming.commands.VerifySmsVerificationCodeCommand;
 import com.thebund1st.daming.web.rest.resources.SmsVerifiedJwtResource;
