@@ -1,5 +1,6 @@
 package com.thebund1st.daming.boot.jwt;
 
+import com.thebund1st.daming.boot.aliyun.oss.OssJwtKeyConfiguration;
 import com.thebund1st.daming.boot.jwt.key.file.FileJwtKeyConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,7 +10,7 @@ import org.springframework.context.annotation.Import;
 
 @RequiredArgsConstructor
 @Configuration
-@Import(FileJwtKeyConfiguration.class)
+@Import({FileJwtKeyConfiguration.class, OssJwtKeyConfiguration.class})
 public class JwtConfiguration {
 
     @ConfigurationProperties(prefix = "daming.jwt")

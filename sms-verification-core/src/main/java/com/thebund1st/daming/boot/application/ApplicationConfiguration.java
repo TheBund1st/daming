@@ -9,6 +9,7 @@ import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.jwt.key.JwtKeyLoader;
 import com.thebund1st.daming.time.Clock;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,6 +37,7 @@ public class ApplicationConfiguration {
         return commandHandler;
     }
 
+    @ConditionalOnMissingBean(SmsVerifiedJwtIssuer.class)
     @Bean
     public SmsVerifiedJwtIssuer smsVerifiedJwtIssuer() {
         SmsVerifiedJwtIssuer issuer = new SmsVerifiedJwtIssuer(clock, jwtKeyLoader.getKey());

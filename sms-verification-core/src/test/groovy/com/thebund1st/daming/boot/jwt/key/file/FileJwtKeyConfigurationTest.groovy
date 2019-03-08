@@ -6,10 +6,25 @@ import com.thebund1st.daming.jwt.key.file.FileJwtKeyLoader
 
 class FileJwtKeyConfigurationTest extends AbstractAutoConfigurationTest {
 
+    def "it should provide a FileJwtKeyLoader given key provider is not explicitly set"() {
+
+        when:
+        def contextRunner = this.contextRunner
+                .withPropertyValues("daming.jwt.key.file.location=./sms-verification-private.der")
+
+        then:
+        contextRunner.run { it ->
+            JwtKeyLoader actual = it.getBean(JwtKeyLoader)
+            assert actual instanceof FileJwtKeyLoader
+            assert actual.getKey() != null
+        }
+    }
+
     def "it should provide a FileJwtKeyLoader given key provider is 'file'"() {
 
         when:
         def contextRunner = this.contextRunner
+                .withPropertyValues("daming.jwt.key.provider=file")
                 .withPropertyValues("daming.jwt.key.file.location=./sms-verification-private.der")
 
         then:
