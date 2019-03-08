@@ -34,6 +34,11 @@ configure(subprojects.findAll { it.name != 'gatling' }) {
         testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     }
 
+    test {
+        exclude '**/*LearningTest*'
+    }
+
+
     // sub-projects using bintray
     if (subProjectsUsingBintray.contains(project.name)) {
 

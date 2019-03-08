@@ -3,19 +3,18 @@ package com.thebund1st.daming.boot.application;
 import com.thebund1st.daming.application.SmsVerificationCommandHandler;
 import com.thebund1st.daming.application.SmsVerifiedJwtIssuer;
 import com.thebund1st.daming.boot.SmsVerificationCodeProperties;
-import com.thebund1st.daming.core.RandomNumberSmsVerificationCode;
+import com.thebund1st.daming.boot.jwt.JwtProperties;
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator;
 import com.thebund1st.daming.core.SmsVerificationRepository;
+import com.thebund1st.daming.jwt.key.JwtKeyLoader;
 import com.thebund1st.daming.time.Clock;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @RequiredArgsConstructor
 @Configuration
-@ConfigurationProperties(prefix = "daming.jwt")
 public class ApplicationConfiguration {
 
     private final SmsVerificationCodeProperties smsVerificationCodeProperties;
@@ -26,12 +25,9 @@ public class ApplicationConfiguration {
 
     private final Clock clock;
 
-    // make it configurable
-    @Setter
-    private int expiresInSeconds = 900;
-    // make it configurable
-    @Setter
-    private String privateKeyFileLocation = "./sms-verification-private.der";
+    private final JwtProperties jwtProperties;
+
+    private final JwtKeyLoader jwtKeyLoader;
 
     @Bean
     public SmsVerificationCommandHandler smsVerificationCommandHandler() {
@@ -41,11 +37,11 @@ public class ApplicationConfiguration {
         return commandHandler;
     }
 
+    @ConditionalOnMissingBean(SmsVerifiedJwtIssuer.class)
     @Bean
     public SmsVerifiedJwtIssuer smsVerifiedJwtIssuer() {
-        SmsVerifiedJwtIssuer issuer = new SmsVerifiedJwtIssuer(clock);
-        issuer.setExpiresInSeconds(expiresInSeconds);
-        issuer.setPrivateKeyFileLocation(privateKeyFileLocation);
+        SmsVerifiedJwtIssuer issuer = new SmsVerifiedJwtIssuer(clock, jwtKeyLoader.getKey());
+        issuer.setExpires(jwtProperties.getExpires());
         return issuer;
     }
 

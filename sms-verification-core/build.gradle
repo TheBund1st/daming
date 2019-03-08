@@ -22,6 +22,7 @@ dependencyManagement {
         dependency "org.springframework.data:spring-data-redis:2.1.2.RELEASE"
         dependency "com.aliyun:aliyun-java-sdk-core:4.0.6"
         dependency "com.aliyun:aliyun-java-sdk-dysmsapi:1.1.0"
+        dependency "com.aliyun.oss:aliyun-sdk-oss:3.4.1"
     }
 }
 
@@ -62,11 +63,13 @@ dependencies {
     runtime "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
     runtime "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
 
-    // aliyun sms
+    // aliyun
     compileOnly("com.aliyun:aliyun-java-sdk-core")
     testCompile("com.aliyun:aliyun-java-sdk-core")
     compileOnly("com.aliyun:aliyun-java-sdk-dysmsapi")
     testCompile("com.aliyun:aliyun-java-sdk-dysmsapi")
+    compileOnly("com.aliyun.oss:aliyun-sdk-oss")
+    testCompile("com.aliyun.oss:aliyun-sdk-oss")
 
     // json
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
@@ -74,4 +77,6 @@ dependencies {
     // spring boot meta data
     compileOnly("org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}")
 }
+
+
 
