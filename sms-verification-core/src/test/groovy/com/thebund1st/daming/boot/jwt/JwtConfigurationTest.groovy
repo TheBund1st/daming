@@ -21,4 +21,5 @@ class JwtConfigurationTest extends AbstractAutoConfigurationTest {
             assert actual.getExpires() == Duration.ofSeconds(20)
         }
     }
+
 }

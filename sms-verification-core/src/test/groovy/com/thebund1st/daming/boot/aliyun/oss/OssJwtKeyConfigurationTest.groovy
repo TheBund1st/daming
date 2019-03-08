@@ -1,8 +1,9 @@
 package com.thebund1st.daming.boot.aliyun.oss
 
-import com.thebund1st.daming.aliyun.oss.OssJwtKeyLoader
+import com.thebund1st.daming.aliyun.oss.OssKeyLoader
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 import com.thebund1st.daming.jwt.key.JwtKeyLoader
+import com.thebund1st.daming.jwt.key.KeyBytesLoader
 import foo.bar.WithDumbSmsVerifiedJwtIssuer
 
 class OssJwtKeyConfigurationTest extends AbstractAutoConfigurationTest {
@@ -21,8 +22,8 @@ class OssJwtKeyConfigurationTest extends AbstractAutoConfigurationTest {
 
         then:
         contextRunner.run { it ->
-            JwtKeyLoader actual = it.getBean(JwtKeyLoader)
-            assert actual instanceof OssJwtKeyLoader
+            KeyBytesLoader actual = it.getBean(KeyBytesLoader)
+            assert actual instanceof OssKeyLoader
         }
     }
 }

@@ -2,18 +2,14 @@ package com.thebund1st.daming.aliyun.oss;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.OSSObject;
-import com.thebund1st.daming.jwt.key.JwtKeyLoader;
+import com.thebund1st.daming.jwt.key.KeyBytesLoader;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import org.springframework.util.StreamUtils;
 
-import java.security.Key;
-import java.security.KeyFactory;
-import java.security.spec.PKCS8EncodedKeySpec;
-
 @RequiredArgsConstructor
-public class OssJwtKeyLoader implements JwtKeyLoader {
+public class OssKeyLoader implements KeyBytesLoader {
 
     private final OSSClient ossClient;
     @Setter
@@ -23,12 +19,8 @@ public class OssJwtKeyLoader implements JwtKeyLoader {
 
     @Override
     @SneakyThrows
-    public Key getKey() {
+    public byte[] getBytes() {
         OSSObject ossObject = ossClient.getObject(bucketName, objectName);
-        byte[] bytes = StreamUtils.copyToByteArray(ossObject.getObjectContent());
-        PKCS8EncodedKeySpec spec =
-                new PKCS8EncodedKeySpec(bytes);
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-        return kf.generatePrivate(spec);
+        return StreamUtils.copyToByteArray(ossObject.getObjectContent());
     }
 }

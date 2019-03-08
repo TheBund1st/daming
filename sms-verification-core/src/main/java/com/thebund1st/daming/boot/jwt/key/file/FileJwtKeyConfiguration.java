@@ -1,7 +1,8 @@
 package com.thebund1st.daming.boot.jwt.key.file;
 
 import com.thebund1st.daming.jwt.key.JwtKeyLoader;
-import com.thebund1st.daming.jwt.key.file.FileJwtKeyLoader;
+import com.thebund1st.daming.jwt.key.KeyBytesLoader;
+import com.thebund1st.daming.jwt.key.file.FileKeyLoader;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -26,10 +27,10 @@ public class FileJwtKeyConfiguration {
     }
 
     @Bean
-    public JwtKeyLoader fileJwtKeyLoader() {
-        FileJwtKeyLoader jwtKeyLoader = new FileJwtKeyLoader();
-        jwtKeyLoader.setPrivateKeyFileLocation(getLocation());
-        return jwtKeyLoader;
+    public KeyBytesLoader fileKeyBytesLoader() {
+        FileKeyLoader loader = new FileKeyLoader();
+        loader.setPrivateKeyFileLocation(getLocation());
+        return loader;
     }
 
     private String getLocation() {

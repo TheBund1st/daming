@@ -1,7 +1,7 @@
 package com.thebund1st.daming.boot.aliyun.oss;
 
 import com.aliyun.oss.OSSClient;
-import com.thebund1st.daming.aliyun.oss.OssJwtKeyLoader;
+import com.thebund1st.daming.aliyun.oss.OssKeyLoader;
 import com.thebund1st.daming.boot.aliyun.AliyunConfiguration;
 import com.thebund1st.daming.boot.aliyun.AliyunCredentialsProperties;
 import com.thebund1st.daming.jwt.key.JwtKeyLoader;
@@ -42,11 +42,11 @@ public class OssJwtKeyConfiguration {
     }
 
     @Bean
-    public JwtKeyLoader ossJwtKeyLoader(@Qualifier("daming.jwt.key.ossClient") OSSClient ossClient) {
-        OssJwtKeyLoader jwtKeyLoader = new OssJwtKeyLoader(ossClient);
-        jwtKeyLoader.setBucketName(bucketName);
-        jwtKeyLoader.setObjectName(objectName);
-        return jwtKeyLoader;
+    public OssKeyLoader ossJwtKeyLoader(@Qualifier("daming.jwt.key.ossClient") OSSClient ossClient) {
+        OssKeyLoader loader = new OssKeyLoader(ossClient);
+        loader.setBucketName(bucketName);
+        loader.setObjectName(objectName);
+        return loader;
     }
 
 }
