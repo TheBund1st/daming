@@ -10,6 +10,7 @@ import static lombok.AccessLevel.PRIVATE;
 @EqualsAndHashCode
 @AllArgsConstructor(access = PRIVATE)
 public class MobilePhoneNumber {
+
     private String value;
 
     @Override
@@ -25,8 +26,10 @@ public class MobilePhoneNumber {
             } else {
                 result = value.substring(0, 3) + "****" + value.substring(value.length() - 4, value.length());
             }
-        } else {
+        } else if (value.length() > 4) {
             result = "****" + value.substring(value.length() - 4, value.length());
+        } else {
+            result = value;
         }
         return result;
     }

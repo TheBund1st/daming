@@ -15,11 +15,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.time.Duration;
 
 @Slf4j
 @RequiredArgsConstructor
+@Validated
 @Transactional
 public class SmsVerificationCommandHandler {
 
@@ -34,7 +37,7 @@ public class SmsVerificationCommandHandler {
     private Duration expires = Duration.ofSeconds(60);
 
     @SmsSender(delegateTo = "smsVerificationSender") //TODO make it configurable
-    public SmsVerification handle(SendSmsVerificationCodeCommand command) {
+    public SmsVerification handle(@Valid SendSmsVerificationCodeCommand command) {
         if (smsVerificationRepository.exists(command.getMobile(), command.getScope())) {
             throw new MobileIsStillUnderVerificationException(command.getMobile(), command.getScope());
         } else {
@@ -50,7 +53,7 @@ public class SmsVerificationCommandHandler {
         }
     }
 
-    public void handle(VerifySmsVerificationCodeCommand command) {
+    public void handle(@Valid VerifySmsVerificationCodeCommand command) {
         SmsVerification smsVerification = smsVerificationRepository
                 .shouldFindBy(command.getMobile(), command.getScope());
         if (smsVerification.matches(command.getCode())) {

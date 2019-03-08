@@ -1,5 +1,6 @@
 package com.thebund1st.daming.application
 
+import com.thebund1st.daming.core.RandomNumberSmsVerificationCode
 import com.thebund1st.daming.core.SmsVerification
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator
 import com.thebund1st.daming.core.SmsVerificationCodeSender
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
+import javax.validation.ConstraintViolationException
 import java.time.ZonedDateTime
 
 import static com.thebund1st.daming.commands.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
@@ -26,9 +28,6 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
     @Autowired
     private SmsVerificationCommandHandler subject
-
-    @SpringBean
-    private SmsVerificationCodeGenerator smsVerificationCodeGenerator = Mock()
 
     @SpringBean
     private SmsVerificationRepository smsVerificationStore = Mock()
@@ -47,7 +46,6 @@ class SmsVerificationCommandHandlerTest extends Specification {
         def command = aSendSmsVerificationCodeCommand().sendTo(verification.mobile).with(verification.scope).build()
 
         and:
-        smsVerificationCodeGenerator.generate() >> verification.getCode()
         clock.now() >> now
 
         when: "it handles send sms verification code"
@@ -61,12 +59,26 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
         assert actual.mobile == verification.mobile
         assert actual.scope == verification.scope
-        assert actual.code == verification.code
+        assert actual.code != null
         assert actual.createdAt == now.toLocalDateTime()
         assert actual.expires == subject.expires
 
         and:
         1 * smsVerificationSender.send(verification)
+    }
+
+    def "it should skip given invalid mobile"() {
+        given:
+        def command = aSendSmsVerificationCodeCommand()
+                .sendTo('12345').build()
+
+        when: "it handles send sms verification code"
+        subject.handle(command)
+
+        then: "it throw"
+
+        def thrown = thrown(ConstraintViolationException.class)
+        assert thrown.getMessage().contains("Invalid mobile phone number")
     }
 
     def "it should skip given the mobile is under verification"() {
@@ -107,6 +119,34 @@ class SmsVerificationCommandHandlerTest extends Specification {
         with(smsVerificationStore) {
             1 * remove(verification)
         }
+    }
+
+    def "it should skip verifying given invalid mobile"() {
+        given:
+        def command = aVerifySmsVerificationCodeCommand()
+                .sendTo('12345').build()
+
+        when: "it handles send sms verification code"
+        subject.handle(command)
+
+        then: "it throw"
+
+        def thrown = thrown(ConstraintViolationException.class)
+        assert thrown.getMessage().contains("Invalid mobile phone number")
+    }
+
+    def "it should skip verifying given invalid code"() {
+        given:
+        def command = aVerifySmsVerificationCodeCommand()
+                .codeIs("Not a code").build()
+
+        when: "it handles send sms verification code"
+        subject.handle(command)
+
+        then: "it throw"
+
+        def thrown = thrown(ConstraintViolationException.class)
+        assert thrown.getMessage().contains("Invalid sms verification code")
     }
 
     def "it should throw given the verification code does not match"() {

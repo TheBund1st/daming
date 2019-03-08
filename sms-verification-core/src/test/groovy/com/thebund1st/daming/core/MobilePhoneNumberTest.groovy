@@ -13,5 +13,7 @@ class MobilePhoneNumberTest extends Specification {
         where:
         mobile        | masked
         '13411111234' | '134****1234'
+        '12341111'    | '****1111'
+        '1234'        | '1234'
     }
 }

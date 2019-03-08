@@ -8,7 +8,9 @@ import java.text.DecimalFormat
 class TestingVerificationCode {
 
     static String aVerificationCodeOf(int size) {
-        new DecimalFormat("######").format(new SecureRandom().nextInt(100000))
+        SecureRandom rNo = new SecureRandom()
+        final int code = rNo.nextInt((999999 - 100000) + 1) + 100000
+        String.valueOf(code)
     }
 
 }
