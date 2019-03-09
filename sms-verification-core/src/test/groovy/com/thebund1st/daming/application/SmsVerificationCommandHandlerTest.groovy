@@ -1,13 +1,14 @@
 package com.thebund1st.daming.application
 
-import com.thebund1st.daming.core.RandomNumberSmsVerificationCode
 import com.thebund1st.daming.core.SmsVerification
-import com.thebund1st.daming.core.SmsVerificationCodeGenerator
 import com.thebund1st.daming.core.SmsVerificationCodeSender
 import com.thebund1st.daming.core.SmsVerificationRepository
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
-import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
+import com.thebund1st.daming.redis.RedisSendSmsVerificationCodeRateLimitingHandler
+import com.thebund1st.daming.security.ratelimiting.Errors
+import com.thebund1st.daming.security.ratelimiting.ErrorsFactory
+import com.thebund1st.daming.security.ratelimiting.TooManyRequestsException
 import com.thebund1st.daming.time.Clock
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,12 +33,20 @@ class SmsVerificationCommandHandlerTest extends Specification {
     @SpringBean
     private SmsVerificationRepository smsVerificationStore = Mock()
 
+    @SuppressWarnings("GroovyAssignabilityCheck")
     @SpringBean
     private SmsVerificationCodeSender smsVerificationSender = Mock(name: "smsVerificationSender")
+
+    @SuppressWarnings("GroovyAssignabilityCheck")
+    @SpringBean
+    private RedisSendSmsVerificationCodeRateLimitingHandler rateLimitingHandler =
+            Mock(name: "oneSendSmsVerificationCodeCommandInEveryXSeconds")
 
     @SpringBean
     private Clock clock = Mock()
 
+    @SpringBean
+    private ErrorsFactory errorsFactory = Mock()
 
     def "it should store and send verification code"() {
         given:
@@ -46,6 +55,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
         def command = aSendSmsVerificationCodeCommand().sendTo(verification.mobile).with(verification.scope).build()
 
         and:
+        errorsFactory.empty() >> Errors.empty()
         clock.now() >> now
 
         when: "it handles send sms verification code"
@@ -65,12 +75,16 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
         and:
         1 * smsVerificationSender.send(verification)
+        1 * rateLimitingHandler.count(command)
     }
 
     def "it should skip given invalid mobile"() {
         given:
         def command = aSendSmsVerificationCodeCommand()
                 .sendTo('12345').build()
+
+        and:
+        errorsFactory.empty() >> Errors.empty()
 
         when: "it handles send sms verification code"
         subject.handle(command)
@@ -81,22 +95,20 @@ class SmsVerificationCommandHandlerTest extends Specification {
         assert thrown.getMessage().contains("Invalid mobile phone number")
     }
 
-    def "it should skip given the mobile is under verification"() {
+    def "it should quite sending verification code given rate limited"() {
         given:
-        def command = aSendSmsVerificationCodeCommand()
-                .sendTo('13411116789').withScope("Login")
-                .build()
+        def command = aSendSmsVerificationCodeCommand().build()
 
         and:
-        smsVerificationStore.exists(command.mobile, command.scope) >> true
+        errorsFactory.empty() >> Errors.empty().append("Too many requests")
 
         when: "it handles send sms verification code"
         subject.handle(command)
 
         then: "it should store the code"
 
-        def thrown = thrown(MobileIsStillUnderVerificationException.class)
-        assert thrown.getMessage() == "The mobile [134****6789] is under [Login] verification."
+        def thrown = thrown(TooManyRequestsException.class)
+        assert thrown.getMessage().contains("Too many requests")
     }
 
     def "it should verify the verification code"() {

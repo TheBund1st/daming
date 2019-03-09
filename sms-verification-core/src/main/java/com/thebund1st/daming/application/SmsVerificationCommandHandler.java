@@ -6,8 +6,8 @@ import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationCode;
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator;
 import com.thebund1st.daming.core.SmsVerificationRepository;
-import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException;
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException;
+import com.thebund1st.daming.security.ratelimiting.RateLimited;
 import com.thebund1st.daming.sms.SmsSender;
 import com.thebund1st.daming.time.Clock;
 import lombok.Getter;
@@ -37,20 +37,17 @@ public class SmsVerificationCommandHandler {
     private Duration expires = Duration.ofSeconds(60);
 
     @SmsSender(delegateTo = "smsVerificationSender") //TODO make it configurable
+    @RateLimited(action = "sendSmsVerificationCodeCommand")
     public SmsVerification handle(@Valid SendSmsVerificationCodeCommand command) {
-        if (smsVerificationRepository.exists(command.getMobile(), command.getScope())) {
-            throw new MobileIsStillUnderVerificationException(command.getMobile(), command.getScope());
-        } else {
-            SmsVerificationCode code = smsVerificationCodeGenerator.generate();
-            SmsVerification verification = new SmsVerification();
-            verification.setCreatedAt(clock.now().toLocalDateTime());
-            verification.setMobile(command.getMobile());
-            verification.setScope(command.getScope());
-            verification.setCode(code);
-            verification.setExpires(expires);
-            smsVerificationRepository.store(verification);
-            return verification;
-        }
+        SmsVerificationCode code = smsVerificationCodeGenerator.generate();
+        SmsVerification verification = new SmsVerification();
+        verification.setCreatedAt(clock.now().toLocalDateTime());
+        verification.setMobile(command.getMobile());
+        verification.setScope(command.getScope());
+        verification.setCode(code);
+        verification.setExpires(expires);
+        smsVerificationRepository.store(verification);
+        return verification;
     }
 
     public void handle(@Valid VerifySmsVerificationCodeCommand command) {

@@ -97,6 +97,21 @@ class SmsVerificationAcceptanceTest extends Specification {
         })
     }
 
+    def "I should get too many requests error given asking sms verification code in x seconds"() {
+        given: "I receive a sms verification code on my phone"
+
+        def command = aSendSmsVerificationCodeCommand().build()
+        receiveSmsVerificationCode(command)
+
+        when: "I want to send the code again"
+
+        def resultActions = askFor(command)
+
+        then: "I should get an error"
+        resultActions
+                .andExpect(status().isTooManyRequests())
+    }
+
     private SmsVerificationCode receiveSmsVerificationCode(SendSmsVerificationCodeCommand command) {
         askFor(command).andExpect(status().isAccepted())
         assert senderStub.sendCount(command.getMobile(), command.scope) == 1

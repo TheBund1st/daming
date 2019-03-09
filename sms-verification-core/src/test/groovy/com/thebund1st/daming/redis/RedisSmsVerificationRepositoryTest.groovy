@@ -1,12 +1,7 @@
 package com.thebund1st.daming.redis
 
-
 import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
-import redis.embedded.RedisServer
-import spock.lang.Specification
 
 import java.util.concurrent.TimeUnit
 
@@ -14,20 +9,7 @@ import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
 import static java.time.temporal.ChronoUnit.SECONDS
 import static org.awaitility.Awaitility.await
 
-@SpringBootTest
-@ActiveProfiles("commit")
-class RedisSmsVerificationRepositoryTest extends Specification {
-
-    private RedisServer redisServer
-
-    def setup() {
-        this.redisServer = new RedisServer(16379)
-        redisServer.start()
-    }
-
-    def cleanup() {
-        this.redisServer.stop()
-    }
+class RedisSmsVerificationRepositoryTest extends AbstractDataRedisTest {
 
     @Autowired
     private RedisSmsVerificationRepository subject

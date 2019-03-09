@@ -5,6 +5,7 @@ import com.thebund1st.daming.boot.application.ApplicationConfiguration;
 import com.thebund1st.daming.boot.core.CoreConfiguration;
 import com.thebund1st.daming.boot.jwt.JwtConfiguration;
 import com.thebund1st.daming.boot.redis.RedisConfiguration;
+import com.thebund1st.daming.boot.security.RateLimitingConfiguration;
 import com.thebund1st.daming.boot.sms.SmsWhitelistConfiguration;
 import com.thebund1st.daming.boot.time.TimeConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.Import;
         AliyunSmsConfiguration.class,
         RedisConfiguration.class,
         SmsWhitelistConfiguration.class,
+        RateLimitingConfiguration.class,
         TimeConfiguration.class,
         JwtConfiguration.class,
         ApplicationConfiguration.class,

@@ -6,7 +6,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.json.mixin.SmsVerificationMixin;
+import com.thebund1st.daming.redis.RedisSendSmsVerificationCodeRateLimitingHandler;
 import com.thebund1st.daming.redis.RedisSmsVerificationRepository;
+import com.thebund1st.daming.time.Clock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -42,9 +45,16 @@ public class RedisConfiguration {
     @ConditionalOnMissingBean(SmsVerificationRepository.class)
     @Bean(name = "redisSmsVerificationStore")
     public RedisSmsVerificationRepository redisSmsVerificationStore(@Qualifier("smsVerificationRedisTemplate")
-                                                                       RedisTemplate<String, SmsVerification> redisTemplate) {
+                                                                            RedisTemplate<String, SmsVerification> redisTemplate) {
         RedisSmsVerificationRepository bean = new RedisSmsVerificationRepository(redisTemplate);
         return bean;
+    }
+
+    @ConditionalOnMissingBean(RedisSendSmsVerificationCodeRateLimitingHandler.class)
+    @Bean(name = "oneSendSmsVerificationCodeCommandInEveryXSeconds")
+    public RedisSendSmsVerificationCodeRateLimitingHandler redisSendSmsVerificationCodeRateLimitingHandler(
+            StringRedisTemplate redisTemplate, Clock clock) {
+        return new RedisSendSmsVerificationCodeRateLimitingHandler(redisTemplate, clock);
     }
 
     private Jackson2JsonRedisSerializer<SmsVerification> smsVerificationJackson2JsonRedisSerializer(ObjectMapper objectMapper) {
