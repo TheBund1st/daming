@@ -30,17 +30,13 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
     @Setter
     private int threshold = 5;
 
-    @Setter
-    private Duration expires = Duration.ofSeconds(60);
-
-
     @EventListener
     public void on(SmsVerificationCodeMismatchEvent event) {
         String key = toKey(event.getMobile(), event.getScope());
         List<Object> attempts = redisTemplate.executePipelined((RedisCallback<Long>) connection -> {
             StringRedisConnection conn = (StringRedisConnection) connection;
             conn.sAdd(key, event.toString());
-            conn.expire(key, expires.getSeconds());
+            conn.expireAt(key, event.getExpiresAt().toEpochSecond());
             conn.sCard(key);
             return null;
         });

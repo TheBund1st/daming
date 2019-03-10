@@ -2,6 +2,8 @@ package com.thebund1st.daming.core
 
 import java.time.Duration
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 
 import static SmsVerificationCode.smsVerificationCodeOf
@@ -39,7 +41,11 @@ class SmsVerificationFixture {
     }
 
     def createdAt(LocalDateTime localDateTime) {
-        target.setCreatedAt(localDateTime)
+        createdAt(localDateTime.atZone(ZoneId.of("Asia/Shanghai")))
+    }
+
+    def createdAt(ZonedDateTime now) {
+        target.setCreatedAt(now)
         this
     }
 
@@ -57,7 +63,7 @@ class SmsVerificationFixture {
                 .sendTo(aMobilePhoneNumber())
                 .with(anyScope())
                 .codeIs(aVerificationCodeOf(6))
-                .createdAt(LocalDateTime.now())
+                .createdAt(ZonedDateTime.now())
                 .expiresIn(60, SECONDS)
     }
 }

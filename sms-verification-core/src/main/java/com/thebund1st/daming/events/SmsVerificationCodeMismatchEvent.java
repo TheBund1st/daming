@@ -31,11 +31,15 @@ public class SmsVerificationCodeMismatchEvent {
     @JsonSerialize(using = SmsVerificationScopeJsonSerializer.class)
     private SmsVerificationScope scope;
 
+    private ZonedDateTime expiresAt;
+
     public SmsVerificationCodeMismatchEvent(String uuid, ZonedDateTime when,
-                                            MobilePhoneNumber mobile, SmsVerificationScope scope) {
+                                            MobilePhoneNumber mobile, SmsVerificationScope scope,
+                                            ZonedDateTime expiresAt) {
         this.uuid = uuid;
         this.when = when;
         this.mobile = mobile;
         this.scope = scope;
+        this.expiresAt = expiresAt;
     }
 }

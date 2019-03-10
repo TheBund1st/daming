@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.data.redis.core.StringRedisTemplate
 
-import java.time.Duration
 import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
@@ -27,13 +26,9 @@ class RedisSmsVerificationCodeMismatchEventHandlerTest extends AbstractDataRedis
     @Autowired
     private RedisSmsVerificationCodeMismatchEventHandler subject
 
-    def setup() {
-        subject.setExpires(Duration.ofSeconds(2))
-    }
-
     def "it should count mismatch if absent"() {
         given:
-        def smsVerification = aSmsVerification().expiresIn(2, SECONDS).build()
+        def smsVerification = aSmsVerification().expiresIn(10, SECONDS).build()
         assert !stringRedisTemplate
                 .hasKey(toKey(smsVerification))
 
@@ -41,13 +36,14 @@ class RedisSmsVerificationCodeMismatchEventHandlerTest extends AbstractDataRedis
         publisher.publishEvent(new SmsVerificationCodeMismatchEvent(UUID.randomUUID().toString(),
                 ZonedDateTime.now(),
                 smsVerification.getMobile(),
-                smsVerification.getScope()))
+                smsVerification.getScope(),
+                smsVerification.expiresAt()))
 
         then:
         assert stringRedisTemplate
                 .opsForSet().size(toKey(smsVerification)) == 1
 
-        await().atMost(3, TimeUnit.SECONDS).until {
+        await().atMost(12, TimeUnit.SECONDS).until {
             !stringRedisTemplate.hasKey(toKey(smsVerification))
         }
     }
@@ -61,7 +57,8 @@ class RedisSmsVerificationCodeMismatchEventHandlerTest extends AbstractDataRedis
             publisher.publishEvent(new SmsVerificationCodeMismatchEvent(UUID.randomUUID().toString(),
                     ZonedDateTime.now(),
                     smsVerification.getMobile(),
-                    smsVerification.getScope()))
+                    smsVerification.getScope(),
+                    smsVerification.expiresAt()))
         }
         assert stringRedisTemplate
                 .opsForSet().size(toKey(smsVerification)) == 4
@@ -70,7 +67,8 @@ class RedisSmsVerificationCodeMismatchEventHandlerTest extends AbstractDataRedis
         publisher.publishEvent(new SmsVerificationCodeMismatchEvent(UUID.randomUUID().toString(),
                 ZonedDateTime.now(),
                 smsVerification.getMobile(),
-                smsVerification.getScope()))
+                smsVerification.getScope(),
+                smsVerification.expiresAt()))
 
         then:
         assert !stringRedisTemplate
@@ -83,7 +81,7 @@ class RedisSmsVerificationCodeMismatchEventHandlerTest extends AbstractDataRedis
 
     def "it should remove mismatch count given verified"() {
         given:
-        def smsVerification = aSmsVerification().expiresIn(2, SECONDS).build()
+        def smsVerification = aSmsVerification().build()
         assert !stringRedisTemplate
                 .hasKey(toKey(smsVerification))
 
@@ -91,7 +89,8 @@ class RedisSmsVerificationCodeMismatchEventHandlerTest extends AbstractDataRedis
         publisher.publishEvent(new SmsVerificationCodeMismatchEvent(UUID.randomUUID().toString(),
                 ZonedDateTime.now(),
                 smsVerification.getMobile(),
-                smsVerification.getScope()))
+                smsVerification.getScope(),
+                smsVerification.expiresAt()))
 
         assert stringRedisTemplate
                 .hasKey(toKey(smsVerification))

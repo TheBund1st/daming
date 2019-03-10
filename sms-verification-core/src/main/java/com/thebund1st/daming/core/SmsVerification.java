@@ -6,14 +6,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @EqualsAndHashCode(of = {"mobile", "scope"})
 @ToString(of = {"mobile", "scope"})
 @Getter
 @Setter
 public class SmsVerification {
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
     private MobilePhoneNumber mobile;
     private SmsVerificationScope scope;
     private SmsVerificationCode code;
@@ -29,5 +29,9 @@ public class SmsVerification {
 
     public boolean matches(SmsVerificationScope scope) {
         return getScope().equals(scope);
+    }
+
+    public ZonedDateTime expiresAt() {
+        return createdAt.plusSeconds(expires.getSeconds());
     }
 }

@@ -76,7 +76,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
         assert actual.mobile == verification.mobile
         assert actual.scope == verification.scope
         assert actual.code != null
-        assert actual.createdAt == now.toLocalDateTime()
+        assert actual.createdAt == now
         assert actual.expires == subject.expires
 
         and:

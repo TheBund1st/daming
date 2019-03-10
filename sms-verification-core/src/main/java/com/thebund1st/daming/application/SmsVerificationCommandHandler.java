@@ -47,7 +47,7 @@ public class SmsVerificationCommandHandler {
     public SmsVerification handle(@Valid SendSmsVerificationCodeCommand command) {
         SmsVerificationCode code = smsVerificationCodeGenerator.generate();
         SmsVerification verification = new SmsVerification();
-        verification.setCreatedAt(clock.now().toLocalDateTime());
+        verification.setCreatedAt(clock.now());
         verification.setMobile(command.getMobile());
         verification.setScope(command.getScope());
         verification.setCode(code);
@@ -67,7 +67,9 @@ public class SmsVerificationCommandHandler {
         } else {
             eventPublisher.publish(new SmsVerificationCodeMismatchEvent(UUID.randomUUID().toString(),
                     clock.now(),
-                    command.getMobile(), command.getScope()));
+                    command.getMobile(),
+                    command.getScope(),
+                    smsVerification.expiresAt()));
             throw new SmsVerificationCodeMismatchException(smsVerification, command.getCode());
         }
     }
