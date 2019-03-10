@@ -1,5 +1,7 @@
 package com.thebund1st.daming.redis
 
+import com.thebund1st.daming.core.SmsVerification
+import com.thebund1st.daming.core.TestingVerificationCode
 import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -36,11 +38,16 @@ class RedisSmsVerificationRepositoryTest extends AbstractDataRedisTest {
         def smsVerification = aSmsVerification().build()
         subject.store(smsVerification)
 
+        and:
+        def anotherCode = TestingVerificationCode.aSmsVerificationCodeOf(6)
+
         when:
+        smsVerification.setCode(anotherCode)
         subject.store(smsVerification)
 
         then:
-        thrown(MobileIsStillUnderVerificationException)
+        def verification = subject.shouldFindBy(smsVerification.getMobile(), smsVerification.getScope())
+        assert verification.matches(anotherCode)
     }
 
     def "it should remove sms verification"() {

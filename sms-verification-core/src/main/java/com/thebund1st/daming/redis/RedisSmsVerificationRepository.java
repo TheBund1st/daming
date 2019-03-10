@@ -5,7 +5,6 @@ import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.core.SmsVerificationScope;
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException;
-import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,15 +22,10 @@ public class RedisSmsVerificationRepository implements SmsVerificationRepository
 
     @Override
     public void store(SmsVerification smsVerification) {
-        Boolean ifAbsent = redisTemplate.opsForValue()
-                .setIfAbsent(toKey(smsVerification.getMobile(), smsVerification.getScope()),
+        redisTemplate.opsForValue()
+                .set(toKey(smsVerification.getMobile(), smsVerification.getScope()),
                         smsVerification,
                         smsVerification.getExpires());
-        if (ifAbsent) {
-            // do nothing as we don't overwrite the entry
-        } else {
-            throw new MobileIsStillUnderVerificationException(smsVerification.getMobile(), smsVerification.getScope());
-        }
     }
 
     private String toKey(MobilePhoneNumber mobile, SmsVerificationScope scope) {

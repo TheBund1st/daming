@@ -1,15 +1,16 @@
 package com.thebund1st.daming.security.ratelimiting
 
+
 import com.thebund1st.daming.redis.AbstractDataRedisTest
-import com.thebund1st.daming.redis.RedisSendSmsVerificationCodeRateLimitingHandler
+import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler
 import org.springframework.beans.factory.annotation.Autowired
 
 import static com.thebund1st.daming.commands.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
 
-class RedisSendSmsVerificationCodeRateLimitingHandlerTest extends AbstractDataRedisTest {
+class BlockSendingRateLimitingHandlerTest extends AbstractDataRedisTest {
 
     @Autowired
-    private RedisSendSmsVerificationCodeRateLimitingHandler subject
+    private BlockSendingRateLimitingHandler subject
 
     def "it should pass given there is no request in given time window"() {
         given:

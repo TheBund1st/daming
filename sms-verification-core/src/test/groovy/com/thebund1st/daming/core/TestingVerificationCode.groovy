@@ -13,4 +13,8 @@ class TestingVerificationCode {
         String.valueOf(code)
     }
 
+    static SmsVerificationCode aSmsVerificationCodeOf(int size) {
+        SmsVerificationCode.smsVerificationCodeOf(aVerificationCodeOf(size))
+    }
+
 }

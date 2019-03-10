@@ -3,10 +3,11 @@ package com.thebund1st.daming.boot.redis;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.thebund1st.daming.boot.security.BlockSendingProperties;
 import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.json.mixin.SmsVerificationMixin;
-import com.thebund1st.daming.redis.RedisSendSmsVerificationCodeRateLimitingHandler;
+import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler;
 import com.thebund1st.daming.redis.RedisSmsVerificationRepository;
 import com.thebund1st.daming.time.Clock;
 import lombok.extern.slf4j.Slf4j;
@@ -50,11 +51,14 @@ public class RedisConfiguration {
         return bean;
     }
 
-    @ConditionalOnMissingBean(RedisSendSmsVerificationCodeRateLimitingHandler.class)
+    @ConditionalOnMissingBean(BlockSendingRateLimitingHandler.class)
     @Bean(name = "oneSendSmsVerificationCodeCommandInEveryXSeconds")
-    public RedisSendSmsVerificationCodeRateLimitingHandler redisSendSmsVerificationCodeRateLimitingHandler(
-            StringRedisTemplate redisTemplate, Clock clock) {
-        return new RedisSendSmsVerificationCodeRateLimitingHandler(redisTemplate, clock);
+    public BlockSendingRateLimitingHandler redisSendSmsVerificationCodeRateLimitingHandler(
+            StringRedisTemplate redisTemplate, Clock clock, BlockSendingProperties properties) {
+        BlockSendingRateLimitingHandler handler =
+                new BlockSendingRateLimitingHandler(redisTemplate, clock);
+        handler.setExpires(properties.getExpires());
+        return handler;
     }
 
     private Jackson2JsonRedisSerializer<SmsVerification> smsVerificationJackson2JsonRedisSerializer(ObjectMapper objectMapper) {

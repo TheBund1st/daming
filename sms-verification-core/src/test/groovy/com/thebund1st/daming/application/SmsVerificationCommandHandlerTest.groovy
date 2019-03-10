@@ -5,7 +5,7 @@ import com.thebund1st.daming.core.SmsVerificationCodeSender
 import com.thebund1st.daming.core.SmsVerificationRepository
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
-import com.thebund1st.daming.redis.RedisSendSmsVerificationCodeRateLimitingHandler
+import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler
 import com.thebund1st.daming.security.ratelimiting.Errors
 import com.thebund1st.daming.security.ratelimiting.ErrorsFactory
 import com.thebund1st.daming.security.ratelimiting.TooManyRequestsException
@@ -39,7 +39,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
     @SuppressWarnings("GroovyAssignabilityCheck")
     @SpringBean
-    private RedisSendSmsVerificationCodeRateLimitingHandler rateLimitingHandler =
+    private BlockSendingRateLimitingHandler rateLimitingHandler =
             Mock(name: "oneSendSmsVerificationCodeCommandInEveryXSeconds")
 
     @SpringBean

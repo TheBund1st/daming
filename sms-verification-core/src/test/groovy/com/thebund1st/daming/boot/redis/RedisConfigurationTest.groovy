@@ -3,10 +3,13 @@ package com.thebund1st.daming.boot.redis
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 import com.thebund1st.daming.core.SmsVerification
 import com.thebund1st.daming.core.SmsVerificationRepository
+import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler
 import com.thebund1st.daming.redis.RedisSmsVerificationRepository
 import foo.bar.WithCustomizedRedisTemplate
 import foo.bar.WithCustomizedSmsVerificationStore
 import org.springframework.data.redis.core.RedisTemplate
+
+import java.time.Duration
 
 class RedisConfigurationTest extends AbstractAutoConfigurationTest {
 
@@ -60,6 +63,20 @@ class RedisConfigurationTest extends AbstractAutoConfigurationTest {
         contextRunner.run { it ->
             def actual = it.getBean(SmsVerificationRepository)
             assert actual instanceof WithCustomizedSmsVerificationStore.SmsVerificationRepositoryStub
+        }
+    }
+
+    def "it should provide RedisSendSmsVerificationCodeRateLimitingHandler"() {
+
+        when:
+        def contextRunner = this.contextRunner
+                .withPropertyValues("daming.rate.limiting.block.sending.expires=20")
+
+        then:
+        contextRunner.run { it ->
+            BlockSendingRateLimitingHandler actual = it.
+                    getBean(BlockSendingRateLimitingHandler)
+            assert actual.expires == Duration.ofSeconds(20)
         }
     }
 }

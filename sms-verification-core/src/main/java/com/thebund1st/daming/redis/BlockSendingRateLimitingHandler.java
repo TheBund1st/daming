@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.time.Duration;
 
-public class RedisSendSmsVerificationCodeRateLimitingHandler
+public class BlockSendingRateLimitingHandler
         implements RateLimitingHandler<SendSmsVerificationCodeCommand> {
 
     private final StringRedisTemplate redisTemplate;
@@ -18,8 +18,8 @@ public class RedisSendSmsVerificationCodeRateLimitingHandler
     private Duration expires = Duration.ofSeconds(15);
     private String keyPrefix = "sms.verification.rate.limiting.1.send.in.every.x.seconds";
 
-    public RedisSendSmsVerificationCodeRateLimitingHandler(StringRedisTemplate redisTemplate,
-                                                           Clock clock) {
+    public BlockSendingRateLimitingHandler(StringRedisTemplate redisTemplate,
+                                           Clock clock) {
         this.redisTemplate = redisTemplate;
         this.clock = clock;
     }
