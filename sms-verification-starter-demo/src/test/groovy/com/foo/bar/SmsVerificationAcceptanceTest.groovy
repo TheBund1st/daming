@@ -13,6 +13,7 @@ import redis.embedded.RedisServer
 import spock.lang.Specification
 
 import static com.thebund1st.daming.commands.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
+import static com.thebund1st.daming.commands.VerifySmsVerificationCodeCommandFixture.aVerifySmsVerificationCodeCommand
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -59,22 +60,13 @@ class SmsVerificationAcceptanceTest extends Specification {
     def "I verify sms verification code"() {
         given: "I receive a sms verification code on my phone"
 
-        def command = aSendSmsVerificationCodeCommand().build()
-        def code = receiveSmsVerificationCode(command)
+        def send = aSendSmsVerificationCodeCommand().build()
+        def code = receiveSmsVerificationCode(send)
 
         when: "I verify my phone with the code"
 
-        def resultActions = mockMvc.perform(
-                delete("/api/sms/verification/code")
-                        .contentType(APPLICATION_JSON_UTF8)
-                        .content("""
-                            {
-                                "mobile": "${command.getMobile().getValue()}",
-                                "scope": "${command.getScope().getValue()}",
-                                "code": "${code.getValue()}"
-                            }
-                        """)
-        )
+        def command = aVerifySmsVerificationCodeCommand().sendTo(send.mobile).with(send.scope).codeIs(code).build()
+        ResultActions resultActions = verify(command)
 
         then: "I should pass the verification"
         resultActions
@@ -99,6 +91,27 @@ class SmsVerificationAcceptanceTest extends Specification {
                 .andExpect(status().isTooManyRequests())
     }
 
+    def "It invalidates sms verification code given too many failure attempts"() {
+        given: "I ask for a code"
+        def send = aSendSmsVerificationCodeCommand().build()
+        def code = receiveSmsVerificationCode(send)
+
+        and: "Too many failure attempts"
+        def wrongCode = aVerifySmsVerificationCodeCommand().sendTo(send.mobile).with(send.scope).build()
+
+        5.times {
+            verify(wrongCode)
+        }
+
+        when: "I verify my phone with the code again"
+        def rightCode = aVerifySmsVerificationCodeCommand().sendTo(send.mobile).with(send.scope).codeIs(code).build()
+        def resultActions = verify(rightCode)
+
+        then: "I should pass the verification"
+        resultActions
+                .andExpect(status().isPreconditionFailed())
+    }
+
     private ResultActions askFor(SendSmsVerificationCodeCommand command) {
         mockMvc.perform(
                 post("/api/sms/verification/code")
@@ -110,6 +123,21 @@ class SmsVerificationAcceptanceTest extends Specification {
                             }
                         """)
         )
+    }
+
+    private ResultActions verify(command) {
+        def resultActions = mockMvc.perform(
+                delete("/api/sms/verification/code")
+                        .contentType(APPLICATION_JSON_UTF8)
+                        .content("""
+                            {
+                                "mobile": "${command.getMobile().getValue()}",
+                                "scope": "${command.getScope().getValue()}",
+                                "code": "${command.getCode().getValue()}"
+                            }
+                        """)
+        )
+        resultActions
     }
 
     private SmsVerificationCode receiveSmsVerificationCode(SendSmsVerificationCodeCommand command) {
