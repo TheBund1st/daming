@@ -6,8 +6,10 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.thebund1st.daming.boot.SmsVerificationCodeProperties;
 import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationRepository;
+import com.thebund1st.daming.events.EventPublisher;
 import com.thebund1st.daming.json.mixin.SmsVerificationMixin;
 import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler;
+import com.thebund1st.daming.redis.RedisSmsVerificationCodeMismatchEventHandler;
 import com.thebund1st.daming.redis.RedisSmsVerificationRepository;
 import com.thebund1st.daming.time.Clock;
 import lombok.extern.slf4j.Slf4j;
@@ -58,6 +60,14 @@ public class RedisConfiguration {
         BlockSendingRateLimitingHandler handler =
                 new BlockSendingRateLimitingHandler(redisTemplate, clock);
         handler.setExpires(properties.getBlock());
+        return handler;
+    }
+
+    @Bean
+    public RedisSmsVerificationCodeMismatchEventHandler redisSmsVerificationCodeMismatchEventHandler(
+            StringRedisTemplate redisTemplate, EventPublisher eventPublisher, Clock clock) {
+        RedisSmsVerificationCodeMismatchEventHandler handler =
+                new RedisSmsVerificationCodeMismatchEventHandler(redisTemplate, eventPublisher, clock);
         return handler;
     }
 

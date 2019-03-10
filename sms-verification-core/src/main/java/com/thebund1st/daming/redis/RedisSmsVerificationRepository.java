@@ -5,8 +5,10 @@ import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.core.SmsVerificationScope;
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException;
+import com.thebund1st.daming.events.TooManyFailureSmsVerificationAttemptsEvent;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.core.RedisTemplate;
 
 @Slf4j
@@ -50,6 +52,16 @@ public class RedisSmsVerificationRepository implements SmsVerificationRepository
 
     @Override
     public void remove(SmsVerification smsVerification) {
-        redisTemplate.delete(toKey(smsVerification.getMobile(), smsVerification.getScope()));
+        remove(smsVerification.getMobile(), smsVerification.getScope());
     }
+
+    private void remove(MobilePhoneNumber mobile, SmsVerificationScope scope) {
+        redisTemplate.delete(toKey(mobile, scope));
+    }
+
+    @EventListener
+    public void on(TooManyFailureSmsVerificationAttemptsEvent event) {
+        remove(event.getMobile(), event.getScope());
+    }
+
 }

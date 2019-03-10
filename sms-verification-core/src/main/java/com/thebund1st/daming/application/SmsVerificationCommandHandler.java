@@ -7,6 +7,8 @@ import com.thebund1st.daming.core.SmsVerificationCode;
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator;
 import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException;
+import com.thebund1st.daming.events.EventPublisher;
+import com.thebund1st.daming.events.SmsVerificationCodeMismatchEvent;
 import com.thebund1st.daming.security.ratelimiting.RateLimited;
 import com.thebund1st.daming.sms.SmsSender;
 import com.thebund1st.daming.time.Clock;
@@ -19,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import java.time.Duration;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,6 +32,8 @@ public class SmsVerificationCommandHandler {
     private final SmsVerificationRepository smsVerificationRepository;
 
     private final SmsVerificationCodeGenerator smsVerificationCodeGenerator;
+
+    private final EventPublisher eventPublisher;
 
     private final Clock clock;
 
@@ -56,6 +61,9 @@ public class SmsVerificationCommandHandler {
         if (smsVerification.matches(command.getCode())) {
             smsVerificationRepository.remove(smsVerification);
         } else {
+            eventPublisher.publish(new SmsVerificationCodeMismatchEvent(UUID.randomUUID().toString(),
+                    clock.now(),
+                    command.getMobile(), command.getScope()));
             throw new SmsVerificationCodeMismatchException(smsVerification, command.getCode());
         }
     }

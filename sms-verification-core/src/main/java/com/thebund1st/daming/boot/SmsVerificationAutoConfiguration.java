@@ -3,6 +3,7 @@ package com.thebund1st.daming.boot;
 import com.thebund1st.daming.boot.aliyun.sms.AliyunSmsConfiguration;
 import com.thebund1st.daming.boot.application.ApplicationConfiguration;
 import com.thebund1st.daming.boot.core.CoreConfiguration;
+import com.thebund1st.daming.boot.events.EventConfiguration;
 import com.thebund1st.daming.boot.jwt.JwtConfiguration;
 import com.thebund1st.daming.boot.redis.RedisConfiguration;
 import com.thebund1st.daming.boot.security.RateLimitingConfiguration;
@@ -26,6 +27,7 @@ import org.springframework.context.annotation.Import;
         SmsVerificationCodeConfiguration.class,
         ApplicationConfiguration.class,
         CoreConfiguration.class,
+        EventConfiguration.class
 })
 @Configuration
 public class SmsVerificationAutoConfiguration {

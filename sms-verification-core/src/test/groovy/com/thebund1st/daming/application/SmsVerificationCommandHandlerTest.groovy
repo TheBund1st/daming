@@ -5,6 +5,8 @@ import com.thebund1st.daming.core.SmsVerificationCodeSender
 import com.thebund1st.daming.core.SmsVerificationRepository
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
+import com.thebund1st.daming.events.EventPublisher
+import com.thebund1st.daming.events.SmsVerificationCodeMismatchEvent
 import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler
 import com.thebund1st.daming.security.ratelimiting.Errors
 import com.thebund1st.daming.security.ratelimiting.ErrorsFactory
@@ -47,6 +49,9 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
     @SpringBean
     private ErrorsFactory errorsFactory = Mock()
+
+    @SpringBean
+    private EventPublisher eventPublisher = Mock()
 
     def "it should store and send verification code"() {
         given:
@@ -180,6 +185,9 @@ class SmsVerificationCommandHandlerTest extends Specification {
         with(smsVerificationStore) {
             0 * remove(verification)
         }
+
+        and: "It raises a SmsVerificationCodeMismatchEvent"
+        1 * eventPublisher.publish(_ as SmsVerificationCodeMismatchEvent)
 
         and: "throw"
         def thrown = thrown(SmsVerificationCodeMismatchException)
