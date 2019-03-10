@@ -20,6 +20,8 @@ public class SmsVerificationCodeProperties {
     @DurationUnit(SECONDS)
     private Duration block = Duration.ofSeconds(15);
 
+    private int maxFailures = 5;
+
     private List<String> whitelist = new ArrayList<>();
 
     public List<MobilePhoneNumber> whitelist() {

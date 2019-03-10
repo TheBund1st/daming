@@ -4,6 +4,7 @@ import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 import com.thebund1st.daming.core.SmsVerification
 import com.thebund1st.daming.core.SmsVerificationRepository
 import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler
+import com.thebund1st.daming.redis.RedisSmsVerificationCodeMismatchEventHandler
 import com.thebund1st.daming.redis.RedisSmsVerificationRepository
 import foo.bar.WithCustomizedRedisTemplate
 import foo.bar.WithCustomizedSmsVerificationStore
@@ -77,6 +78,20 @@ class RedisConfigurationTest extends AbstractAutoConfigurationTest {
             BlockSendingRateLimitingHandler actual = it.
                     getBean(BlockSendingRateLimitingHandler)
             assert actual.expires == Duration.ofSeconds(20)
+        }
+    }
+
+    def "it should provide RedisSmsVerificationCodeMismatchEventHandler"() {
+
+        when:
+        def contextRunner = this.contextRunner
+                .withPropertyValues("daming.sms.verification.code.max-failures=20")
+
+        then:
+        contextRunner.run { it ->
+            RedisSmsVerificationCodeMismatchEventHandler actual = it.
+                    getBean(RedisSmsVerificationCodeMismatchEventHandler)
+            assert actual.threshold == 20
         }
     }
 }

@@ -65,9 +65,11 @@ public class RedisConfiguration {
 
     @Bean
     public RedisSmsVerificationCodeMismatchEventHandler redisSmsVerificationCodeMismatchEventHandler(
-            StringRedisTemplate redisTemplate, EventPublisher eventPublisher, Clock clock) {
+            StringRedisTemplate redisTemplate, EventPublisher eventPublisher, Clock clock,
+            SmsVerificationCodeProperties properties) {
         RedisSmsVerificationCodeMismatchEventHandler handler =
                 new RedisSmsVerificationCodeMismatchEventHandler(redisTemplate, eventPublisher, clock);
+        handler.setThreshold(properties.getMaxFailures());
         return handler;
     }
 
