@@ -70,7 +70,7 @@ class RedisConfigurationTest extends AbstractAutoConfigurationTest {
 
         when:
         def contextRunner = this.contextRunner
-                .withPropertyValues("daming.rate.limiting.block.sending.expires=20")
+                .withPropertyValues("daming.sms.verification.code.block=20")
 
         then:
         contextRunner.run { it ->

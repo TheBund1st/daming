@@ -17,6 +17,9 @@ public class SmsVerificationCodeProperties {
     @DurationUnit(SECONDS)
     private Duration expires = Duration.ofSeconds(60);
 
+    @DurationUnit(SECONDS)
+    private Duration block = Duration.ofSeconds(15);
+
     private List<String> whitelist = new ArrayList<>();
 
     public List<MobilePhoneNumber> whitelist() {

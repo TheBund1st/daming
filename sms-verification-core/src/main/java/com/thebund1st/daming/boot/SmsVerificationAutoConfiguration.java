@@ -8,8 +8,6 @@ import com.thebund1st.daming.boot.redis.RedisConfiguration;
 import com.thebund1st.daming.boot.security.RateLimitingConfiguration;
 import com.thebund1st.daming.boot.sms.SmsWhitelistConfiguration;
 import com.thebund1st.daming.boot.time.TimeConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -25,16 +23,12 @@ import org.springframework.context.annotation.Import;
         RateLimitingConfiguration.class,
         TimeConfiguration.class,
         JwtConfiguration.class,
+        SmsVerificationCodeConfiguration.class,
         ApplicationConfiguration.class,
         CoreConfiguration.class,
 })
 @Configuration
 public class SmsVerificationAutoConfiguration {
 
-    @ConfigurationProperties(prefix = "daming.sms.verification.code")
-    @Bean
-    public SmsVerificationCodeProperties smsVerificationCodeProperties() {
-        return new SmsVerificationCodeProperties();
-    }
 
 }

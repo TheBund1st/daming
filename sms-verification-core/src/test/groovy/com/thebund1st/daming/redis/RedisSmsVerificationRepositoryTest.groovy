@@ -1,8 +1,7 @@
 package com.thebund1st.daming.redis
 
-import com.thebund1st.daming.core.SmsVerification
+
 import com.thebund1st.daming.core.TestingVerificationCode
-import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException
 import org.springframework.beans.factory.annotation.Autowired
 
 import java.util.concurrent.TimeUnit

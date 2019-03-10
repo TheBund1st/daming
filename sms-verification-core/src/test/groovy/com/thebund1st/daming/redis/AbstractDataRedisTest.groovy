@@ -1,7 +1,7 @@
 package com.thebund1st.daming.redis
 
+import com.thebund1st.daming.boot.SmsVerificationCodeConfiguration
 import com.thebund1st.daming.boot.redis.RedisConfiguration
-import com.thebund1st.daming.boot.security.RateLimitingConfiguration
 import com.thebund1st.daming.boot.time.TimeConfiguration
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest
 import org.springframework.context.annotation.Import
@@ -13,7 +13,7 @@ import spock.lang.Specification
 @Import([
         RedisConfiguration,
         TimeConfiguration,
-        RateLimitingConfiguration
+        SmsVerificationCodeConfiguration
 ])
 @ActiveProfiles("commit")
 class AbstractDataRedisTest extends Specification {
