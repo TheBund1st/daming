@@ -2,6 +2,7 @@ package com.thebund1st.daming.redis
 
 import com.thebund1st.daming.core.SmsVerification
 import com.thebund1st.daming.events.SmsVerificationCodeMismatchEvent
+import com.thebund1st.daming.events.SmsVerificationCodeVerifiedEvent
 import com.thebund1st.daming.events.TooManyFailureSmsVerificationAttemptsEvent
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationEventPublisher
@@ -72,11 +73,38 @@ class RedisSmsVerificationCodeMismatchEventHandlerTest extends AbstractDataRedis
                 smsVerification.getScope()))
 
         then:
-        assert stringRedisTemplate
-                .opsForSet().size(toKey(smsVerification)) == 5
+        assert !stringRedisTemplate
+                .hasKey(toKey(smsVerification))
 
         and:
         1 * eventPublisher.publish(_ as TooManyFailureSmsVerificationAttemptsEvent)
+
+    }
+
+    def "it should remove mismatch count given verified"() {
+        given:
+        def smsVerification = aSmsVerification().expiresIn(2, SECONDS).build()
+        assert !stringRedisTemplate
+                .hasKey(toKey(smsVerification))
+
+        and:
+        publisher.publishEvent(new SmsVerificationCodeMismatchEvent(UUID.randomUUID().toString(),
+                ZonedDateTime.now(),
+                smsVerification.getMobile(),
+                smsVerification.getScope()))
+
+        assert stringRedisTemplate
+                .hasKey(toKey(smsVerification))
+
+        when:
+        publisher.publishEvent(new SmsVerificationCodeVerifiedEvent(UUID.randomUUID().toString(),
+                ZonedDateTime.now(),
+                smsVerification.getMobile(),
+                smsVerification.getScope()))
+
+        then:
+        assert !stringRedisTemplate
+                .hasKey(toKey(smsVerification))
 
     }
 

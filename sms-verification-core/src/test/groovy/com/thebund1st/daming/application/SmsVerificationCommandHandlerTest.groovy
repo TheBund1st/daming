@@ -7,6 +7,7 @@ import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationExcepti
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
 import com.thebund1st.daming.events.EventPublisher
 import com.thebund1st.daming.events.SmsVerificationCodeMismatchEvent
+import com.thebund1st.daming.events.SmsVerificationCodeVerifiedEvent
 import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler
 import com.thebund1st.daming.security.ratelimiting.Errors
 import com.thebund1st.daming.security.ratelimiting.ErrorsFactory
@@ -136,6 +137,8 @@ class SmsVerificationCommandHandlerTest extends Specification {
         with(smsVerificationStore) {
             1 * remove(verification)
         }
+
+        1 * eventPublisher.publish(_ as SmsVerificationCodeVerifiedEvent)
     }
 
     def "it should skip verifying given invalid mobile"() {

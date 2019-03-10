@@ -1,7 +1,10 @@
 package com.thebund1st.daming.redis;
 
+import com.thebund1st.daming.core.MobilePhoneNumber;
+import com.thebund1st.daming.core.SmsVerificationScope;
 import com.thebund1st.daming.events.EventPublisher;
 import com.thebund1st.daming.events.SmsVerificationCodeMismatchEvent;
+import com.thebund1st.daming.events.SmsVerificationCodeVerifiedEvent;
 import com.thebund1st.daming.events.TooManyFailureSmsVerificationAttemptsEvent;
 import com.thebund1st.daming.time.Clock;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +36,7 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
 
     @EventListener
     public void on(SmsVerificationCodeMismatchEvent event) {
-        String key = toKey(event);
+        String key = toKey(event.getMobile(), event.getScope());
         List<Object> attempts = redisTemplate.executePipelined((RedisCallback<Long>) connection -> {
             StringRedisConnection conn = (StringRedisConnection) connection;
             conn.sAdd(key, event.toString());
@@ -43,6 +46,7 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
         });
         if (attempts.size() == 3) {
             if (toAttempts(attempts) >= threshold) {
+                remove(key);
                 eventPublisher.publish(new TooManyFailureSmsVerificationAttemptsEvent(UUID.randomUUID().toString(),
                         clock.now(),
                         event.getMobile(),
@@ -51,12 +55,22 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
         }
     }
 
-    public Long toAttempts(List<Object> attempts) {
+    @EventListener
+    public void on(SmsVerificationCodeVerifiedEvent event) {
+        String key = toKey(event.getMobile(), event.getScope());
+        remove(key);
+    }
+
+    private void remove(String key) {
+        redisTemplate.delete(key);
+    }
+
+    private Long toAttempts(List<Object> attempts) {
         return (Long) attempts.get(attempts.size() - 1);
     }
 
-    private String toKey(SmsVerificationCodeMismatchEvent event) {
+    private String toKey(MobilePhoneNumber mobile, SmsVerificationScope scope) {
         return String.format("sms.verification.code.mismatch.%s.%s",
-                event.getMobile().getValue(), event.getScope().getValue());
+                mobile.getValue(), scope.getValue());
     }
 }

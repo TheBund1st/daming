@@ -9,6 +9,7 @@ import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException;
 import com.thebund1st.daming.events.EventPublisher;
 import com.thebund1st.daming.events.SmsVerificationCodeMismatchEvent;
+import com.thebund1st.daming.events.SmsVerificationCodeVerifiedEvent;
 import com.thebund1st.daming.security.ratelimiting.RateLimited;
 import com.thebund1st.daming.sms.SmsSender;
 import com.thebund1st.daming.time.Clock;
@@ -60,6 +61,9 @@ public class SmsVerificationCommandHandler {
                 .shouldFindBy(command.getMobile(), command.getScope());
         if (smsVerification.matches(command.getCode())) {
             smsVerificationRepository.remove(smsVerification);
+            eventPublisher.publish(new SmsVerificationCodeVerifiedEvent(UUID.randomUUID().toString(),
+                    clock.now(),
+                    command.getMobile(), command.getScope()));
         } else {
             eventPublisher.publish(new SmsVerificationCodeMismatchEvent(UUID.randomUUID().toString(),
                     clock.now(),
