@@ -56,19 +56,6 @@ class SmsVerificationAcceptanceTest extends Specification {
         assert senderStub.sendCount(command.getMobile(), command.scope) == 1
     }
 
-    private ResultActions askFor(SendSmsVerificationCodeCommand command) {
-        mockMvc.perform(
-                post("/api/sms/verification/code")
-                        .contentType(APPLICATION_JSON_UTF8)
-                        .content("""
-                            {
-                                "mobile": "${command.getMobile().getValue()}",
-                                "scope": "${command.getScope().getValue()}"
-                            }
-                        """)
-        )
-    }
-
     def "I verify sms verification code"() {
         given: "I receive a sms verification code on my phone"
 
@@ -110,6 +97,19 @@ class SmsVerificationAcceptanceTest extends Specification {
         then: "I should get an error"
         resultActions
                 .andExpect(status().isTooManyRequests())
+    }
+
+    private ResultActions askFor(SendSmsVerificationCodeCommand command) {
+        mockMvc.perform(
+                post("/api/sms/verification/code")
+                        .contentType(APPLICATION_JSON_UTF8)
+                        .content("""
+                            {
+                                "mobile": "${command.getMobile().getValue()}",
+                                "scope": "${command.getScope().getValue()}"
+                            }
+                        """)
+        )
     }
 
     private SmsVerificationCode receiveSmsVerificationCode(SendSmsVerificationCodeCommand command) {
