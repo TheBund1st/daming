@@ -15,6 +15,7 @@ import org.springframework.data.redis.connection.StringRedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,7 +41,8 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
         List<Object> attempts = redisTemplate.executePipelined((RedisCallback<Long>) connection -> {
             StringRedisConnection conn = (StringRedisConnection) connection;
             conn.sAdd(key, event.toString());
-            conn.expireAt(key, event.getExpiresAt().toEpochSecond());
+            long expires = Duration.between(event.getWhen(), event.getExpiresAt()).getSeconds();
+            conn.expire(key, expires);
             conn.sCard(key);
             return null;
         });
