@@ -41,20 +41,21 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
             StringRedisConnection conn = (StringRedisConnection) connection;
             conn.sAdd(key, event.toString());
             conn.expireAt(key, event.getExpiresAt().toEpochSecond());
-            conn.sCard(key);
             return null;
         });
         log.debug("Got Redis pipeline {}",
                 String.join(",", attempts.stream().map(Object::toString).collect(toList())));
-        if (attempts.size() == 3) {
-            if (toAttempts(attempts) >= threshold) {
-                log.info("Too many failure attempts for {} {}", event.getMobile(), event.getScope());
-                remove(key);
-                eventPublisher.publish(new TooManyFailureSmsVerificationAttemptsEvent(UUID.randomUUID().toString(),
-                        clock.now(),
-                        event.getMobile(),
-                        event.getScope()));
-            }
+        // Move this out of pipeline, as it returns zero somehow
+        Long failures = this.redisTemplate.opsForSet().size(key);
+        log.debug("Got Redis set size {}", failures);
+        //noinspection ConstantConditions
+        if (failures >= threshold) {
+            log.info("Too many failure attempts for {} {}", event.getMobile(), event.getScope());
+            remove(key);
+            eventPublisher.publish(new TooManyFailureSmsVerificationAttemptsEvent(UUID.randomUUID().toString(),
+                    clock.now(),
+                    event.getMobile(),
+                    event.getScope()));
         }
     }
 
