@@ -41,7 +41,7 @@ class RedisSmsVerificationCodeMismatchEventHandlerTest extends AbstractDataRedis
 
         then:
         assert stringRedisTemplate
-                .opsForHash().size(toKey(smsVerification)) == 1
+                .opsForSet().size(toKey(smsVerification)) == 1
 
         await().atMost(12, TimeUnit.SECONDS).until {
             !stringRedisTemplate.hasKey(toKey(smsVerification))
@@ -61,7 +61,7 @@ class RedisSmsVerificationCodeMismatchEventHandlerTest extends AbstractDataRedis
                     smsVerification.expiresAt()))
         }
         assert stringRedisTemplate
-                .opsForHash().size(toKey(smsVerification)) == 4
+                .opsForSet().size(toKey(smsVerification)) == 4
 
         when:
         publisher.publishEvent(new SmsVerificationCodeMismatchEvent(UUID.randomUUID().toString(),
