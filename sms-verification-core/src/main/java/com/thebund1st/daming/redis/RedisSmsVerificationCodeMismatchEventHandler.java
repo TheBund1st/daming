@@ -39,9 +39,9 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
         String key = toKey(event.getMobile(), event.getScope());
         List<Object> attempts = redisTemplate.executePipelined((RedisCallback<Long>) connection -> {
             StringRedisConnection conn = (StringRedisConnection) connection;
-            conn.sAdd(key, event.toString());
+            conn.hSet(key, event.getUuid(), event.toString());
             conn.expireAt(key, event.getExpiresAt().toEpochSecond());
-            conn.sCard(key);
+            conn.hLen(key);
             return null;
         });
         log.debug("Got Redis pipeline {}",
