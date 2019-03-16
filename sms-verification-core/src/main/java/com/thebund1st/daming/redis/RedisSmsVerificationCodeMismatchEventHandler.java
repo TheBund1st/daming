@@ -9,15 +9,18 @@ import com.thebund1st.daming.events.TooManyFailureSmsVerificationAttemptsEvent;
 import com.thebund1st.daming.time.Clock;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.connection.StringRedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 
+import static java.util.stream.Collectors.toList;
+
+@Slf4j
 @RequiredArgsConstructor
 public class RedisSmsVerificationCodeMismatchEventHandler {
 
@@ -32,6 +35,7 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
 
     @EventListener
     public void on(SmsVerificationCodeMismatchEvent event) {
+        log.debug("Receiving {}", event.toString());
         String key = toKey(event.getMobile(), event.getScope());
         List<Object> attempts = redisTemplate.executePipelined((RedisCallback<Long>) connection -> {
             StringRedisConnection conn = (StringRedisConnection) connection;
@@ -40,8 +44,11 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
             conn.sCard(key);
             return null;
         });
+        log.debug("Got Redis pipeline {}",
+                String.join(",", attempts.stream().map(Object::toString).collect(toList())));
         if (attempts.size() == 3) {
             if (toAttempts(attempts) >= threshold) {
+                log.info("Too many failure attempts for {} {}", event.getMobile(), event.getScope());
                 remove(key);
                 eventPublisher.publish(new TooManyFailureSmsVerificationAttemptsEvent(UUID.randomUUID().toString(),
                         clock.now(),
