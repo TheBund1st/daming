@@ -48,3 +48,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
 
 }
+
+test {
+    testLogging.showStandardStreams = true
+}
