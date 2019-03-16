@@ -36,7 +36,7 @@ dependencies {
     // redis
     compile "org.springframework.boot:spring-boot-starter-data-redis"
     compile "org.springframework.data:spring-data-redis:2.1.2.RELEASE"
-    testCompile 'com.github.kstyrc:embedded-redis:0.6'
+    testCompile 'it.ozimov:embedded-redis:0.7.2'
 
     //sms verification
     compile project(':sms-verification-starter')

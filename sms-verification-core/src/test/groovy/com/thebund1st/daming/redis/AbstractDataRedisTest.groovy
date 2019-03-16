@@ -9,7 +9,10 @@ import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.ActiveProfiles
 import redis.embedded.RedisServer
+import redis.embedded.util.OS
 import spock.lang.Specification
+
+import static redis.embedded.RedisExecProvider.defaultProvider
 
 @DataRedisTest
 @Import([
@@ -30,7 +33,9 @@ class AbstractDataRedisTest extends Specification {
     }
 
     def setup() {
-        this.redisServer = new RedisServer(port())
+        this.redisServer = RedisServer.builder()
+                .redisExecProvider(defaultProvider().override(OS.MAC_OS_X, '/usr/local/bin/redis-server'))
+                .port(port()).build()
         redisServer.start()
     }
 

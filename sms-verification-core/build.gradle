@@ -56,7 +56,7 @@ dependencies {
     compileOnly "org.springframework.data:spring-data-redis"
     testCompile "org.springframework.data:spring-data-redis"
     testCompile 'redis.clients:jedis:2.9.0'
-    testCompile 'com.github.kstyrc:embedded-redis:0.6'
+    testCompile 'it.ozimov:embedded-redis:0.7.2'
 
     // jwt
     compile "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
