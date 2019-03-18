@@ -33,9 +33,7 @@ class AbstractDataRedisTest extends Specification {
     }
 
     def setup() {
-        this.redisServer = RedisServer.builder()
-                .redisExecProvider(defaultProvider().override(OS.MAC_OS_X, '/usr/local/bin/redis-server'))
-                .port(port()).build()
+        this.redisServer = new RedisServer(port())
         redisServer.start()
     }
 
