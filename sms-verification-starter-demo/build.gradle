@@ -29,6 +29,8 @@ dependencies {
     testCompile('org.spockframework:spock-spring:1.2-groovy-2.4')
     testCompile project(':sms-verification-core').sourceSets.test.output
     testCompile('com.github.binarywang:java-testdata-generator:1.1.2')
+    testCompile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.0'
+
 
     //aop
     compile('org.springframework.boot:spring-boot-starter-aop')
