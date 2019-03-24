@@ -9,6 +9,7 @@ import com.thebund1st.daming.json.deserializers.SmsVerificationCodeJsonDeseriali
 import com.thebund1st.daming.json.deserializers.SmsVerificationScopeJsonDeserializer;
 import com.thebund1st.daming.validation.ValidMobilePhoneNumber;
 import com.thebund1st.daming.validation.ValidSmsVerificationCode;
+import com.thebund1st.daming.validation.ValidSmsVerificationScope;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class VerifySmsVerificationCodeCommand {
     @JsonDeserialize(using = MobilePhoneNumberJsonDeserializer.class)
     private MobilePhoneNumber mobile;
 
+    @ValidSmsVerificationScope
     @JsonDeserialize(using = SmsVerificationScopeJsonDeserializer.class)
     private SmsVerificationScope scope;
 

@@ -187,6 +187,20 @@ class SmsVerificationCommandHandlerTest extends Specification {
         assert thrown.getMessage().contains("Invalid sms verification code")
     }
 
+    def "it should skip verifying given invalid scope"() {
+        given:
+        def command = aVerifySmsVerificationCodeCommand()
+                .withScope("A Fake Scope").build()
+
+        when: "it handles send sms verification code"
+        subject.handle(command)
+
+        then: "it throw"
+
+        def thrown = thrown(ConstraintViolationException.class)
+        assert thrown.getMessage().contains("Invalid sms verification scope [A Fake Scope]")
+    }
+
     def "it should throw given the verification code does not match"() {
         given:
         def verification = aSmsVerification()
@@ -219,7 +233,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
     def "it should throw given the verification does not exist"() {
         given:
         def verification = aSmsVerification()
-                .sendTo("13411116789").withScope("Login").build()
+                .sendTo("13411116789").withScope("SMS_LOGIN").build()
         def command = aVerifySmsVerificationCodeCommand()
                 .sendTo(verification.mobile).with(verification.scope).codeIs(verification.code).build()
 
@@ -239,6 +253,6 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
         and: "throw"
         def thrown = thrown(MobileIsNotUnderVerificationException)
-        assert thrown.getMessage() == "The mobile [134****6789] is not under [Login] verification."
+        assert thrown.getMessage() == "The mobile [134****6789] is not under [SMS_LOGIN] verification."
     }
 }
