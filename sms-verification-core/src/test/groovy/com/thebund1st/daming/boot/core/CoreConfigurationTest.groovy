@@ -1,9 +1,9 @@
 package com.thebund1st.daming.boot.core
 
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
-import com.thebund1st.daming.core.MobilePhoneNumberPattern
-import com.thebund1st.daming.core.SmsVerificationCodeGenerator
-import com.thebund1st.daming.core.SmsVerificationCodePattern
+import com.thebund1st.daming.core.*
+
+import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationScopeOf
 
 class CoreConfigurationTest extends AbstractAutoConfigurationTest {
 
@@ -40,6 +40,22 @@ class CoreConfigurationTest extends AbstractAutoConfigurationTest {
         contextRunner.run { it ->
             MobilePhoneNumberPattern actual = it.getBean(MobilePhoneNumberPattern)
             assert actual != null
+        }
+    }
+
+    def "it should provide one bean of SmsVerificationScopePattern given no customized configuration"() {
+
+        when:
+        def contextRunner = this.contextRunner
+                .withPropertyValues("daming.sms.verification.scope.valid=a,b,c,d")
+
+        then:
+        contextRunner.run { it ->
+            SmsVerificationScopePattern actual =
+                    it.getBean(SmsVerificationScopePattern)
+            assert actual != null
+            def staticPattern = (StaticSmsVerificationScopePattern) actual
+            assert staticPattern.valid.containsAll(['a', 'b', 'c', 'd'].collect { smsVerificationScopeOf(it) })
         }
     }
 }

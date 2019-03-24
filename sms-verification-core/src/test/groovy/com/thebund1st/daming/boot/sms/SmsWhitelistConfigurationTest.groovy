@@ -2,7 +2,7 @@ package com.thebund1st.daming.boot.sms
 
 import com.thebund1st.daming.core.SmsVerificationCodeSender
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
-import com.thebund1st.daming.boot.SmsVerificationCodeProperties
+import com.thebund1st.daming.boot.core.SmsVerificationCodeProperties
 import com.thebund1st.daming.sms.LoggingSmsVerificationCodeSender
 import com.thebund1st.daming.sms.WhitelistSmsVerificationCodeSender
 import foo.bar.WithCustomizedSmsVerificationSender

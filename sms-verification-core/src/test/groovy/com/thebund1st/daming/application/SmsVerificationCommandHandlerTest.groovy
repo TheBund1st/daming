@@ -26,7 +26,8 @@ import static com.thebund1st.daming.commands.SendSmsVerificationCodeCommandFixtu
 import static com.thebund1st.daming.commands.VerifySmsVerificationCodeCommandFixture.aVerifySmsVerificationCodeCommand
 import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
 
-@SpringBootTest
+//FIXME why can't I set this value in applicaiton-commit.properties?
+@SpringBootTest(properties="daming.sms.verification.scope.valid=SMS_LOGIN")
 @ActiveProfiles("commit")
 class SmsVerificationCommandHandlerTest extends Specification {
 
@@ -99,6 +100,23 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
         def thrown = thrown(ConstraintViolationException.class)
         assert thrown.getMessage().contains("Invalid mobile phone number")
+    }
+
+    def "it should skip given invalid scope"() {
+        given:
+        def command = aSendSmsVerificationCodeCommand()
+                .withScope("A Fake Scope").build()
+
+        and:
+        errorsFactory.empty() >> Errors.empty()
+
+        when: "it handles send sms verification code"
+        subject.handle(command)
+
+        then: "it throw"
+
+        def thrown = thrown(ConstraintViolationException.class)
+        assert thrown.getMessage().contains("Invalid sms verification scope [A Fake Scope]")
     }
 
     def "it should quite sending verification code given rate limited"() {

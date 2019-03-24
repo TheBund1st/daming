@@ -2,12 +2,11 @@ package com.thebund1st.daming.commands
 
 import com.thebund1st.daming.core.MobilePhoneNumber
 import com.thebund1st.daming.core.SmsVerificationScope
-import com.thebund1st.daming.core.TestingSmsVerificationScope
 
 import static com.thebund1st.daming.core.MobilePhoneNumber.mobilePhoneNumberOf
 import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationScopeOf
 import static com.thebund1st.daming.core.TestingMobile.aMobilePhoneNumber
-import static com.thebund1st.daming.core.TestingSmsVerificationScope.anyScope
+import static com.thebund1st.daming.core.TestingSmsVerificationScope.smsLogin
 
 class SendSmsVerificationCodeCommandFixture {
     private SendSmsVerificationCodeCommand target = new SendSmsVerificationCodeCommand()
@@ -37,6 +36,6 @@ class SendSmsVerificationCodeCommandFixture {
     static def aSendSmsVerificationCodeCommand() {
         new SendSmsVerificationCodeCommandFixture()
                 .sendTo(aMobilePhoneNumber())
-                .with(anyScope())
+                .with(smsLogin())
     }
 }

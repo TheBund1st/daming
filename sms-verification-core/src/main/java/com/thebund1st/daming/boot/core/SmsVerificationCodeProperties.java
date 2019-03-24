@@ -1,4 +1,4 @@
-package com.thebund1st.daming.boot;
+package com.thebund1st.daming.boot.core;
 
 import com.thebund1st.daming.core.MobilePhoneNumber;
 import lombok.Data;

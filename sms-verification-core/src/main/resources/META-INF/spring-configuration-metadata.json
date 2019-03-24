@@ -2,7 +2,7 @@
   "groups": [
     {
       "name": "daming.sms.verification.code",
-      "type": "com.thebund1st.daming.boot.SmsVerificationCodeProperties",
+      "type": "com.thebund1st.daming.boot.core.SmsVerificationCodeProperties",
       "sourceType": "com.thebund1st.daming.boot.SmsVerificationAutoConfiguration",
       "sourceMethod": "smsVerificationCodeProperties()"
     }

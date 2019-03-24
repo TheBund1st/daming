@@ -13,4 +13,7 @@ class TestingSmsVerificationScope {
                 new DecimalFormat("######").format(new SecureRandom().nextInt(100000))))
     }
 
+    static SmsVerificationScope smsLogin() {
+        smsVerificationScopeOf("SMS_LOGIN")
+    }
 }
