@@ -19,12 +19,13 @@ import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.joining;
 
 @Slf4j
 @RequiredArgsConstructor
 public class RedisSmsVerificationCodeMismatchEventHandler {
 
+    private static final String DELIMITER = ",";
     private final StringRedisTemplate redisTemplate;
 
     private final EventPublisher eventPublisher;
@@ -47,10 +48,10 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
             return null;
         });
         log.debug("Got Redis pipeline {}",
-                String.join(",", attempts.stream().map(Object::toString).collect(toList())));
+                attempts.stream().map(Object::toString).collect(joining(DELIMITER)));
         if (attempts.size() == 3) {
             if (toAttempts(attempts) >= threshold) {
-                log.info("Too many failure attempts for {} {}", event.getMobile(), event.getScope());
+                log.info("Too many failure verification attempts for {} {}", event.getMobile(), event.getScope());
                 remove(key);
                 eventPublisher.publish(new TooManyFailureSmsVerificationAttemptsEvent(UUID.randomUUID().toString(),
                         clock.now(),
@@ -62,8 +63,10 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
 
     @EventListener
     public void on(SmsVerificationCodeVerifiedEvent event) {
+        log.debug("Receiving {}", event.toString());
         String key = toKey(event.getMobile(), event.getScope());
         remove(key);
+        log.debug("Failure verification attempt count for [{}][{}] is reset", event.getMobile(), event.getScope());
     }
 
     private void remove(String key) {

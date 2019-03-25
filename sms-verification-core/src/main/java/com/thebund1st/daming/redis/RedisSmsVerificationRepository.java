@@ -61,8 +61,11 @@ public class RedisSmsVerificationRepository implements SmsVerificationRepository
 
     @EventListener
     public void on(TooManyFailureSmsVerificationAttemptsEvent event) {
+        // TODO: Should the listener be explicit?
         log.debug("Receiving {}", event);
         remove(event.getMobile(), event.getScope());
+        log.debug("The [{}] code for [{}] is removed due to too many failure verification attempts",
+                event.getScope(), event.getMobile());
     }
 
 }
