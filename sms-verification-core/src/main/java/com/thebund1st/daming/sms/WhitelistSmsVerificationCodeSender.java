@@ -1,8 +1,8 @@
 package com.thebund1st.daming.sms;
 
-import com.thebund1st.daming.core.SmsVerificationCodeSender;
 import com.thebund1st.daming.core.MobilePhoneNumber;
 import com.thebund1st.daming.core.SmsVerification;
+import com.thebund1st.daming.core.SmsVerificationCodeSender;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +27,11 @@ public class WhitelistSmsVerificationCodeSender implements SmsVerificationCodeSe
     @Override
     public void send(SmsVerification verification) {
         if (whitelistIsDisabled() || sentToWhitelist(verification)) {
+            log.debug("Attempt to send [{}] code to [{}]", verification.getScope(), verification.getMobile());
             target.send(verification);
         } else {
-            log.info("Skip sending verification code to {} due to abc", verification.getMobile());
+            log.info("Skip sending [{}] code to [{}] due to whitelist",
+                    verification.getScope(), verification.getMobile());
         }
     }
 
