@@ -5,10 +5,12 @@ import com.thebund1st.daming.security.ratelimiting.Errors;
 import com.thebund1st.daming.security.ratelimiting.RateLimitingHandler;
 import com.thebund1st.daming.time.Clock;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.time.Duration;
 
+@Slf4j
 public class BlockSendingRateLimitingHandler
         implements RateLimitingHandler<SendSmsVerificationCodeCommand> {
 
@@ -28,11 +30,12 @@ public class BlockSendingRateLimitingHandler
     public void check(SendSmsVerificationCodeCommand command, Errors errors) {
         //noinspection ConstantConditions
         if (redisTemplate.hasKey(toKey(command))) {
-            errors.append(String.format("Too many requests by [%s][%s] in %d seconds",
+            errors.append(String.format("Only 1 request is allowed by [%s][%s] in every %d seconds",
                     command.getMobile().getValue(),
                     command.getScope().getValue(),
                     expires.getSeconds()
             ));
+            log.debug("{} is blocked due to the policy 1 request in every {}", command, expires);
         }
     }
 
@@ -42,6 +45,7 @@ public class BlockSendingRateLimitingHandler
 
     @Override
     public void count(SendSmsVerificationCodeCommand command) {
+        log.debug("Attempt to block {} in the next {}", command, expires);
         redisTemplate.opsForValue()
                 .set(toKey(command),
                         clock.now().toString(),
