@@ -6,7 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.thebund1st.daming.boot.core.SmsVerificationCodeProperties;
 import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationRepository;
-import com.thebund1st.daming.events.EventPublisher;
+import com.thebund1st.daming.core.DomainEventPublisher;
 import com.thebund1st.daming.json.mixin.SmsVerificationMixin;
 import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler;
 import com.thebund1st.daming.redis.RedisSmsVerificationCodeMismatchEventHandler;
@@ -65,10 +65,10 @@ public class RedisConfiguration {
 
     @Bean
     public RedisSmsVerificationCodeMismatchEventHandler redisSmsVerificationCodeMismatchEventHandler(
-            StringRedisTemplate redisTemplate, EventPublisher eventPublisher, Clock clock,
+            StringRedisTemplate redisTemplate, DomainEventPublisher domainEventPublisher, Clock clock,
             SmsVerificationCodeProperties properties) {
         RedisSmsVerificationCodeMismatchEventHandler handler =
-                new RedisSmsVerificationCodeMismatchEventHandler(redisTemplate, eventPublisher, clock);
+                new RedisSmsVerificationCodeMismatchEventHandler(redisTemplate, domainEventPublisher, clock);
         handler.setThreshold(properties.getMaxFailures());
         return handler;
     }

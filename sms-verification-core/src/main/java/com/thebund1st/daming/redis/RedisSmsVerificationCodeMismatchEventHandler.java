@@ -2,7 +2,7 @@ package com.thebund1st.daming.redis;
 
 import com.thebund1st.daming.core.MobilePhoneNumber;
 import com.thebund1st.daming.core.SmsVerificationScope;
-import com.thebund1st.daming.events.EventPublisher;
+import com.thebund1st.daming.core.DomainEventPublisher;
 import com.thebund1st.daming.events.SmsVerificationCodeMismatchEvent;
 import com.thebund1st.daming.events.SmsVerificationCodeVerifiedEvent;
 import com.thebund1st.daming.events.TooManyFailureSmsVerificationAttemptsEvent;
@@ -27,7 +27,7 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
     private static final String DELIMITER = ",";
     private final StringRedisTemplate redisTemplate;
 
-    private final EventPublisher eventPublisher;
+    private final DomainEventPublisher domainEventPublisher;
 
     private final Clock clock;
 
@@ -50,7 +50,7 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
             if (toAttempts(attempts) >= threshold) {
                 log.info("Too many failure verification attempts for {} {}", event.getMobile(), event.getScope());
                 remove(key);
-                eventPublisher.publish(new TooManyFailureSmsVerificationAttemptsEvent(UUID.randomUUID().toString(),
+                domainEventPublisher.publish(new TooManyFailureSmsVerificationAttemptsEvent(UUID.randomUUID().toString(),
                         clock.now(),
                         event.getMobile(),
                         event.getScope()));
