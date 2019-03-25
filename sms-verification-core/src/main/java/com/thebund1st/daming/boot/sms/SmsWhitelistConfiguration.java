@@ -2,7 +2,7 @@ package com.thebund1st.daming.boot.sms;
 
 import com.thebund1st.daming.core.SmsVerificationCodeSender;
 import com.thebund1st.daming.boot.core.SmsVerificationCodeProperties;
-import com.thebund1st.daming.sms.LoggingSmsVerificationCodeSender;
+import com.thebund1st.daming.sms.SmsVerificationCodeSenderStub;
 import com.thebund1st.daming.sms.SmsSenderAspect;
 import com.thebund1st.daming.sms.WhitelistSmsVerificationCodeSender;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class SmsWhitelistConfiguration {
             throw new NoUniqueBeanDefinitionException(SmsVerificationCodeSender.class, senders.keySet());
         }
         if (CollectionUtils.isEmpty(senders)) {
-            this.senders.put("loggingSmsVerificationSender", new LoggingSmsVerificationCodeSender());
+            this.senders.put("smsVerificationSenderStub", new SmsVerificationCodeSenderStub());
         }
         WhitelistSmsVerificationCodeSender sender = new WhitelistSmsVerificationCodeSender(findUnique());
         sender.setWhitelist(smsVerificationCodeProperties.whitelist());
