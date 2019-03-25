@@ -10,7 +10,6 @@ import com.thebund1st.daming.time.Clock;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.connection.StringRedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -35,9 +34,7 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
     @Setter
     private int threshold = 5;
 
-    @EventListener
     public void on(SmsVerificationCodeMismatchEvent event) {
-        log.debug("Receiving {}", event.toString());
         String key = toKey(event.getMobile(), event.getScope());
         List<Object> attempts = redisTemplate.executePipelined((RedisCallback<Long>) connection -> {
             StringRedisConnection conn = (StringRedisConnection) connection;
@@ -61,12 +58,9 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
         }
     }
 
-    @EventListener
     public void on(SmsVerificationCodeVerifiedEvent event) {
-        log.debug("Receiving {}", event.toString());
         String key = toKey(event.getMobile(), event.getScope());
         remove(key);
-        log.debug("Failure verification attempt count for [{}][{}] is reset", event.getMobile(), event.getScope());
     }
 
     private void remove(String key) {

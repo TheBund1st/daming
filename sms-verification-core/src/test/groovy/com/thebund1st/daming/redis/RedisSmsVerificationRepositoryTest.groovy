@@ -2,6 +2,7 @@ package com.thebund1st.daming.redis
 
 
 import com.thebund1st.daming.core.TestingVerificationCode
+import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
 import org.springframework.beans.factory.annotation.Autowired
 
 import java.util.concurrent.TimeUnit
@@ -30,6 +31,18 @@ class RedisSmsVerificationRepositoryTest extends AbstractDataRedisTest {
         def found = subject.shouldFindBy(smsVerification.mobile, smsVerification.scope)
         assert found.code == smsVerification.code
         assert found.expires == smsVerification.expires
+    }
+
+    def "it should throw given the verification does not exit"() {
+        given:
+        def smsVerification = aSmsVerification().build()
+        when:
+        subject.shouldFindBy(smsVerification.getMobile(), smsVerification.getScope())
+
+        then:
+        Throwable thrown = thrown()
+
+        assert thrown instanceof MobileIsNotUnderVerificationException
     }
 
     def "it should throw exception when store sms verification given it exists"() {

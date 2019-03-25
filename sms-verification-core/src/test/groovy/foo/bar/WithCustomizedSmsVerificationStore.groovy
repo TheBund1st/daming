@@ -34,6 +34,11 @@ class WithCustomizedSmsVerificationStore {
         }
 
         @Override
+        Optional<SmsVerification> findBy(MobilePhoneNumber mobile, SmsVerificationScope scope) {
+            return null
+        }
+
+        @Override
         void remove(SmsVerification smsVerification) {
 
         }

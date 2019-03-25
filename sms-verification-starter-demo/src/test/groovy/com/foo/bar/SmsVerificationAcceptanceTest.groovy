@@ -94,6 +94,8 @@ class SmsVerificationAcceptanceTest extends Specification {
             i.verify(wrongCode)
         }
 
+        Thread.sleep(1000) // wait for async
+
         when: "I verify my phone with the code again"
         def rightCode = aVerifySmsVerificationCodeCommand().sendTo(send.mobile).with(send.scope).codeIs(code).build()
         i.verify(rightCode)

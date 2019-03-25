@@ -5,11 +5,11 @@ import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.core.SmsVerificationScope;
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException;
-import com.thebund1st.daming.events.TooManyFailureSmsVerificationAttemptsEvent;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.core.RedisTemplate;
+
+import java.util.Optional;
 
 @Slf4j
 @Setter
@@ -42,12 +42,12 @@ public class RedisSmsVerificationRepository implements SmsVerificationRepository
 
     @Override
     public SmsVerification shouldFindBy(MobilePhoneNumber mobile, SmsVerificationScope scope) {
-        SmsVerification codeMaybe = redisTemplate.opsForValue().get(toKey(mobile, scope));
-        if (codeMaybe == null) {
-            throw new MobileIsNotUnderVerificationException(mobile, scope);
-        } else {
-            return codeMaybe;
-        }
+        return findBy(mobile, scope).orElseThrow(() -> new MobileIsNotUnderVerificationException(mobile, scope));
+    }
+
+    @Override
+    public Optional<SmsVerification> findBy(MobilePhoneNumber mobile, SmsVerificationScope scope) {
+        return Optional.ofNullable(redisTemplate.opsForValue().get(toKey(mobile, scope)));
     }
 
     @Override
@@ -57,15 +57,6 @@ public class RedisSmsVerificationRepository implements SmsVerificationRepository
 
     private void remove(MobilePhoneNumber mobile, SmsVerificationScope scope) {
         redisTemplate.delete(toKey(mobile, scope));
-    }
-
-    @EventListener
-    public void on(TooManyFailureSmsVerificationAttemptsEvent event) {
-        // TODO: Should the listener be explicit?
-        log.debug("Receiving {}", event);
-        remove(event.getMobile(), event.getScope());
-        log.debug("The [{}] code for [{}] is removed due to too many failure verification attempts",
-                event.getScope(), event.getMobile());
     }
 
 }
