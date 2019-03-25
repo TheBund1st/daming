@@ -29,6 +29,7 @@ public class WhitelistSmsVerificationCodeSender implements SmsVerificationCodeSe
         if (whitelistIsDisabled() || sentToWhitelist(verification)) {
             log.debug("Attempt to send [{}] code to [{}]", verification.getScope(), verification.getMobile());
             target.send(verification);
+            log.info("[{}] code is sent to [{}]", verification.getScope(), verification.getMobile());
         } else {
             log.info("Skip sending [{}] code to [{}] due to whitelist",
                     verification.getScope(), verification.getMobile());
