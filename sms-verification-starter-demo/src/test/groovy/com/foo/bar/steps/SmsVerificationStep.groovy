@@ -7,10 +7,11 @@ import io.restassured.response.ValidatableResponse
 import org.springframework.http.HttpStatus
 
 import static io.restassured.RestAssured.given
+import static java.util.concurrent.TimeUnit.SECONDS
+import static org.awaitility.Awaitility.await
 import static org.hamcrest.Matchers.notNullValue
 import static org.springframework.http.HttpStatus.ACCEPTED
 import static org.springframework.http.HttpStatus.OK
-import static org.springframework.http.HttpStatus.TOO_MANY_REQUESTS
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE
 
 class SmsVerificationStep {
@@ -43,9 +44,10 @@ class SmsVerificationStep {
     def shouldReceiveVerificationCodeOnMyPhone() {
         this.response
                 .statusCode(ACCEPTED.value())
-        def count = senderStub.sendCount(sendSmsVerificationCodeCommand.getMobile(),
-                sendSmsVerificationCodeCommand.scope)
-        assert count == 1
+        await().atMost(3, SECONDS).untilAsserted {
+            assert senderStub.sendCount(sendSmsVerificationCodeCommand.getMobile(),
+                    sendSmsVerificationCodeCommand.scope) == 1
+        }
         senderStub.getTheOnly(sendSmsVerificationCodeCommand.getMobile(),
                 sendSmsVerificationCodeCommand.scope).get().getCode()
     }
