@@ -1,13 +1,14 @@
 package com.thebund1st.daming.application
 
+import com.thebund1st.daming.core.DomainEventPublisher
 import com.thebund1st.daming.core.SmsVerification
 import com.thebund1st.daming.core.SmsVerificationCodeSender
 import com.thebund1st.daming.core.SmsVerificationRepository
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
-import com.thebund1st.daming.core.DomainEventPublisher
 import com.thebund1st.daming.events.SmsVerificationCodeMismatchEvent
 import com.thebund1st.daming.events.SmsVerificationCodeVerifiedEvent
+import com.thebund1st.daming.events.SmsVerificationRequestedEvent
 import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler
 import com.thebund1st.daming.security.ratelimiting.Errors
 import com.thebund1st.daming.security.ratelimiting.ErrorsFactory
@@ -27,7 +28,7 @@ import static com.thebund1st.daming.commands.VerifySmsVerificationCodeCommandFix
 import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
 
 //FIXME why can't I set this value in applicaiton-commit.properties?
-@SpringBootTest(properties="daming.sms.verification.scope.valid=SMS_LOGIN")
+@SpringBootTest(properties = "daming.sms.verification.scope.valid=SMS_LOGIN")
 @ActiveProfiles("commit")
 class SmsVerificationCommandHandlerTest extends Specification {
 
@@ -81,7 +82,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
         assert actual.expires == subject.expires
 
         and:
-        1 * smsVerificationSender.send(verification)
+        1 * eventPublisher.publish(_ as SmsVerificationRequestedEvent)
         1 * rateLimitingHandler.count(command)
     }
 

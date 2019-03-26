@@ -2,16 +2,16 @@ package com.thebund1st.daming.application;
 
 import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand;
 import com.thebund1st.daming.commands.VerifySmsVerificationCodeCommand;
+import com.thebund1st.daming.core.DomainEventPublisher;
 import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationCode;
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator;
 import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException;
-import com.thebund1st.daming.core.DomainEventPublisher;
 import com.thebund1st.daming.events.SmsVerificationCodeMismatchEvent;
 import com.thebund1st.daming.events.SmsVerificationCodeVerifiedEvent;
+import com.thebund1st.daming.events.SmsVerificationRequestedEvent;
 import com.thebund1st.daming.security.ratelimiting.RateLimited;
-import com.thebund1st.daming.sms.SmsSender;
 import com.thebund1st.daming.time.Clock;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +42,6 @@ public class SmsVerificationCommandHandler {
     @Getter
     private Duration expires = Duration.ofSeconds(60);
 
-    @SmsSender(delegateTo = "smsVerificationSender") //TODO make it configurable
     @RateLimited(action = "sendSmsVerificationCodeCommand")
     public SmsVerification handle(@Valid SendSmsVerificationCodeCommand command) {
         SmsVerificationCode code = smsVerificationCodeGenerator.generate();
@@ -53,7 +52,14 @@ public class SmsVerificationCommandHandler {
         verification.setCode(code);
         verification.setExpires(expires);
         smsVerificationRepository.store(verification);
+        domainEventPublisher.publish(new SmsVerificationRequestedEvent(nextEventId(),
+                verification.getCreatedAt(),
+                verification));
         return verification;
+    }
+
+    private String nextEventId() {
+        return UUID.randomUUID().toString();
     }
 
     public void handle(@Valid VerifySmsVerificationCodeCommand command) {
@@ -61,11 +67,11 @@ public class SmsVerificationCommandHandler {
                 .shouldFindBy(command.getMobile(), command.getScope());
         if (smsVerification.matches(command.getCode())) {
             smsVerificationRepository.remove(smsVerification);
-            domainEventPublisher.publish(new SmsVerificationCodeVerifiedEvent(UUID.randomUUID().toString(),
+            domainEventPublisher.publish(new SmsVerificationCodeVerifiedEvent(nextEventId(),
                     clock.now(),
                     command.getMobile(), command.getScope()));
         } else {
-            domainEventPublisher.publish(new SmsVerificationCodeMismatchEvent(UUID.randomUUID().toString(),
+            domainEventPublisher.publish(new SmsVerificationCodeMismatchEvent(nextEventId(),
                     clock.now(),
                     command.getMobile(),
                     command.getScope(),

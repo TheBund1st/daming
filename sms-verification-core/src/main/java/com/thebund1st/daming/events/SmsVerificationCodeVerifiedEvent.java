@@ -10,6 +10,7 @@ import com.thebund1st.daming.json.serializers.MobilePhoneNumberJsonSerializer;
 import com.thebund1st.daming.json.serializers.SmsVerificationScopeJsonSerializer;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.ZonedDateTime;
@@ -18,6 +19,7 @@ import java.time.ZonedDateTime;
 @Getter
 @EqualsAndHashCode
 @ToString
+@NoArgsConstructor
 public class SmsVerificationCodeVerifiedEvent {
 
     private String uuid;

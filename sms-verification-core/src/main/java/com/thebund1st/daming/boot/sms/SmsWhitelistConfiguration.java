@@ -1,9 +1,8 @@
 package com.thebund1st.daming.boot.sms;
 
-import com.thebund1st.daming.core.SmsVerificationCodeSender;
 import com.thebund1st.daming.boot.core.SmsVerificationCodeProperties;
+import com.thebund1st.daming.core.SmsVerificationCodeSender;
 import com.thebund1st.daming.sms.SmsVerificationCodeSenderStub;
-import com.thebund1st.daming.sms.SmsSenderAspect;
 import com.thebund1st.daming.sms.WhitelistSmsVerificationCodeSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
@@ -46,8 +45,4 @@ public class SmsWhitelistConfiguration {
         return senders.values().stream().findFirst().get();
     }
 
-    @Bean
-    public SmsSenderAspect smsSenderAspect() {
-        return new SmsSenderAspect();
-    }
 }

@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.thebund1st.daming.boot.core.SmsVerificationCodeProperties;
+import com.thebund1st.daming.core.DomainEventPublisher;
 import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationRepository;
-import com.thebund1st.daming.core.DomainEventPublisher;
 import com.thebund1st.daming.json.mixin.SmsVerificationMixin;
 import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler;
 import com.thebund1st.daming.redis.RedisSmsVerificationCodeMismatchEventHandler;
@@ -81,7 +81,7 @@ public class RedisConfiguration {
     }
 
     //TODO make it reusable for other components
-    private static ObjectMapper buildMapper() {
+    public static ObjectMapper buildMapper() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(mapper.getSerializationConfig()
                 .getDefaultVisibilityChecker()

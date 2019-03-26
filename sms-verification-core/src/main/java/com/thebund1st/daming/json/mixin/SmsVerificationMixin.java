@@ -26,5 +26,4 @@ public abstract class SmsVerificationMixin {
     @JsonDeserialize(using = SmsVerificationScopeJsonDeserializer.class)
     public abstract SmsVerificationScope getScope();
 
-
 }
