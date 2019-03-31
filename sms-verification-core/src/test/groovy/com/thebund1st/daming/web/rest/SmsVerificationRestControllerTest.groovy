@@ -3,7 +3,6 @@ package com.thebund1st.daming.web.rest
 import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
 import com.thebund1st.daming.web.AbstractWebMvcTest
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 
 import static com.thebund1st.daming.commands.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
 import static com.thebund1st.daming.commands.VerifySmsVerificationCodeCommandFixture.aVerifySmsVerificationCodeCommand
@@ -14,7 +13,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@WebMvcTest
 class SmsVerificationRestControllerTest extends AbstractWebMvcTest {
 
     def "it should accept sms verification request"() {

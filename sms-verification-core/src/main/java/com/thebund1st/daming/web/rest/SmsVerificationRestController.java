@@ -24,13 +24,13 @@ public class SmsVerificationRestController {
     private final SmsVerifiedJwtIssuer smsVerifiedJwtIssuer;
 
 
-    @PostMapping("/api/sms/verification/code")
+    @PostMapping("#{endpointProperties.sendSmsVerificationCodePath}")
     @ResponseStatus(ACCEPTED)
     public void handle(@RequestBody SendSmsVerificationCodeCommand command) {
         smsVerificationCommandHandler.handle(command);
     }
 
-    @DeleteMapping("/api/sms/verification/code")
+    @DeleteMapping("#{endpointProperties.verifySmsVerificationCodePath}")
     public SmsVerifiedJwtResource handle(@RequestBody VerifySmsVerificationCodeCommand command) {
         smsVerificationCommandHandler.handle(command);
         return new SmsVerifiedJwtResource(smsVerifiedJwtIssuer.issue(command.getMobile(), command.getScope()));

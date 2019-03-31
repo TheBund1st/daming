@@ -6,6 +6,7 @@ import com.thebund1st.daming.boot.core.CoreConfiguration;
 import com.thebund1st.daming.boot.core.SmsVerificationCodeConfiguration;
 import com.thebund1st.daming.boot.core.SmsVerificationScopeConfiguration;
 import com.thebund1st.daming.boot.eventhandling.EventHandlingConfiguration;
+import com.thebund1st.daming.boot.http.EndpointsConfiguration;
 import com.thebund1st.daming.boot.jwt.JwtConfiguration;
 import com.thebund1st.daming.boot.redis.RedisConfiguration;
 import com.thebund1st.daming.boot.security.RateLimitingConfiguration;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.Import;
         "com.thebund1st.daming.web",
 })
 @Import({
+        EndpointsConfiguration.class,
         AliyunSmsConfiguration.class,
         RedisConfiguration.class,
         SmsWhitelistConfiguration.class,
