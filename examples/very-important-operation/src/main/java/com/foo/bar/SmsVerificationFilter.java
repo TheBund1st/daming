@@ -1,9 +1,8 @@
 package com.foo.bar;
 
-import org.springframework.security.authentication.TestingAuthenticationToken;
+import lombok.Setter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -12,9 +11,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collection;
+import java.util.Collections;
 
 public class SmsVerificationFilter extends AbstractAuthenticationProcessingFilter {
+
+    @Setter
+    private SmsVerificationJwtVerifier smsVerificationJwtVerifier;
 
     public SmsVerificationFilter(
             RequestMatcher requiresAuthenticationRequestMatcher) {
@@ -25,43 +27,9 @@ public class SmsVerificationFilter extends AbstractAuthenticationProcessingFilte
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response)
             throws AuthenticationException {
-
-        return new Authentication() {
-            @Override
-            public Collection<? extends GrantedAuthority> getAuthorities() {
-                return null;
-            }
-
-            @Override
-            public Object getCredentials() {
-                return null;
-            }
-
-            @Override
-            public Object getDetails() {
-                return null;
-            }
-
-            @Override
-            public Object getPrincipal() {
-                return null;
-            }
-
-            @Override
-            public boolean isAuthenticated() {
-                return true;
-            }
-
-            @Override
-            public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-
-            }
-
-            @Override
-            public String getName() {
-                return null;
-            }
-        };
+        final String jwt = request.getHeader("X-SMS-VERIFICATION-JWT");
+        SmsVerificationClaims claims = smsVerificationJwtVerifier.verify(jwt);
+        return new SmsVerifiedAuthentication(claims, Collections.emptyList());
     }
 
     @Override
