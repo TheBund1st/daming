@@ -11,6 +11,7 @@ import spock.lang.Specification
 
 import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
 import static io.restassured.RestAssured.given
+import static org.hamcrest.Matchers.equalTo
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE
 
@@ -35,8 +36,8 @@ class VeryImportantOperationControllerTest extends Specification {
     def "it should allow very important operation"() {
 
         given:
-        def smsVerfication = aSmsVerification().build()
-        def jwt = smsVerifiedJwtIssuer.issue(smsVerfication.mobile, smsVerfication.scope)
+        def smsVerification = aSmsVerification().build()
+        def jwt = smsVerifiedJwtIssuer.issue(smsVerification.mobile, smsVerification.scope)
 
         when:
         def then = given()
@@ -47,7 +48,11 @@ class VeryImportantOperationControllerTest extends Specification {
                 .then()
 
         then:
-        then.statusCode(HttpStatus.OK.value())
+        then
+                .statusCode(HttpStatus.OK.value())
+                .body('mobile', equalTo(smsVerification.mobile.value))
+                .body('scope', equalTo(smsVerification.scope.value))
+
     }
 
     def "it should reject very important operation given no jwt"() {
