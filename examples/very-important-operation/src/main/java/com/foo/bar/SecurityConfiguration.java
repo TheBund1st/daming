@@ -1,7 +1,7 @@
 package com.foo.bar;
 
 import com.thebund1st.daming.sdk.jwt.SmsVerificationJwtVerifier;
-import com.thebund1st.daming.sdk.security.SmsVerificationFilter;
+import com.thebund1st.daming.sdk.security.SmsVerificationJwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -47,15 +47,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     private Filter smsVerificationFilter() throws Exception {
-        SmsVerificationFilter filter =
-                new SmsVerificationFilter(
+        SmsVerificationJwtAuthenticationFilter filter =
+                new SmsVerificationJwtAuthenticationFilter(
                         new AntPathRequestMatcher(VERY_IMPORTANT_OPERATION)
                 );
         filter.setSmsVerificationJwtVerifier(smsVerificationJwtVerifier);
-        filter.setAuthenticationSuccessHandler((httpServletRequest, httpServletResponse, authentication) -> {
-            // does nothing, just let the request pass
-        });
-        filter.setAuthenticationFailureHandler(new SmsVerificationAuthenticationFailureHandler());
         return filter;
     }
 

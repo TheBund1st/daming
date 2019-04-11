@@ -1,4 +1,4 @@
-package com.foo.bar;
+package com.thebund1st.daming.sdk.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
@@ -11,12 +11,12 @@ import java.io.IOException;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @Slf4j
-public class SmsVerificationAuthenticationFailureHandler
+public class SmsVerificationJwtAuthenticationFailureHandler
         implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
-        response.setStatus(UNAUTHORIZED.value());
+        response.sendError(UNAUTHORIZED.value(), exception.getMessage());
     }
 }

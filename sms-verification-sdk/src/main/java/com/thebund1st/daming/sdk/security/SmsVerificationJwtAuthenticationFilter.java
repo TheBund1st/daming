@@ -15,14 +15,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 
-public class SmsVerificationFilter extends AbstractAuthenticationProcessingFilter {
+public class SmsVerificationJwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     @Setter
     private SmsVerificationJwtVerifier smsVerificationJwtVerifier;
 
-    public SmsVerificationFilter(
+    public SmsVerificationJwtAuthenticationFilter(
             RequestMatcher requiresAuthenticationRequestMatcher) {
         super(requiresAuthenticationRequestMatcher);
+        super.setAuthenticationSuccessHandler((httpServletRequest, httpServletResponse, authentication) -> {
+            // does nothing, just let the request pass
+        });
+        super.setAuthenticationFailureHandler(new SmsVerificationJwtAuthenticationFailureHandler());
     }
 
     @Override
