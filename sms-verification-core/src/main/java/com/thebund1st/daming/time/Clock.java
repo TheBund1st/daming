@@ -1,6 +1,5 @@
 package com.thebund1st.daming.time;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -10,6 +9,6 @@ public class Clock {
     private ZoneId zoneId = ZoneId.of("Asia/Shanghai");
 
     public ZonedDateTime now() {
-        return LocalDateTime.now().atZone(zoneId);
+        return ZonedDateTime.now(zoneId);
     }
 }
