@@ -22,6 +22,8 @@ dependencies {
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
     testCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+
+    compile project(':sms-verification-jwt')
 }
 
 

@@ -60,6 +60,7 @@ dependencies {
     compile "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
     runtime "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
     runtime "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
+    compile project(':sms-verification-jwt')
 
     // aliyun
     compileOnly("com.aliyun:aliyun-java-sdk-core")

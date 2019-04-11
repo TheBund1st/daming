@@ -7,15 +7,15 @@ import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 
-import java.security.PublicKey;
+import java.security.Key;
 
 @RequiredArgsConstructor
 public class SmsVerificationJwtVerifier {
 
-    private final PublicKey publicKey;
+    private final Key publicKey;
     private final Clock clock;
 
-    public SmsVerificationJwtVerifier(PublicKey publicKey) {
+    public SmsVerificationJwtVerifier(Key publicKey) {
         this(publicKey, null);
     }
 

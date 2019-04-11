@@ -1,0 +1,18 @@
+buildscript {
+
+}
+
+apply plugin: 'idea'
+apply plugin: 'groovy'
+
+dependencies {
+
+    // jwt
+    compile "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
+    runtime "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
+    runtime "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
+
+}
+
+
+

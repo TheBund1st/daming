@@ -1,7 +1,11 @@
 package com.foo.bar;
 
+import com.thebund1st.daming.jwt.key.JwtPublicKeyLoader;
+import com.thebund1st.daming.jwt.key.KeyBytesLoader;
+import com.thebund1st.daming.jwt.key.file.FileKeyLoader;
 import com.thebund1st.daming.sdk.jwt.SmsVerificationJwtVerifier;
 import com.thebund1st.daming.sdk.security.SmsVerificationFilter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,11 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.Filter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.KeyFactory;
-import java.security.PublicKey;
-import java.security.spec.X509EncodedKeySpec;
+import java.security.Key;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -67,15 +67,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public SmsVerificationJwtVerifier smsVerificationJwtVerifier() throws Exception {
-        return new SmsVerificationJwtVerifier(get(publicKeyFileLocation));
+        Key publicKey = jwtPublicKeyLoader(jwtPublicKeyLoader()).getKey();
+        return new SmsVerificationJwtVerifier(publicKey);
     }
 
-    private PublicKey get(String filename) throws Exception {
+    @Bean
+    public JwtPublicKeyLoader jwtPublicKeyLoader(@Qualifier("daming.JwtPublicKeyLoader") KeyBytesLoader keyBytesLoader) {
+        return new JwtPublicKeyLoader(keyBytesLoader);
+    }
 
-        byte[] keyBytes = Files.readAllBytes(Paths.get(filename));
-        X509EncodedKeySpec spec =
-                new X509EncodedKeySpec(keyBytes);
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-        return kf.generatePublic(spec);
+    @Bean(name = "daming.JwtPublicKeyLoader")
+    public KeyBytesLoader jwtPublicKeyLoader() {
+        FileKeyLoader fileKeyLoader = new FileKeyLoader();
+        fileKeyLoader.setPrivateKeyFileLocation(publicKeyFileLocation);
+        return fileKeyLoader;
     }
 }
