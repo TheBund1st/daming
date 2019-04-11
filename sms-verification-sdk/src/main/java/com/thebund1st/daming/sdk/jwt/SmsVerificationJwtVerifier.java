@@ -1,10 +1,11 @@
-package com.foo.bar;
+package com.thebund1st.daming.sdk.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.BadCredentialsException;
 
 import java.security.PublicKey;
 
@@ -12,21 +13,29 @@ import java.security.PublicKey;
 public class SmsVerificationJwtVerifier {
 
     private final PublicKey publicKey;
+    private final Clock clock;
+
+    public SmsVerificationJwtVerifier(PublicKey publicKey) {
+        this(publicKey, null);
+    }
 
     public SmsVerificationClaims verify(String jwt) {
         if (jwt == null) {
-            throw new BadCredentialsException("The jwt must not be null");
+            throw new BadSmsVerificationJwtException("The jwt must not be null");
         }
         try {
-            Jws<Claims> claims = Jwts.parser()
-//                .setClock(new DefaultClock())
-                    .setSigningKey(publicKey)
+            JwtParser parser = Jwts.parser()
+                    .setSigningKey(publicKey);
+            if (clock != null) {
+                parser = parser.setClock(clock);
+            }
+            Jws<Claims> claims = parser
                     .parseClaimsJws(jwt);
             String mobile = claims.getBody().get("mobile", String.class);
             String scope = claims.getBody().get("scope", String.class);
             return new SmsVerificationClaims(mobile, scope);
         } catch (Exception err) {
-            throw new BadCredentialsException(err.getMessage(), err);
+            throw new BadSmsVerificationJwtException(err.getMessage(), err);
         }
     }
 }

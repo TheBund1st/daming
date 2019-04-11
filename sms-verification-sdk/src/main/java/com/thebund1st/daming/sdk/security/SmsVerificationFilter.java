@@ -1,5 +1,7 @@
-package com.foo.bar;
+package com.thebund1st.daming.sdk.security;
 
+import com.thebund1st.daming.sdk.jwt.SmsVerificationClaims;
+import com.thebund1st.daming.sdk.jwt.SmsVerificationJwtVerifier;
 import lombok.Setter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -29,7 +31,7 @@ public class SmsVerificationFilter extends AbstractAuthenticationProcessingFilte
             throws AuthenticationException {
         final String jwt = request.getHeader("X-SMS-VERIFICATION-JWT");
         SmsVerificationClaims claims = smsVerificationJwtVerifier.verify(jwt);
-        return new SmsVerifiedAuthentication(claims, Collections.emptyList());
+        return new SmsVerificationAuthentication(claims, Collections.emptyList());
     }
 
     @Override

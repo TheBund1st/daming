@@ -1,8 +1,6 @@
 buildscript {
     ext {
         byteBuddyVersion = '1.7.11'
-        jjwtVersion = '0.10.5'
-
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")

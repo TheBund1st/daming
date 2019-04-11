@@ -1,4 +1,4 @@
-package com.foo.bar;
+package com.thebund1st.daming.sdk.jwt;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

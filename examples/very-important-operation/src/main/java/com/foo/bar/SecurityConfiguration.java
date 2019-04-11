@@ -1,5 +1,7 @@
 package com.foo.bar;
 
+import com.thebund1st.daming.sdk.jwt.SmsVerificationJwtVerifier;
+import com.thebund1st.daming.sdk.security.SmsVerificationFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +12,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.Filter;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyFactory;

@@ -1,16 +1,17 @@
-package com.foo.bar;
+package com.thebund1st.daming.sdk.security;
 
+import com.thebund1st.daming.sdk.jwt.SmsVerificationClaims;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-public class SmsVerifiedAuthentication extends AbstractAuthenticationToken {
+public class SmsVerificationAuthentication extends AbstractAuthenticationToken {
 
     private SmsVerificationClaims smsVerificationClaims;
 
-    public SmsVerifiedAuthentication(SmsVerificationClaims smsVerificationClaims,
-                                     Collection<? extends GrantedAuthority> authorities) {
+    public SmsVerificationAuthentication(SmsVerificationClaims smsVerificationClaims,
+                                         Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.smsVerificationClaims = smsVerificationClaims;
         setAuthenticated(true);

@@ -1,10 +1,11 @@
-def subProjectsUsingBintray = ['sms-verification-core', 'sms-verification-starter']
+def subProjectsUsingBintray = ['sms-verification-core', 'sms-verification-starter', 'sms-verification-sdk']
 // sub-projects using java
 configure(subprojects.findAll { it.name != 'gatling' }) {
     buildscript {
         ext {
             lombokVersion = '1.16.20'
             springBootVersion = '2.0.5.RELEASE'
+            jjwtVersion = '0.10.5'
         }
         repositories {
             maven {

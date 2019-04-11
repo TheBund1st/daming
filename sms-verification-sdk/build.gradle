@@ -1,0 +1,28 @@
+buildscript {
+
+}
+
+apply plugin: 'idea'
+apply plugin: 'groovy'
+apply from: "${rootProject.projectDir}/gradle/maven-publish.gradle"
+
+
+dependencies {
+
+    // jwt
+    compile "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
+    runtime "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
+    runtime "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
+
+    compileOnly "org.springframework.security:spring-security-core:5.0.8.RELEASE"
+    testCompile "org.springframework.security:spring-security-core:5.0.8.RELEASE"
+    compileOnly "org.springframework.security:spring-security-web:5.0.8.RELEASE"
+    testCompile "org.springframework.security:spring-security-web:5.0.8.RELEASE"
+
+    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+    testCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+}
+
+
+
