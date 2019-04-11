@@ -1,4 +1,9 @@
-def subProjectsUsingBintray = ['sms-verification-core', 'sms-verification-starter', 'sms-verification-sdk']
+def subProjectsUsingBintray = [
+        'sms-verification-core',
+        'sms-verification-starter',
+        'sms-verification-sdk',
+        'sms-verification-starter-sdk'
+]
 // sub-projects using java
 configure(subprojects.findAll { it.name != 'gatling' }) {
     buildscript {

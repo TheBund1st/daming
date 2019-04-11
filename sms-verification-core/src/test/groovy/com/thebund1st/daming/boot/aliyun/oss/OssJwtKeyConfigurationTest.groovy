@@ -5,6 +5,7 @@ import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 import com.thebund1st.daming.jwt.key.JwtKeyLoader
 import com.thebund1st.daming.jwt.key.KeyBytesLoader
 import foo.bar.WithDumbSmsVerifiedJwtIssuer
+import org.springframework.context.annotation.Bean
 
 class OssJwtKeyConfigurationTest extends AbstractAutoConfigurationTest {
 
@@ -22,7 +23,7 @@ class OssJwtKeyConfigurationTest extends AbstractAutoConfigurationTest {
 
         then:
         contextRunner.run { it ->
-            KeyBytesLoader actual = it.getBean(KeyBytesLoader)
+            KeyBytesLoader actual = it.getBean("smsVerificationJwtSigningKeyBytesLoader")
             assert actual instanceof OssKeyLoader
         }
     }

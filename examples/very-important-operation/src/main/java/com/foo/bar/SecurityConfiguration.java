@@ -1,13 +1,8 @@
 package com.foo.bar;
 
-import com.thebund1st.daming.jwt.key.JwtPublicKeyLoader;
-import com.thebund1st.daming.jwt.key.KeyBytesLoader;
-import com.thebund1st.daming.jwt.key.file.FileKeyLoader;
 import com.thebund1st.daming.sdk.jwt.SmsVerificationJwtVerifier;
 import com.thebund1st.daming.sdk.security.SmsVerificationFilter;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +11,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.Filter;
-import java.security.Key;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -25,8 +19,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String VERY_IMPORTANT_OPERATION = "/very/important/operation";
 
-    @Value("${daming.jwt.publicKeyFileLocation}")
-    private String publicKeyFileLocation;
+    @Autowired
+    private SmsVerificationJwtVerifier smsVerificationJwtVerifier;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -57,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 new SmsVerificationFilter(
                         new AntPathRequestMatcher(VERY_IMPORTANT_OPERATION)
                 );
-        filter.setSmsVerificationJwtVerifier(smsVerificationJwtVerifier());
+        filter.setSmsVerificationJwtVerifier(smsVerificationJwtVerifier);
         filter.setAuthenticationSuccessHandler((httpServletRequest, httpServletResponse, authentication) -> {
             // does nothing, just let the request pass
         });
@@ -65,21 +59,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
-    @Bean
-    public SmsVerificationJwtVerifier smsVerificationJwtVerifier() throws Exception {
-        Key publicKey = jwtPublicKeyLoader(jwtPublicKeyLoader()).getKey();
-        return new SmsVerificationJwtVerifier(publicKey);
-    }
 
-    @Bean
-    public JwtPublicKeyLoader jwtPublicKeyLoader(@Qualifier("daming.JwtPublicKeyLoader") KeyBytesLoader keyBytesLoader) {
-        return new JwtPublicKeyLoader(keyBytesLoader);
-    }
-
-    @Bean(name = "daming.JwtPublicKeyLoader")
-    public KeyBytesLoader jwtPublicKeyLoader() {
-        FileKeyLoader fileKeyLoader = new FileKeyLoader();
-        fileKeyLoader.setPrivateKeyFileLocation(publicKeyFileLocation);
-        return fileKeyLoader;
-    }
 }

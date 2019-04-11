@@ -41,7 +41,7 @@ dependencies {
 
     //sms verification
     compile project(':sms-verification-starter')
-    compile project(':sms-verification-sdk')
+    compile project(':sms-verification-starter-sdk')
 
     //devtools
     compile("org.springframework.boot:spring-boot-devtools")

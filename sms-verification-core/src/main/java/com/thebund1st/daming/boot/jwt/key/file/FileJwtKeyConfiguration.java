@@ -1,6 +1,5 @@
 package com.thebund1st.daming.boot.jwt.key.file;
 
-import com.thebund1st.daming.jwt.key.JwtKeyLoader;
 import com.thebund1st.daming.jwt.key.KeyBytesLoader;
 import com.thebund1st.daming.jwt.key.file.FileKeyLoader;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,7 @@ public class FileJwtKeyConfiguration {
         return new DeprecatedFileJwtKeyProperties();
     }
 
-    @Bean
+    @Bean(name = "smsVerificationJwtSigningKeyBytesLoader")
     public KeyBytesLoader fileKeyBytesLoader() {
         FileKeyLoader loader = new FileKeyLoader();
         loader.setPrivateKeyFileLocation(getLocation());

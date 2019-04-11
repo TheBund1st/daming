@@ -1,5 +1,10 @@
 buildscript {
-
+    ext {
+        byteBuddyVersion = '1.7.11'
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 apply plugin: 'idea'
@@ -24,6 +29,16 @@ dependencies {
     testCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
 
     compile project(':sms-verification-jwt')
+
+    // spock
+    testCompile('org.spockframework:spock-spring:1.2-groovy-2.4')
+    testCompile("net.bytebuddy:byte-buddy-agent:${byteBuddyVersion}")
+    testCompile("net.bytebuddy:byte-buddy:${byteBuddyVersion}")
+    testCompile 'org.awaitility:awaitility-groovy:3.1.2'
+
+    compileOnly("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    testCompile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
 
 

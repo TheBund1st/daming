@@ -41,7 +41,7 @@ public class OssJwtKeyConfiguration {
                 aliyunCredentialsProperties.getAccessKeyId(), aliyunCredentialsProperties.getAccessKeySecret());
     }
 
-    @Bean
+    @Bean(name = "smsVerificationJwtSigningKeyBytesLoader")
     public OssKeyLoader ossJwtKeyLoader(@Qualifier("daming.jwt.key.ossClient") OSSClient ossClient) {
         OssKeyLoader loader = new OssKeyLoader(ossClient);
         loader.setBucketName(bucketName);

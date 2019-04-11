@@ -1,7 +1,6 @@
 package com.thebund1st.daming.boot.jwt.key.file
 
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
-import com.thebund1st.daming.jwt.key.JwtKeyLoader
 import com.thebund1st.daming.jwt.key.KeyBytesLoader
 import com.thebund1st.daming.jwt.key.file.FileKeyLoader
 
@@ -15,7 +14,7 @@ class FileJwtKeyConfigurationTest extends AbstractAutoConfigurationTest {
 
         then:
         contextRunner.run { it ->
-            KeyBytesLoader actual = it.getBean(KeyBytesLoader)
+            KeyBytesLoader actual = it.getBean("smsVerificationJwtSigningKeyBytesLoader")
             assert actual instanceof FileKeyLoader
             assert actual.getBytes() != null
         }
@@ -30,7 +29,7 @@ class FileJwtKeyConfigurationTest extends AbstractAutoConfigurationTest {
 
         then:
         contextRunner.run { it ->
-            KeyBytesLoader actual = it.getBean(KeyBytesLoader)
+            KeyBytesLoader actual = it.getBean("smsVerificationJwtSigningKeyBytesLoader")
             assert actual instanceof FileKeyLoader
             assert actual.getBytes() != null
         }
