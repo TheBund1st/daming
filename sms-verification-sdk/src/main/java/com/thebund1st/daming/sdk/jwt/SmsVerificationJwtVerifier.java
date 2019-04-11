@@ -9,14 +9,18 @@ import lombok.RequiredArgsConstructor;
 
 import java.security.Key;
 
-@RequiredArgsConstructor
 public class SmsVerificationJwtVerifier {
 
     private final Key publicKey;
-    private final Clock clock;
+    private Clock clock;
 
     public SmsVerificationJwtVerifier(Key publicKey) {
         this(publicKey, null);
+    }
+
+    public SmsVerificationJwtVerifier(Key publicKey, Clock clock) {
+        this.publicKey = publicKey;
+        this.clock = clock;
     }
 
     public SmsVerificationClaims verify(String jwt) {
