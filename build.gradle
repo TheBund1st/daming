@@ -1,4 +1,5 @@
 def subProjectsUsingBintray = [
+        'sms-verification-jwt',
         'sms-verification-core',
         'sms-verification-starter',
         'sms-verification-sdk',
