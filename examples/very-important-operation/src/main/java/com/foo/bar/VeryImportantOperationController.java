@@ -15,8 +15,8 @@ public class VeryImportantOperationController {
 
     @SmsVerificationRequired
     @PostMapping(path = "/very/important/operation")
-    public Object theOperationRequiresSmsVerification(HttpServletRequest request) {
-        return request.getAttribute("smsVerificationClaims");
+    public Object theOperationRequiresSmsVerification(SmsVerificationClaims smsVerificationClaims) {
+        return smsVerificationClaims;
     }
 
     @GetMapping(path = "/very/important/operation")
