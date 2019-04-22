@@ -1,8 +1,6 @@
 package com.thebund1st.daming.sdk.jwt;
 
-import org.springframework.security.core.AuthenticationException;
-
-public class BadSmsVerificationJwtException extends AuthenticationException {
+public class BadSmsVerificationJwtException extends RuntimeException {
 
     public BadSmsVerificationJwtException(String message) {
         super(message);

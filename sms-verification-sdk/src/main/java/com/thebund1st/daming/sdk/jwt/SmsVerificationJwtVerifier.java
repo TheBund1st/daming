@@ -5,7 +5,6 @@ import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
-import lombok.RequiredArgsConstructor;
 
 import java.security.Key;
 
