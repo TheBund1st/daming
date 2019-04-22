@@ -7,4 +7,5 @@ import spock.lang.Specification
 abstract class AbstractAutoConfigurationTest extends Specification {
     protected final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
             .withConfiguration(AutoConfigurations.of(SmsVerificationAutoConfiguration.class))
+            .withPropertyValues("daming.sdk.jwt.key.file.location=../sms-verification-core/sms-verification-public.der")
 }

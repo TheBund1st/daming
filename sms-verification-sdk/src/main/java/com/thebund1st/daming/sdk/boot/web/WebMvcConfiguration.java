@@ -18,9 +18,15 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Autowired
     private SmsVerificationJwtVerifier smsVerificationJwtVerifier;
 
+    @Autowired
+    private WebProperties webProperties;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SmsVerificationRequiredHandlerInterceptor(smsVerificationJwtVerifier));
+        registry.addInterceptor(
+                new SmsVerificationRequiredHandlerInterceptor(smsVerificationJwtVerifier,
+                        webProperties.getJwtHeaderName())
+        );
     }
 
     @Override
