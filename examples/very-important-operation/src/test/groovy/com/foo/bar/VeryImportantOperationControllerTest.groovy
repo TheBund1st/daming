@@ -3,7 +3,6 @@ package com.foo.bar
 import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer
 import io.restassured.RestAssured
 import io.restassured.builder.RequestSpecBuilder
-import io.restassured.builder.ResponseSpecBuilder
 import io.restassured.filter.log.RequestLoggingFilter
 import io.restassured.filter.log.ResponseLoggingFilter
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +13,6 @@ import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
 import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
-import static io.restassured.RestAssured.filters
 import static io.restassured.RestAssured.given
 import static org.hamcrest.Matchers.containsString
 import static org.hamcrest.Matchers.equalTo
@@ -137,14 +135,7 @@ class VeryImportantOperationControllerTest extends Specification {
     def "it should allow very very important operation given login and a good jwt"() {
 
         given:
-        def cookie = given()
-                .param("username", "admin")
-                .param("password", "secret")
-                .when()
-                .post("/login")
-                .then()
-                .statusCode(FOUND.value())
-                .extract().cookie("JSESSIONID")
+        def cookie = loggedIn()
 
         and:
         def smsVerification = aSmsVerification().build()
@@ -163,6 +154,30 @@ class VeryImportantOperationControllerTest extends Specification {
         then.statusCode(HttpStatus.OK.value())
                 .body('mobile', equalTo(smsVerification.mobile.value))
                 .body('scope', equalTo(smsVerification.scope.value))
+    }
+
+    private String loggedIn() {
+        given()
+                .param("username", "admin")
+                .param("password", "secret")
+                .when()
+                .post("/login")
+                .then()
+                .statusCode(FOUND.value())
+                .extract().cookie("JSESSIONID")
+    }
+
+    def "it should pass unimportant operation even it has same url with very important operation"() {
+
+        when:
+        def then = given()
+                .contentType(APPLICATION_JSON_UTF8_VALUE)
+                .when()
+                .get("/very/important/operation")
+                .then()
+
+        then:
+        then.statusCode(HttpStatus.OK.value())
     }
 
 }
