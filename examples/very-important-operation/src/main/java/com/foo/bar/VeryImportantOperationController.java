@@ -1,5 +1,6 @@
 package com.foo.bar;
 
+import com.thebund1st.daming.sdk.jwt.SmsVerificationClaims;
 import com.thebund1st.daming.sdk.web.annotation.SmsVerificationRequired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ public class VeryImportantOperationController {
 
     @SmsVerificationRequired
     @PostMapping(path = "/very/very/important/operation")
-    public Object theOperationRequiresBothLoginAndSmsVerification(HttpServletRequest request) {
-        return request.getAttribute("smsVerificationClaims");
+    public Object theOperationRequiresBothLoginAndSmsVerification(SmsVerificationClaims smsVerificationClaims) {
+        return smsVerificationClaims;
     }
 }
