@@ -1,6 +1,7 @@
 package com.foo.bar;
 
 import com.thebund1st.daming.sdk.jwt.SmsVerificationJwtVerifier;
+import com.thebund1st.daming.sdk.web.handler.BadSmsVerificationJwtExceptionHandler;
 import com.thebund1st.daming.sdk.web.handler.SmsVerificationRequiredHandlerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

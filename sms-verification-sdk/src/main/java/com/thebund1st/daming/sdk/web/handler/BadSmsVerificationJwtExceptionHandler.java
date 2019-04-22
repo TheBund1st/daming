@@ -1,4 +1,4 @@
-package com.foo.bar;
+package com.thebund1st.daming.sdk.web.handler;
 
 
 import com.thebund1st.daming.sdk.jwt.BadSmsVerificationJwtException;
@@ -17,8 +17,7 @@ public class BadSmsVerificationJwtExceptionHandler {
             BadSmsVerificationJwtException.class
     })
     public void handle(BadSmsVerificationJwtException ex,
-                       WebRequest request, HttpServletResponse response)
-            throws Exception {
+                       WebRequest request, HttpServletResponse response) throws Exception {
         Principal userPrincipal = request.getUserPrincipal();
         if (userPrincipal == null) {
             response.sendError(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
