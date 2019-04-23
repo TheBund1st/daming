@@ -1,0 +1,59 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.5.RELEASE'
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'idea'
+
+apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.github.hippoom'
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Finchley.SR1'
+    }
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.spockframework:spock-spring:1.2-groovy-2.4')
+    testCompile project(':sms-verification-core').sourceSets.test.output
+    testCompile('com.github.binarywang:java-testdata-generator:1.1.2')
+    testCompile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.0'
+    testCompile 'org.awaitility:awaitility-groovy:3.1.2'
+
+
+    //aop
+    compile('org.springframework.boot:spring-boot-starter-aop')
+
+    // redis
+    compile "org.springframework.boot:spring-boot-starter-data-redis"
+    compile "org.springframework.data:spring-data-redis:2.1.2.RELEASE"
+    testCompile 'it.ozimov:embedded-redis:0.7.2'
+
+    //sms verification
+    compile project(':sms-verification-starter')
+    compile project(':sms-verification-starter-sdk')
+
+    //devtools
+    compile("org.springframework.boot:spring-boot-devtools")
+
+    //metric
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+
+    //security
+    compile("org.springframework.boot:spring-boot-starter-security")
+
+}
+
+test {
+    testLogging.showStandardStreams = true
+}
