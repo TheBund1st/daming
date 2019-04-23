@@ -28,13 +28,9 @@ class VeryImportantOperationControllerTest extends Specification {
     int randomServerPort
 
     @Autowired
-    private SmsVerificationCodeSenderStub senderStub
-
-    @Autowired
     private SmsVerifiedJwtIssuer smsVerifiedJwtIssuer
 
     def setup() {
-
         RestAssured.requestSpecification = new RequestSpecBuilder()
                 .setPort(randomServerPort)
                 .addFilter(new RequestLoggingFilter())

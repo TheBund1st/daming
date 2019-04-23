@@ -40,7 +40,7 @@ dependencies {
     testCompile 'it.ozimov:embedded-redis:0.7.2'
 
     //sms verification
-    compile project(':sms-verification-starter')
+    testCompile project(':sms-verification-starter')
     compile project(':sms-verification-starter-sdk')
 
     //devtools
