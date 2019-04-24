@@ -12,5 +12,6 @@ import java.lang.annotation.Target;
 @Documented
 public @interface SmsVerificationRequired {
 
+    String scope() default "";
 
 }

@@ -13,4 +13,8 @@ public class SmsVerificationClaims {
         this.mobile = mobile;
         this.scope = scope;
     }
+
+    public boolean scopeMatches(String scope) {
+        return this.scope.equals(scope);
+    }
 }

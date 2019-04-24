@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class VeryImportantOperationController {
 
 
-    @SmsVerificationRequired
+    @SmsVerificationRequired(scope = "VIO")
     @PostMapping(path = "/very/important/operation")
     public Object theOperationRequiresSmsVerification(SmsVerificationClaims smsVerificationClaims) {
         return smsVerificationClaims;
@@ -24,7 +24,7 @@ public class VeryImportantOperationController {
         return new HashMap<>();
     }
 
-    @SmsVerificationRequired
+    @SmsVerificationRequired(scope = "VVIO")
     @PostMapping(path = "/very/very/important/operation")
     public Object theOperationRequiresBothLoginAndSmsVerification(SmsVerificationClaims smsVerificationClaims) {
         return smsVerificationClaims;

@@ -1,6 +1,6 @@
 package com.thebund1st.daming.sdk.boot.web;
 
-import com.thebund1st.daming.sdk.web.handler.BadSmsVerificationJwtExceptionHandler;
+import com.thebund1st.daming.sdk.web.handler.SmsVerificationJwtExceptionHandler;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class WebConfiguration {
     }
 
     @Bean
-    public BadSmsVerificationJwtExceptionHandler badSmsVerificationJwtExceptionHandler() {
-        return new BadSmsVerificationJwtExceptionHandler();
+    public SmsVerificationJwtExceptionHandler badSmsVerificationJwtExceptionHandler() {
+        return new SmsVerificationJwtExceptionHandler();
     }
 }

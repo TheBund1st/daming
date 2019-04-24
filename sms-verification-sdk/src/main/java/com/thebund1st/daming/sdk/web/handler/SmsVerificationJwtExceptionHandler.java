@@ -1,7 +1,7 @@
 package com.thebund1st.daming.sdk.web.handler;
 
 
-import com.thebund1st.daming.sdk.jwt.BadSmsVerificationJwtException;
+import com.thebund1st.daming.sdk.jwt.SmsVerificationJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
 @RestControllerAdvice
-public class BadSmsVerificationJwtExceptionHandler {
+public class SmsVerificationJwtExceptionHandler {
 
     @ExceptionHandler({
-            BadSmsVerificationJwtException.class
+            SmsVerificationJwtException.class
     })
-    public void handle(BadSmsVerificationJwtException ex,
+    public void handle(SmsVerificationJwtException ex,
                        WebRequest request, HttpServletResponse response) throws Exception {
         Principal userPrincipal = request.getUserPrincipal();
         if (userPrincipal == null) {

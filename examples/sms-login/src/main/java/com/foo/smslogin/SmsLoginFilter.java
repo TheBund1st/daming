@@ -29,7 +29,7 @@ public class SmsLoginFilter extends AbstractAuthenticationProcessingFilter {
             HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException {
         String jwt = request.getHeader("X-SMS-VERIFICATION-JWT");
-        SmsVerificationClaims claims = smsVerificationJwtVerifier.verify(jwt);
+        SmsVerificationClaims claims = smsVerificationJwtVerifier.verify(jwt, "SMS_LOGIN");
         String mobile = claims.getMobile();
         return userRepository.mustFindByMobile(mobile);
     }

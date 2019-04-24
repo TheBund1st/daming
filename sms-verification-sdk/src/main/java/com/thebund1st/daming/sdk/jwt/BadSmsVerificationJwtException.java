@@ -1,6 +1,6 @@
 package com.thebund1st.daming.sdk.jwt;
 
-public class BadSmsVerificationJwtException extends RuntimeException {
+public class BadSmsVerificationJwtException extends SmsVerificationJwtException {
 
     public BadSmsVerificationJwtException(String message) {
         super(message);

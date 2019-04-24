@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
 import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
+import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationScopeOf
 import static io.restassured.RestAssured.given
 import static org.hamcrest.Matchers.containsString
 import static org.hamcrest.Matchers.equalTo
@@ -41,7 +42,7 @@ class VeryImportantOperationControllerTest extends Specification {
     def "it should allow very important operation"() {
 
         given:
-        def smsVerification = aSmsVerification().build()
+        def smsVerification = aSmsVerification().withScope("VIO").build()
         def jwt = smsVerifiedJwtIssuer.issue(smsVerification.mobile, smsVerification.scope)
 
         when:
@@ -134,7 +135,7 @@ class VeryImportantOperationControllerTest extends Specification {
         def cookie = loggedIn()
 
         and:
-        def smsVerification = aSmsVerification().build()
+        def smsVerification = aSmsVerification().withScope("VVIO").build()
         def jwt = smsVerifiedJwtIssuer.issue(smsVerification.mobile, smsVerification.scope)
 
         when:

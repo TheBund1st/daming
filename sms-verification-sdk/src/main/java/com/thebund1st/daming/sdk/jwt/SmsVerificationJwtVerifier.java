@@ -22,6 +22,12 @@ public class SmsVerificationJwtVerifier {
         this.clock = clock;
     }
 
+    /**
+     * @param jwt, JWT issued by daming.
+     * @return claims that contains verified mobile and scope.
+     * @see #verify(String, String)
+     */
+    @Deprecated
     public SmsVerificationClaims verify(String jwt) {
         if (jwt == null) {
             throw new BadSmsVerificationJwtException("The jwt must not be null");
@@ -40,5 +46,13 @@ public class SmsVerificationJwtVerifier {
         } catch (Exception err) {
             throw new BadSmsVerificationJwtException(err.getMessage(), err);
         }
+    }
+
+    public SmsVerificationClaims verify(String jwt, String scope) {
+        SmsVerificationClaims claims = verify(jwt);
+        if (!claims.scopeMatches(scope)) {
+            throw new SmsVerificationScopeMismatchException(claims, scope);
+        }
+        return claims;
     }
 }

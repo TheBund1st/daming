@@ -25,8 +25,10 @@ public class SmsVerificationRequiredHandlerInterceptor extends HandlerIntercepto
             throws Exception {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         if (handlerMethod.hasMethodAnnotation(SmsVerificationRequired.class)) {
+            SmsVerificationRequired smsVerificationRequired = handlerMethod
+                    .getMethodAnnotation(SmsVerificationRequired.class);
             final String jwt = request.getHeader(jwtHeaderName);
-            SmsVerificationClaims claims = smsVerificationJwtVerifier.verify(jwt);
+            SmsVerificationClaims claims = smsVerificationJwtVerifier.verify(jwt, smsVerificationRequired.scope());
             request.setAttribute("smsVerificationClaims", claims);
             return true;
         } else {
