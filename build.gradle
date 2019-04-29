@@ -27,7 +27,7 @@ configure(subprojects.findAll { it.name != 'gatling' }) {
     apply plugin: 'java'
 
     group = 'com.github.hippoom'
-    version = '0.9.4'
+    version = '0.9.5-SNAPSHOT'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
