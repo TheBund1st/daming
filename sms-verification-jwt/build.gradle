@@ -4,6 +4,7 @@ buildscript {
 
 apply plugin: 'idea'
 apply plugin: 'groovy'
+apply from: "${rootProject.projectDir}/gradle/maven-publish.gradle"
 
 dependencies {
 
