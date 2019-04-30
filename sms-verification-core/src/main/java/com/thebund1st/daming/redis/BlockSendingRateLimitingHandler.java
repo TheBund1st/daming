@@ -10,6 +10,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.time.Duration;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 @Slf4j
 public class BlockSendingRateLimitingHandler
         implements RateLimitingHandler<SendSmsVerificationCodeCommand> {
@@ -46,9 +48,11 @@ public class BlockSendingRateLimitingHandler
     @Override
     public void count(SendSmsVerificationCodeCommand command) {
         log.debug("Attempt to block {} in the next {}", command, expires);
+        // use .set(key, value, timeout, timeUnit) instead of .set(key, value, duration)
+        // to be compatible with spring-data-redis 1.x
         redisTemplate.opsForValue()
                 .set(toKey(command),
                         clock.now().toString(),
-                        expires);
+                        expires.getSeconds(), SECONDS);
     }
 }

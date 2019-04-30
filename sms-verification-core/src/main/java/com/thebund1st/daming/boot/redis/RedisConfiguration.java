@@ -9,6 +9,8 @@ import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.json.mixin.SmsVerificationMixin;
 import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler;
+import com.thebund1st.daming.redis.DeleteFromRedis;
+import com.thebund1st.daming.redis.DeleteFromRedisUsingRestTemplate;
 import com.thebund1st.daming.redis.RedisSmsVerificationCodeMismatchEventHandler;
 import com.thebund1st.daming.redis.RedisSmsVerificationRepository;
 import com.thebund1st.daming.time.Clock;
@@ -45,11 +47,19 @@ public class RedisConfiguration {
         return redisTemplate;
     }
 
+    @ConditionalOnMissingBean(DeleteFromRedis.class)
+    @Bean
+    public DeleteFromRedis deleteFromRedis(@Qualifier("smsVerificationRedisTemplate")
+                                                       RedisTemplate<String, SmsVerification> redisTemplate) {
+        return new DeleteFromRedisUsingRestTemplate(redisTemplate);
+    }
+
     @ConditionalOnMissingBean(SmsVerificationRepository.class)
     @Bean(name = "redisSmsVerificationStore")
     public RedisSmsVerificationRepository redisSmsVerificationStore(@Qualifier("smsVerificationRedisTemplate")
-                                                                            RedisTemplate<String, SmsVerification> redisTemplate) {
-        RedisSmsVerificationRepository bean = new RedisSmsVerificationRepository(redisTemplate);
+                                                                            RedisTemplate<String, SmsVerification> redisTemplate,
+                                                                    DeleteFromRedis deleteFromRedis) {
+        RedisSmsVerificationRepository bean = new RedisSmsVerificationRepository(redisTemplate, deleteFromRedis);
         return bean;
     }
 
@@ -65,10 +75,11 @@ public class RedisConfiguration {
 
     @Bean
     public RedisSmsVerificationCodeMismatchEventHandler redisSmsVerificationCodeMismatchEventHandler(
-            StringRedisTemplate redisTemplate, DomainEventPublisher domainEventPublisher, Clock clock,
+            StringRedisTemplate redisTemplate, DeleteFromRedis deleteFromRedis,
+            DomainEventPublisher domainEventPublisher, Clock clock,
             SmsVerificationCodeProperties properties) {
         RedisSmsVerificationCodeMismatchEventHandler handler =
-                new RedisSmsVerificationCodeMismatchEventHandler(redisTemplate, domainEventPublisher, clock);
+                new RedisSmsVerificationCodeMismatchEventHandler(redisTemplate, deleteFromRedis, domainEventPublisher, clock);
         handler.setThreshold(properties.getMaxFailures());
         return handler;
     }

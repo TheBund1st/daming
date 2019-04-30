@@ -10,24 +10,32 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Slf4j
 @Setter
 public class RedisSmsVerificationRepository implements SmsVerificationRepository {
 
     private final RedisTemplate<String, SmsVerification> redisTemplate;
+    private final DeleteFromRedis deleteFromRedis;
     private String keyPrefix = "sms.verification.";
 
-    public RedisSmsVerificationRepository(RedisTemplate<String, SmsVerification> redisTemplate) {
+    public RedisSmsVerificationRepository(RedisTemplate<String, SmsVerification> redisTemplate,
+                                          DeleteFromRedis deleteFromRedis) {
         this.redisTemplate = redisTemplate;
+        this.deleteFromRedis = deleteFromRedis;
     }
 
     @Override
     public void store(SmsVerification smsVerification) {
+        // use .set(key, value, timeout, timeUnit) instead of .set(key, value, duration)
+        // to be compatible with spring-data-redis 1.x
         redisTemplate.opsForValue()
                 .set(toKey(smsVerification.getMobile(), smsVerification.getScope()),
                         smsVerification,
-                        smsVerification.getExpires());
+                        smsVerification.getExpires().getSeconds(), SECONDS);
     }
 
     private String toKey(MobilePhoneNumber mobile, SmsVerificationScope scope) {
@@ -56,7 +64,7 @@ public class RedisSmsVerificationRepository implements SmsVerificationRepository
     }
 
     private void remove(MobilePhoneNumber mobile, SmsVerificationScope scope) {
-        redisTemplate.delete(toKey(mobile, scope));
+        deleteFromRedis.delete(toKey(mobile, scope));
     }
 
 }

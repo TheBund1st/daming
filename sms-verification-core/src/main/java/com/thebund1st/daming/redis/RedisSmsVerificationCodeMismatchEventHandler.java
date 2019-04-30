@@ -26,7 +26,7 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
 
     private static final String DELIMITER = ",";
     private final StringRedisTemplate redisTemplate;
-
+    private final DeleteFromRedis deleteFromRedis;
     private final DomainEventPublisher domainEventPublisher;
 
     private final Clock clock;
@@ -64,7 +64,7 @@ public class RedisSmsVerificationCodeMismatchEventHandler {
     }
 
     private void remove(String key) {
-        redisTemplate.delete(key);
+        deleteFromRedis.delete(key);
     }
 
     private Long toAttempts(List<Object> attempts) {
