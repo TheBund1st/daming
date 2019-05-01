@@ -12,7 +12,7 @@ import static org.springframework.http.HttpStatus.ACCEPTED;
 
 @RequiredArgsConstructor
 @RestController
-public class SmsVerificationRestController {
+public class SendSmsVerificationCodeRestController {
 
     private final SmsVerificationCommandHandler smsVerificationCommandHandler;
 
