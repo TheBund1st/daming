@@ -2,6 +2,7 @@ package com.thebund1st.daming.boot.jwt
 
 
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
+import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer
 import com.thebund1st.daming.jwt.key.JwtKeyLoader
 import foo.bar.WithCustomizedJwtSigningKeyLoader
 
@@ -34,6 +35,21 @@ class JwtConfigurationTest extends AbstractAutoConfigurationTest {
         then.run { it ->
             JwtKeyLoader actual = it.getBean("smsVerificationJwtSigningKeyLoader")
             assert actual instanceof WithCustomizedJwtSigningKeyLoader.CustomizedJwtKeyLoader
+        }
+    }
+
+    def "it should skip built-in SmsVerificationIssuer given daming.jwt is disabled"() {
+
+        when:
+        def then = this.contextRunner
+                .withPropertyValues(
+                "daming.jwt.enabled=false"
+        )
+
+        then:
+        then.run { it ->
+            def beansOfType = it.getBeansOfType(SmsVerifiedJwtIssuer)
+            assert beansOfType.size() == 0
         }
     }
 

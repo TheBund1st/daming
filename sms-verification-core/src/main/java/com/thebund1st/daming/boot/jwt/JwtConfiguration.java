@@ -10,11 +10,13 @@ import com.thebund1st.daming.time.Clock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+@ConditionalOnProperty(prefix = "daming.jwt", name = "enabled", havingValue = "true", matchIfMissing = true)
 @RequiredArgsConstructor
 @Configuration
 @Import({FileJwtKeyConfiguration.class, OssJwtKeyConfiguration.class})
