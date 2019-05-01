@@ -3,6 +3,7 @@ package com.thebund1st.daming.boot.jwt;
 import com.thebund1st.daming.boot.aliyun.oss.OssJwtKeyConfiguration;
 import com.thebund1st.daming.boot.jwt.key.file.FileJwtKeyConfiguration;
 import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer;
+import com.thebund1st.daming.jwt.key.JwtKeyLoader;
 import com.thebund1st.daming.jwt.key.JwtPrivateKeyLoader;
 import com.thebund1st.daming.jwt.key.KeyBytesLoader;
 import com.thebund1st.daming.time.Clock;
@@ -34,7 +35,9 @@ public class JwtConfiguration {
 
     @ConditionalOnMissingBean(SmsVerifiedJwtIssuer.class)
     @Bean
-    public SmsVerifiedJwtIssuer smsVerifiedJwtIssuer(Clock clock, JwtPrivateKeyLoader jwtPrivateKeyLoader) {
+    public SmsVerifiedJwtIssuer smsVerifiedJwtIssuer(Clock clock,
+                                                     @Qualifier("smsVerificationJwtSigningKeyLoader")
+                                                     JwtKeyLoader jwtPrivateKeyLoader) {
         SmsVerifiedJwtIssuer issuer = new SmsVerifiedJwtIssuer(clock, jwtPrivateKeyLoader.getKey());
         issuer.setExpires(jwtProperties().getExpires());
         return issuer;
