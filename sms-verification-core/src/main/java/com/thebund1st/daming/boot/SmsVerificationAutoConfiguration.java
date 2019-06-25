@@ -2,6 +2,7 @@ package com.thebund1st.daming.boot;
 
 import com.thebund1st.daming.boot.aliyun.sms.AliyunSmsConfiguration;
 import com.thebund1st.daming.boot.application.ApplicationConfiguration;
+import com.thebund1st.daming.boot.core.ByPassConfiguration;
 import com.thebund1st.daming.boot.core.CoreConfiguration;
 import com.thebund1st.daming.boot.core.SmsVerificationCodeConfiguration;
 import com.thebund1st.daming.boot.core.SmsVerificationScopeConfiguration;
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.Import;
         "com.thebund1st.daming.web",
 })
 @Import({
+        ByPassConfiguration.class,
         EndpointsConfiguration.class,
         AliyunSmsConfiguration.class,
         RedisConfiguration.class,

@@ -22,12 +22,16 @@ class CoreConfigurationTest extends AbstractAutoConfigurationTest {
     def "it should skip default SmsVerificationCodeGenerator given customized configuration"() {
 
         when:
-        def contextRunner = this.contextRunner.withPropertyValues("daming.sms.verification.bypass=true")
+        def contextRunner = this.contextRunner.withPropertyValues(
+                "daming.sms.verification.bypass.enabled=true",
+                "daming.sms.verification.bypass.value=111111",
+        )
 
         then:
         contextRunner.run { it ->
             SmsVerificationCodeGenerator actual = it.getBean(SmsVerificationCodeGenerator)
             assert actual instanceof FixedSmsVerificationCode
+            assert actual.value == "111111"
         }
     }
 
@@ -46,7 +50,7 @@ class CoreConfigurationTest extends AbstractAutoConfigurationTest {
     def "it should skip default SmsVerificationCodePattern given customized configuration"() {
 
         when:
-        def contextRunner = this.contextRunner.withPropertyValues("daming.sms.verification.bypass=true")
+        def contextRunner = this.contextRunner.withPropertyValues("daming.sms.verification.bypass.enabled=true")
 
         then:
         contextRunner.run { it ->
