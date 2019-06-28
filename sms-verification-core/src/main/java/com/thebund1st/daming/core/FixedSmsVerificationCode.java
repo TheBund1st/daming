@@ -1,15 +1,16 @@
 package com.thebund1st.daming.core;
 
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.thebund1st.daming.core.SmsVerificationCode.smsVerificationCodeOf;
 
 @Slf4j
+@RequiredArgsConstructor
 public class FixedSmsVerificationCode implements SmsVerificationCodePattern, SmsVerificationCodeGenerator {
 
-    @Setter
-    private String value = "123456";
+    private final String value;
 
     @Override
     public SmsVerificationCode generate() {

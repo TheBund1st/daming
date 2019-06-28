@@ -21,16 +21,14 @@ import javax.annotation.PostConstruct;
 public class BypassConfiguration {
 
     @Setter
-    private String value;
+    private String value = "123456";
 
     @Autowired
     private DefaultSmsVerificationCodeSender defaultSmsVerificationCodeSender;
 
     @Bean
     public FixedSmsVerificationCode fixedSmsVerificationCode() {
-        FixedSmsVerificationCode bean = new FixedSmsVerificationCode();
-        bean.setValue(value);
-        return bean;
+        return new FixedSmsVerificationCode(value);
     }
 
     @PostConstruct

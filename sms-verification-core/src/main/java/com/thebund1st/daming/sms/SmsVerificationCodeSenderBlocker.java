@@ -11,6 +11,8 @@ public class SmsVerificationCodeSenderBlocker implements SmsVerificationCodeSend
 
     @Override
     public boolean preHandle(SmsVerification verification) {
+        log.debug("Block sending [{}] code to [{}] due to blocker is enabled",
+                verification.getScope(), verification.getMobile());
         return false;
     }
 }

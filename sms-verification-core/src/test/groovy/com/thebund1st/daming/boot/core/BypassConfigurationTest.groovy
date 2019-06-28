@@ -28,4 +28,22 @@ class BypassConfigurationTest extends AbstractAutoConfigurationTest {
         }
     }
 
+    def "it should use default fixed bypass code given no customized configuration"() {
+
+        when:
+        def contextRunner = this.contextRunner.withPropertyValues(
+                "daming.sms.verification.bypass.enabled=true",
+        )
+
+        then:
+        contextRunner.run { it ->
+            SmsVerificationCodeGenerator actual = it.getBean(SmsVerificationCodeGenerator)
+            assert actual instanceof FixedSmsVerificationCode
+            assert actual.value == "123456"
+
+            DefaultSmsVerificationCodeSender sender = it.getBean(SmsVerificationCodeSender)
+            assert sender.interceptors.count { i -> i instanceof SmsVerificationCodeSenderBlocker } == 1
+        }
+    }
+
 }
