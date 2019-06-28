@@ -1,20 +1,15 @@
 package com.thebund1st.daming.sms
 
-import com.thebund1st.daming.core.SmsVerificationCodeSender
-import com.thebund1st.daming.core.SmsVerification
+
 import spock.lang.Specification
 
 import static com.thebund1st.daming.core.MobilePhoneNumber.mobilePhoneNumberOf
 import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
 
-class WhitelistSmsVerificationCodeSenderTest extends Specification {
+class WhitelistSmsVerificationCodeSenderInterceptorTest extends Specification {
 
-    private WhitelistSmsVerificationCodeSender subject
-    private SmsVerificationCodeSender target = Mock()
+    private WhitelistSmsVerificationCodeSenderInterceptor subject = new WhitelistSmsVerificationCodeSenderInterceptor()
 
-    def setup() {
-        subject = new WhitelistSmsVerificationCodeSender(target)
-    }
 
     def "it should block sms verification code sending given whitelist is enabled and the mobile is not in the list"() {
 
@@ -25,10 +20,10 @@ class WhitelistSmsVerificationCodeSenderTest extends Specification {
         subject.setWhitelist(['13917777788'].collect { mobilePhoneNumberOf(it) })
 
         when:
-        subject.send(verification)
+        def result = subject.preHandle(verification)
 
         then:
-        0 * target.send(_ as SmsVerification)
+        assert !result
     }
 
     def "it should continue sms verification code sending given whitelist is enabled and the mobile is in the list"() {
@@ -40,10 +35,10 @@ class WhitelistSmsVerificationCodeSenderTest extends Specification {
         subject.setWhitelist(['13917777711'].collect { mobilePhoneNumberOf(it) })
 
         when:
-        subject.send(verification)
+        def result = subject.preHandle(verification)
 
         then:
-        1 * target.send(verification)
+        assert result
     }
 
     def "it should continue sms verification code sending given whitelist is disable"() {
@@ -52,9 +47,9 @@ class WhitelistSmsVerificationCodeSenderTest extends Specification {
         def verification = aSmsVerification().sendTo('13917777711').build()
 
         when:
-        subject.send(verification)
+        def result = subject.preHandle(verification)
 
         then:
-        1 * target.send(verification)
+        assert result
     }
 }

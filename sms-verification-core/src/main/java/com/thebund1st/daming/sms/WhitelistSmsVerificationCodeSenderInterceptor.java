@@ -2,37 +2,33 @@ package com.thebund1st.daming.sms;
 
 import com.thebund1st.daming.core.MobilePhoneNumber;
 import com.thebund1st.daming.core.SmsVerification;
-import com.thebund1st.daming.core.SmsVerificationCodeSender;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @since 0.9.6
+ */
 @Slf4j
-public class WhitelistSmsVerificationCodeSender implements SmsVerificationCodeSender {
-
-    @Getter
-    private final SmsVerificationCodeSender target;
+@ToString
+public class WhitelistSmsVerificationCodeSenderInterceptor implements SmsVerificationCodeSenderInterceptor {
 
     @Getter
     @Setter
     private List<MobilePhoneNumber> whitelist = new ArrayList<>();
 
-    public WhitelistSmsVerificationCodeSender(SmsVerificationCodeSender target) {
-        this.target = target;
-    }
-
     @Override
-    public void send(SmsVerification verification) {
+    public boolean preHandle(SmsVerification verification) {
         if (whitelistIsDisabled() || sentToWhitelist(verification)) {
-            log.debug("Attempt to send [{}] code to [{}]", verification.getScope(), verification.getMobile());
-            target.send(verification);
-            log.info("[{}] code is sent to [{}]", verification.getScope(), verification.getMobile());
+            return true;
         } else {
-            log.info("Skip sending [{}] code to [{}] due to whitelist",
+            log.debug("Block sending [{}] code to non-whitelist [{}] due to whitelist is enabled",
                     verification.getScope(), verification.getMobile());
+            return false;
         }
     }
 

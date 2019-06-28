@@ -39,8 +39,8 @@ class SmsVerificationCommandHandlerTest extends Specification {
     private SmsVerificationRepository smsVerificationStore = Mock()
 
     @SuppressWarnings("GroovyAssignabilityCheck")
-    @SpringBean
-    private SmsVerificationCodeSender smsVerificationSender = Mock(name: "smsVerificationSender")
+    @SpringBean(name = "smsVerificationSenderTarget")
+    private SmsVerificationCodeSender smsVerificationSenderTarget = Mock(name: "smsVerificationSenderTarget")
 
     @SuppressWarnings("GroovyAssignabilityCheck")
     @SpringBean
