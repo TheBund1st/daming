@@ -71,7 +71,7 @@ dependencies {
     testCompile("com.aliyun.oss:aliyun-sdk-oss")
 
     // json
-    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8")
 
     // spring boot meta data
     compileOnly("org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}")
