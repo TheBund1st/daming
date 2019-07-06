@@ -32,19 +32,12 @@ class SmsLoginAcceptanceTest extends Specification {
 
 
     def setup() {
-        this.redisServer = new RedisServer(16480)
-        redisServer.start()
         RestAssured.requestSpecification = new RequestSpecBuilder()
                 .setPort(randomServerPort)
                 .addFilter(new RequestLoggingFilter())
                 .addFilter(new ResponseLoggingFilter())
                 .build()
     }
-
-    def cleanup() {
-        this.redisServer.stop()
-    }
-
 
     def "it should allow login via sms"() {
 

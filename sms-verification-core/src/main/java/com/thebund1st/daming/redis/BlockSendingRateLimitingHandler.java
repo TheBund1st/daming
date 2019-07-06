@@ -6,6 +6,7 @@ import com.thebund1st.daming.security.ratelimiting.RateLimitingHandler;
 import com.thebund1st.daming.time.Clock;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.time.Duration;
@@ -13,6 +14,7 @@ import java.time.Duration;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Slf4j
+@Order(1000)
 public class BlockSendingRateLimitingHandler
         implements RateLimitingHandler<SendSmsVerificationCodeCommand> {
 

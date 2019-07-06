@@ -46,6 +46,9 @@ dependencies {
     // test mobile number generator
     testCompile('com.github.binarywang:java-testdata-generator:1.1.2')
 
+    compile group: 'es.moki.ratelimitj', name: 'ratelimitj-redis', version: '0.6.0'
+
+
     // redis
     compileOnly("org.springframework.boot:spring-boot-starter-data-redis:${springBootVersion}")
     testCompile("org.springframework.boot:spring-boot-starter-data-redis:${springBootVersion}") {

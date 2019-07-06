@@ -25,20 +25,12 @@ class SmsVerificationAcceptanceTest extends Specification {
     @Autowired
     private SmsVerificationCodeSenderStub senderStub
 
-    private RedisServer redisServer
-
     private SmsVerificationStep i
 
     def setup() {
-        this.redisServer = new RedisServer(16380)
-        redisServer.start()
         RestAssured.port = randomServerPort
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails()
         i = new SmsVerificationStep(senderStub)
-    }
-
-    def cleanup() {
-        this.redisServer.stop()
     }
 
     def "I ask for sms verification code"() {

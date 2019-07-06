@@ -4,8 +4,10 @@ import com.thebund1st.daming.security.ratelimiting.ErrorsFactory;
 import com.thebund1st.daming.security.ratelimiting.RateLimitedAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
+@Import(SlidingWindowConfiguration.class)
 public class RateLimitingConfiguration {
 
     @Bean
