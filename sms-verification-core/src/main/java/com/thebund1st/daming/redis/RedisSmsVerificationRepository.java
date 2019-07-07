@@ -20,7 +20,7 @@ public class RedisSmsVerificationRepository implements SmsVerificationRepository
 
     private final RedisTemplate<String, SmsVerification> redisTemplate;
     private final DeleteFromRedis deleteFromRedis;
-    private String keyPrefix = "sms.verification.";
+    private String keyPrefix = "sms.verification";
 
     public RedisSmsVerificationRepository(RedisTemplate<String, SmsVerification> redisTemplate,
                                           DeleteFromRedis deleteFromRedis) {
