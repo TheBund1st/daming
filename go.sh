@@ -9,4 +9,8 @@ case "$1" in
     docker-compose -f docker/docker-compose.yml down
     docker-compose -f docker/docker-compose.yml up -d
     ;;
+  "stubs")
+    docker-compose -f docker/docker-compose-stubs.yml down
+    docker-compose -f docker/docker-compose-stubs.yml up -d
+    ;;
 esac
