@@ -3,6 +3,7 @@ package com.thebund1st.daming.web
 import com.thebund1st.daming.application.SmsVerificationCommandHandler
 import com.thebund1st.daming.boot.http.EndpointsConfiguration
 import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer
+import io.restassured.module.mockmvc.RestAssuredMockMvc
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -22,4 +23,8 @@ class AbstractWebMvcTest extends Specification {
 
     @SpringBean
     protected SmsVerifiedJwtIssuer smsVerifiedJwtIssuer = Mock()
+
+    def setup() {
+        RestAssuredMockMvc.mockMvc(mockMvc)
+    }
 }

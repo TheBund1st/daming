@@ -10,7 +10,7 @@ configure(subprojects.findAll { it.name != 'gatling' }) {
     buildscript {
         ext {
             lombokVersion = '1.16.20'
-            springBootVersion = '2.0.5.RELEASE'
+            springBootVersion = '2.1.2.RELEASE'
             jjwtVersion = '0.10.5'
         }
         repositories {

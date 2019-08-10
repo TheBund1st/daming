@@ -1,20 +1,23 @@
 buildscript {
     ext {
         byteBuddyVersion = '1.7.11'
+        springContractVersion = '2.1.0.RELEASE'
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:${springContractVersion}"
     }
 }
 
 apply plugin: 'idea'
 apply plugin: 'groovy'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'spring-cloud-contract'
 apply from: "${rootProject.projectDir}/gradle/maven-publish.gradle"
 
 dependencyManagement {
     imports {
-        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Finchley.SR1'
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Greenwich.RELEASE'
     }
     dependencies {
         dependency "org.springframework.data:spring-data-redis:2.1.2.RELEASE"
@@ -34,6 +37,9 @@ dependencies {
     testCompile("net.bytebuddy:byte-buddy-agent:${byteBuddyVersion}")
     testCompile("net.bytebuddy:byte-buddy:${byteBuddyVersion}")
     testCompile 'org.awaitility:awaitility-groovy:3.1.2'
+    testCompile("org.springframework.cloud:spring-cloud-starter-contract-verifier:${springContractVersion}") {
+        force = true
+    }
 
     //aop
     compileOnly("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
@@ -78,6 +84,21 @@ dependencies {
 
     // spring boot meta data
     compileOnly("org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}")
+}
+
+contracts {
+    testFramework = 'Spock'
+    testMode = 'MockMvc'
+    basePackageForTests = 'com.thebund1st.daming.contract'
+    packageWithBaseClasses = "com.thebund1st.daming.contract.base"
+}
+
+sourceSets {
+    test {
+        groovy {
+            srcDir 'build/generated-test-sources/contracts'
+        }
+    }
 }
 
 
