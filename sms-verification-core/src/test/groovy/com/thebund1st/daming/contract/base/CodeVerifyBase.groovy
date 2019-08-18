@@ -1,5 +1,6 @@
 package com.thebund1st.daming.contract.base
 
+import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
 import com.thebund1st.daming.web.AbstractWebMvcTest
 
@@ -11,6 +12,19 @@ class CodeVerifyBase extends AbstractWebMvcTest {
     def setup() {
         handleHappy()
         handleCodeMismatch()
+        handleNotUnderVerification()
+    }
+
+    private void handleNotUnderVerification() {
+        def command = aVerifySmsVerificationCodeCommand()
+                .withScope("DEMO")
+                .sendTo("13912222274")
+                .codeIs("123456")
+                .build()
+
+        smsVerificationHandler.handle(command) >> {
+            throw new MobileIsNotUnderVerificationException(command.mobile, command.scope)
+        }
     }
 
     private void handleCodeMismatch() {

@@ -1,5 +1,6 @@
 package com.thebund1st.daming.web.rest;
 
+import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException;
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException;
 import com.thebund1st.daming.security.ratelimiting.TooManyRequestsException;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
@@ -32,6 +33,16 @@ public abstract class DefaultResponseEntityExceptionHandler extends ResponseEnti
             SmsVerificationCodeMismatchException ex, WebRequest request) {
         Map<String, Object> errorAttributes = getErrorAttributes(request);
         errorAttributes.put("error", "1101");
+        errorAttributes.put("message", ex.getMessage());
+        return handleExceptionInternal(ex, errorAttributes,
+                new HttpHeaders(), HttpStatus.PRECONDITION_FAILED, request);
+    }
+
+    @ExceptionHandler(value = {MobileIsNotUnderVerificationException.class})
+    protected ResponseEntity<Object> handleNotUnderVerification(
+            MobileIsNotUnderVerificationException ex, WebRequest request) {
+        Map<String, Object> errorAttributes = getErrorAttributes(request);
+        errorAttributes.put("error", "1102");
         errorAttributes.put("message", ex.getMessage());
         return handleExceptionInternal(ex, errorAttributes,
                 new HttpHeaders(), HttpStatus.PRECONDITION_FAILED, request);
