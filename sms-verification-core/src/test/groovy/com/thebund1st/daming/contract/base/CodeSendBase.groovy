@@ -12,6 +12,10 @@ import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationSco
 class CodeSendBase extends AbstractWebMvcTest {
 
     def setup() {
+        handleTooManyRequests()
+    }
+
+    private void handleTooManyRequests() {
         def command = aSendSmsVerificationCodeCommand()
                 .with(smsVerificationScopeOf("DEMO"))
                 .sendTo(mobilePhoneNumberOf("13912222274"))

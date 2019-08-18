@@ -28,7 +28,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Validated
 @Transactional
-public class SmsVerificationCommandHandler {
+public abstract class SmsVerificationCommandHandler {
 
     private final SmsVerificationRepository smsVerificationRepository;
 

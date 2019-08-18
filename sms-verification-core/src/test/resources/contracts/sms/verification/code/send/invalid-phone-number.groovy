@@ -5,8 +5,7 @@ import org.springframework.cloud.contract.spec.Contract
 import static org.springframework.cloud.contract.spec.internal.HttpMethods.HttpMethod.POST
 
 Contract.make {
-    ignored()
-    description "fetch by invalid phone"
+    description "POST to send sms verification code, but with invalid phone number"
     request {
         urlPath "/api/sms/verification/code"
         method POST
@@ -15,14 +14,17 @@ Contract.make {
         }
         body([
                 scope : value(consumer(regex('.*')), producer('DEMO')),
-                mobile: value(consumer(regex('^((?!(18522223333|18511112222)).)+$')), producer('18511112222'))
+                mobile: value(consumer(regex('^((?!(18522223333|18511112222)).)+$')), producer('DD18511112222'))
         ])
     }
     response {
-        status 202
+        status 400
         body([
-                msg     : 'phone number is not exist',
-                hasError: true
+                errors: [
+                        [
+                                field: 'mobile',
+                        ]
+                ]
         ])
     }
 }

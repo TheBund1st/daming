@@ -5,6 +5,7 @@ import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -18,13 +19,23 @@ public abstract class DefaultExceptionHandler extends ResponseEntityExceptionHan
     @ExceptionHandler(value = {TooManyRequestsException.class})
     protected ResponseEntity<Object> handleTooManyRequests(
             TooManyRequestsException ex, WebRequest request) {
-        DefaultErrorAttributes errorAttributes = new DefaultErrorAttributes(false);
-        Map<String, Object> errorAttributes1 = errorAttributes.getErrorAttributes(request, false);
-        errorAttributes1.put("error", "1001");
-        errorAttributes1.put("message", ex.getMessage());
-        return handleExceptionInternal(ex, errorAttributes1,
+        Map<String, Object> errorAttributes = getErrorAttributes(request);
+        errorAttributes.put("error", "1001");
+        errorAttributes.put("message", ex.getMessage());
+        return handleExceptionInternal(ex, errorAttributes,
                 new HttpHeaders(), HttpStatus.TOO_MANY_REQUESTS, request);
     }
 
+    private Map<String, Object> getErrorAttributes(WebRequest request) {
+        DefaultErrorAttributes errorAttributes = new DefaultErrorAttributes(false);
+        return errorAttributes.getErrorAttributes(request, false);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        Map<String, Object> errorAttributes = getErrorAttributes(request);
+        return handleExceptionInternal(ex, errorAttributes, headers, status, request);
+    }
 
 }
