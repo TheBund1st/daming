@@ -12,12 +12,17 @@ import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationSco
 class CodeSendBase extends AbstractWebMvcTest {
 
     def setup() {
+        handleTooManyRequests()
+    }
+
+    private void handleTooManyRequests() {
         def command = aSendSmsVerificationCodeCommand()
                 .with(smsVerificationScopeOf("DEMO"))
                 .sendTo(mobilePhoneNumberOf("13912222274"))
                 .build()
         smsVerificationHandler.handle(command) >> {
-            throw new TooManyRequestsException(Errors.empty().append("Too many requests"))
+            throw new TooManyRequestsException(Errors.empty()
+                    .append("Only 1 request is allowed by [DEMO][13912222274] in every 15 seconds"))
         }
     }
 

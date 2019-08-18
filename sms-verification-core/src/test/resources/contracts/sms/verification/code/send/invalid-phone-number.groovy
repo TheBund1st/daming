@@ -5,7 +5,7 @@ import org.springframework.cloud.contract.spec.Contract
 import static org.springframework.cloud.contract.spec.internal.HttpMethods.HttpMethod.POST
 
 Contract.make {
-    description "POST to happy sms verification code"
+    description "POST to send sms verification code, but with invalid phone number"
     request {
         urlPath "/api/sms/verification/code"
         method POST
@@ -14,14 +14,17 @@ Contract.make {
         }
         body([
                 scope : value(consumer(regex('.*')), producer('DEMO')),
-                mobile: value(consumer(regex('13912222274')), producer('13912222274'))
+                mobile: value(consumer(regex('^((?!(18522223333|18511112222)).)+$')), producer('DD18511112222'))
         ])
     }
     response {
-        status 429
+        status 400
         body([
-                error  : '1001',
-                message: 'Only 1 request is allowed by [DEMO][13912222274] in every 15 seconds'
+                errors: [
+                        [
+                                field: 'mobile',
+                        ]
+                ]
         ])
     }
 }
