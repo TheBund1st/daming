@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @ConditionalOnProperty(prefix = "daming.jwt", name = "enabled", havingValue = "true", matchIfMissing = true)
 @RequiredArgsConstructor
 @RestController
@@ -21,7 +23,7 @@ public class VerifySmsVerificationCodeRestController {
 
 
     @DeleteMapping("#{endpointProperties.verifySmsVerificationCodePath}")
-    public SmsVerifiedJwtResource handle(@RequestBody VerifySmsVerificationCodeCommand command) {
+    public SmsVerifiedJwtResource handle(@Valid @RequestBody VerifySmsVerificationCodeCommand command) {
         smsVerificationCommandHandler.handle(command);
         return new SmsVerifiedJwtResource(smsVerifiedJwtIssuer.issue(command.getMobile(), command.getScope()));
     }
