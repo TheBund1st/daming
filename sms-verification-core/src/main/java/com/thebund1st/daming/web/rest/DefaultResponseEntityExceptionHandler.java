@@ -1,5 +1,6 @@
 package com.thebund1st.daming.web.rest;
 
+import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException;
 import com.thebund1st.daming.security.ratelimiting.TooManyRequestsException;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +25,16 @@ public abstract class DefaultResponseEntityExceptionHandler extends ResponseEnti
         errorAttributes.put("message", ex.getMessage());
         return handleExceptionInternal(ex, errorAttributes,
                 new HttpHeaders(), HttpStatus.TOO_MANY_REQUESTS, request);
+    }
+
+    @ExceptionHandler(value = {SmsVerificationCodeMismatchException.class})
+    protected ResponseEntity<Object> handleCodeMismatch(
+            SmsVerificationCodeMismatchException ex, WebRequest request) {
+        Map<String, Object> errorAttributes = getErrorAttributes(request);
+        errorAttributes.put("error", "1101");
+        errorAttributes.put("message", ex.getMessage());
+        return handleExceptionInternal(ex, errorAttributes,
+                new HttpHeaders(), HttpStatus.PRECONDITION_FAILED, request);
     }
 
     private Map<String, Object> getErrorAttributes(WebRequest request) {

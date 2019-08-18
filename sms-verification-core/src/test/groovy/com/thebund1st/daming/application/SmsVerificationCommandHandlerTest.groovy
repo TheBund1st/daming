@@ -228,7 +228,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
         and: "throw"
         def thrown = thrown(SmsVerificationCodeMismatchException)
         assert thrown.getMessage() ==
-                "The actual code [654321] does not match the code [123456] sent to [134****6789][Login]."
+                "The actual code [654321] does not match the code sent to [134****6789][Login]."
     }
 
     def "it should throw given the verification does not exist"() {
