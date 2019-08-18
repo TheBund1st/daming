@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
 @WebMvcTest
-@Import(EndpointsConfiguration)
+@Import([EndpointsConfiguration, MockMvcBuilderCustomizers])
 class AbstractWebMvcTest extends Specification {
 
     @Autowired

@@ -19,5 +19,9 @@ Contract.make {
     }
     response {
         status 429
+        body([
+                error  : '1001',
+                message: 'Only 1 request is allowed by [DEMO][13912222274] in every 15 seconds'
+        ])
     }
 }

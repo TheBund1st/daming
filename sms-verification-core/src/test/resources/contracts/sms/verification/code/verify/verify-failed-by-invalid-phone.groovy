@@ -1,10 +1,11 @@
-package contracts.sms.verification.code.send
+package contracts.sms.verification.code.verify
 
 import org.springframework.cloud.contract.spec.Contract
 
 import static org.springframework.cloud.contract.spec.internal.HttpMethods.HttpMethod.POST
 
 Contract.make {
+    ignored()
     description "verify failed by invalid phone"
     request {
         urlPath "/api/sms/verification/code/verify"
