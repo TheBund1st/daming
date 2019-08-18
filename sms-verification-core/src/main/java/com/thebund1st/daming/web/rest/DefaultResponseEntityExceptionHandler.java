@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.Map;
 
 @ControllerAdvice
-public abstract class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
+public abstract class DefaultResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {TooManyRequestsException.class})
     protected ResponseEntity<Object> handleTooManyRequests(
