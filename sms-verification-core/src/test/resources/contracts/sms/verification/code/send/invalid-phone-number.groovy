@@ -14,7 +14,7 @@ Contract.make {
         }
         body([
                 scope : value(consumer(regex('.*')), producer('DEMO')),
-                mobile: value(consumer(regex('^((?!(18522223333|18511112222)).)+$')), producer('DD18511112222'))
+                mobile: value(consumer(regex('18500001111')), producer('DD18511112222'))
         ])
     }
     response {
