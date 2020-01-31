@@ -2,7 +2,6 @@ package com.thebund1st.daming.application
 
 import com.thebund1st.daming.core.DomainEventPublisher
 import com.thebund1st.daming.core.SmsVerification
-import com.thebund1st.daming.core.SmsVerificationCodeSender
 import com.thebund1st.daming.core.SmsVerificationRepository
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
@@ -37,10 +36,6 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
     @SpringBean
     private SmsVerificationRepository smsVerificationStore = Mock()
-
-    @SuppressWarnings("GroovyAssignabilityCheck")
-    @SpringBean(name = "smsVerificationSenderTarget")
-    private SmsVerificationCodeSender smsVerificationSenderTarget = Mock(name: "smsVerificationSenderTarget")
 
     @SuppressWarnings("GroovyAssignabilityCheck")
     @SpringBean
