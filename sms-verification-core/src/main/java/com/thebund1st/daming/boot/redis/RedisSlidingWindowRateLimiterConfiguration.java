@@ -25,7 +25,7 @@ import java.util.Set;
 @Configuration
 @ConditionalOnProperty(prefix = "daming.sms.verification.code.sliding.window", name = "enabled",
         havingValue = "true")
-public class RedisRateLimiterConfiguration {
+public class RedisSlidingWindowRateLimiterConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(value = RequestRateLimiterFactory.class)
