@@ -1,6 +1,6 @@
 package com.foo.bar
 
-import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler
+import com.thebund1st.daming.adapter.redis.RedisSendSmsVerificationCodeNextWindowRateLimiter
 import com.thebund1st.daming.security.ratelimiting.Errors
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -10,10 +10,10 @@ import static com.thebund1st.daming.commands.SendSmsVerificationCodeCommandFixtu
 import static java.util.concurrent.TimeUnit.SECONDS
 import static org.awaitility.Awaitility.await
 
-class BlockSendingRateLimitingHandlerTest extends AbstractSpringDataRedis1Test {
+class RedisSendSmsVerificationCodeNextWindowRateLimiterTest extends AbstractSpringDataRedis1Test {
 
     @Autowired
-    private BlockSendingRateLimitingHandler subject
+    private RedisSendSmsVerificationCodeNextWindowRateLimiter subject
 
     def setup() {
         subject.setExpires(Duration.ofSeconds(2))

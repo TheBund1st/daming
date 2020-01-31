@@ -1,7 +1,6 @@
-package com.thebund1st.daming.adapter.redis.driven
+package com.thebund1st.daming.adapter.redis
 
 import com.thebund1st.daming.redis.AbstractDataRedisTest
-import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler
 import com.thebund1st.daming.security.ratelimiting.TooManyRequestsException
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -12,10 +11,10 @@ import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
 import static java.util.concurrent.TimeUnit.SECONDS
 import static org.awaitility.Awaitility.await
 
-class RedisOnlyOneSmsVerificationBlockerTest extends AbstractDataRedisTest {
+class RedisSendSmsVerificationCodeNextWindowRateLimiterTest extends AbstractDataRedisTest {
 
     @Autowired
-    private BlockSendingRateLimitingHandler subject
+    private RedisSendSmsVerificationCodeNextWindowRateLimiter subject
 
     def setup() {
         subject.setExpires(Duration.ofSeconds(2))

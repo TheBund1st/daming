@@ -2,7 +2,7 @@ package com.thebund1st.daming.boot.redis;
 
 import com.thebund1st.daming.application.interceptor.SendSmsVerificationCodeCommandHandlerInterceptorAspect;
 import com.thebund1st.daming.boot.security.SlidingWindowProperties;
-import com.thebund1st.daming.redis.RedisSlidingWindowByMobileRateLimiter;
+import com.thebund1st.daming.adapter.ratelimitj.RateLimitJSendSmsVerificationCodeSlidingWindowRateLimiter;
 import es.moki.ratelimitj.core.limiter.request.RequestLimitRule;
 import es.moki.ratelimitj.core.limiter.request.RequestRateLimiter;
 import es.moki.ratelimitj.core.limiter.request.RequestRateLimiterFactory;
@@ -46,21 +46,21 @@ public class RedisSlidingWindowRateLimiterConfiguration {
     }
 
     @Bean
-    public RedisSlidingWindowByMobileRateLimiter redisSlidingWindowByMobileRateLimiter(
+    public RateLimitJSendSmsVerificationCodeSlidingWindowRateLimiter redisSlidingWindowByMobileRateLimiter(
             RequestRateLimiterFactory redisRateLimiterFactory, SlidingWindowProperties slidingWindowProperties) {
         Set<RequestLimitRule> rules = Collections.singleton(
                 RequestLimitRule.of(slidingWindowProperties.getDuration(), slidingWindowProperties.getLimit()));
         RequestRateLimiter requestRateLimiter = redisRateLimiterFactory.getInstance(rules);
-        return new RedisSlidingWindowByMobileRateLimiter(requestRateLimiter);
+        return new RateLimitJSendSmsVerificationCodeSlidingWindowRateLimiter(requestRateLimiter);
     }
 
 
     @Bean
     public SendSmsVerificationCodeCommandHandlerInterceptorAspect slidingWindowRateLimiterForSendSmsVerificationCode(
-            RedisSlidingWindowByMobileRateLimiter redisSlidingWindowByMobileRateLimiter) {
+            RateLimitJSendSmsVerificationCodeSlidingWindowRateLimiter rateLimitJSendSmsVerificationCodeSlidingWindowRateLimiter) {
         SendSmsVerificationCodeCommandHandlerInterceptorAspect aspect =
                 new SendSmsVerificationCodeCommandHandlerInterceptorAspect();
-        aspect.setCommandHandlerInterceptor(redisSlidingWindowByMobileRateLimiter);
+        aspect.setCommandHandlerInterceptor(rateLimitJSendSmsVerificationCodeSlidingWindowRateLimiter);
         aspect.setOrder(1001);
         return aspect;
     }

@@ -1,4 +1,4 @@
-package com.thebund1st.daming.redis;
+package com.thebund1st.daming.adapter.redis;
 
 import com.thebund1st.daming.application.interceptor.SendSmsVerificationCodeCommandHandlerInterceptor;
 import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand;
@@ -17,11 +17,8 @@ import java.time.Duration;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Slf4j
-//@Order(1000)
-public class BlockSendingRateLimitingHandler
-        implements
-//        RateLimitingHandler<SendSmsVerificationCodeCommand>,
-        SendSmsVerificationCodeCommandHandlerInterceptor {
+public class RedisSendSmsVerificationCodeNextWindowRateLimiter
+        implements SendSmsVerificationCodeCommandHandlerInterceptor {
 
     private final StringRedisTemplate redisTemplate;
     private final Clock clock;
@@ -29,13 +26,14 @@ public class BlockSendingRateLimitingHandler
     private Duration expires = Duration.ofSeconds(15);
     private String keyPrefix = "sms.verification.rate.limiting.1.send.in.every.x.seconds";
 
-    public BlockSendingRateLimitingHandler(StringRedisTemplate redisTemplate,
-                                           Clock clock) {
+    public RedisSendSmsVerificationCodeNextWindowRateLimiter(StringRedisTemplate redisTemplate,
+                                                             Clock clock) {
         this.redisTemplate = redisTemplate;
         this.clock = clock;
     }
 
     //    @Override
+    @Deprecated
     public void check(SendSmsVerificationCodeCommand command, Errors errors) {
         //noinspection ConstantConditions
         if (itShouldBlockThe(command)) {
@@ -61,6 +59,7 @@ public class BlockSendingRateLimitingHandler
     }
 
     //    @Override
+    @Deprecated
     public void count(SendSmsVerificationCodeCommand command) {
         registerBlockerWith(command.getMobile(), command.getScope());
     }

@@ -1,9 +1,10 @@
 package com.thebund1st.daming.boot.redis
 
+
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 import com.thebund1st.daming.core.SmsVerification
 import com.thebund1st.daming.core.SmsVerificationRepository
-import com.thebund1st.daming.redis.BlockSendingRateLimitingHandler
+import com.thebund1st.daming.adapter.redis.RedisSendSmsVerificationCodeNextWindowRateLimiter
 import com.thebund1st.daming.redis.RedisSmsVerificationCodeMismatchEventHandler
 import com.thebund1st.daming.redis.RedisSmsVerificationRepository
 import foo.bar.WithCustomizedRedisTemplate
@@ -75,8 +76,8 @@ class RedisConfigurationTest extends AbstractAutoConfigurationTest {
 
         then:
         contextRunner.run { it ->
-            BlockSendingRateLimitingHandler actual = it.
-                    getBean(BlockSendingRateLimitingHandler)
+            RedisSendSmsVerificationCodeNextWindowRateLimiter actual = it.
+                    getBean(RedisSendSmsVerificationCodeNextWindowRateLimiter)
             assert actual.expires == Duration.ofSeconds(20)
         }
     }
