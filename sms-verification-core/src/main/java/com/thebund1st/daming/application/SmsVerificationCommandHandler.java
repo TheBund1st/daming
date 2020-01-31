@@ -1,5 +1,6 @@
 package com.thebund1st.daming.application;
 
+import com.thebund1st.daming.application.interceptor.CommandHandler;
 import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand;
 import com.thebund1st.daming.commands.VerifySmsVerificationCodeCommand;
 import com.thebund1st.daming.core.DomainEventPublisher;
@@ -43,6 +44,7 @@ public abstract class SmsVerificationCommandHandler {
     private Duration expires = Duration.ofSeconds(60);
 
     @RateLimited(action = "sendSmsVerificationCodeCommand")
+    @CommandHandler
     public SmsVerification handle(@Valid SendSmsVerificationCodeCommand command) {
         SmsVerificationCode code = smsVerificationCodeGenerator.generate();
         SmsVerification verification = new SmsVerification();

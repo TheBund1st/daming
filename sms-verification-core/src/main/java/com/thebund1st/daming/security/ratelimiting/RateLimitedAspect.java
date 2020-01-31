@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 @Aspect
 public class RateLimitedAspect {
 
-    @Autowired
+    @Autowired(required=false)
     private List<RateLimitingHandler<SendSmsVerificationCodeCommand>> sendSmsVerificationCodeRateLimitingHandlers
             = new ArrayList<>();
 

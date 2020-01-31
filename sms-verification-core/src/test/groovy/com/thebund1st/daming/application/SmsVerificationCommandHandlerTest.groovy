@@ -78,7 +78,7 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
         and:
         1 * eventPublisher.publish(_ as SmsVerificationRequestedEvent)
-        1 * rateLimitingHandler.count(command)
+        1 * rateLimitingHandler.postHandle(command, verification)
     }
 
     def "it should skip given invalid mobile"() {

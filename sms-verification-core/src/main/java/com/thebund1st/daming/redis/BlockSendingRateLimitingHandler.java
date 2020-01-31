@@ -6,7 +6,6 @@ import com.thebund1st.daming.core.MobilePhoneNumber;
 import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationScope;
 import com.thebund1st.daming.security.ratelimiting.Errors;
-import com.thebund1st.daming.security.ratelimiting.RateLimitingHandler;
 import com.thebund1st.daming.security.ratelimiting.TooManyRequestsException;
 import com.thebund1st.daming.time.Clock;
 import lombok.Setter;
@@ -21,7 +20,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @Slf4j
 @Order(1000)
 public class BlockSendingRateLimitingHandler
-        implements RateLimitingHandler<SendSmsVerificationCodeCommand>,
+        implements
+//        RateLimitingHandler<SendSmsVerificationCodeCommand>,
         SendSmsVerificationCodeCommandHandlerInterceptor {
 
     private final StringRedisTemplate redisTemplate;
@@ -36,7 +36,7 @@ public class BlockSendingRateLimitingHandler
         this.clock = clock;
     }
 
-    @Override
+//    @Override
     public void check(SendSmsVerificationCodeCommand command, Errors errors) {
         //noinspection ConstantConditions
         if (itShouldBlockThe(command)) {
@@ -61,7 +61,7 @@ public class BlockSendingRateLimitingHandler
         return String.format("%s.%s.%s", keyPrefix, mobile.getValue(), scope.getValue());
     }
 
-    @Override
+//    @Override
     public void count(SendSmsVerificationCodeCommand command) {
         registerBlockerWith(command.getMobile(), command.getScope());
     }
