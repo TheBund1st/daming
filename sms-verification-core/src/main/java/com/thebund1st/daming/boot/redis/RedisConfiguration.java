@@ -11,7 +11,7 @@ import com.thebund1st.daming.json.mixin.SmsVerificationMixin;
 import com.thebund1st.daming.redis.DeleteFromRedis;
 import com.thebund1st.daming.redis.DeleteFromRedisUsingRestTemplate;
 import com.thebund1st.daming.redis.RedisSmsVerificationCodeMismatchEventHandler;
-import com.thebund1st.daming.redis.RedisSmsVerificationRepository;
+import com.thebund1st.daming.adapter.redis.RedisSmsVerificationRepository;
 import com.thebund1st.daming.time.Clock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;

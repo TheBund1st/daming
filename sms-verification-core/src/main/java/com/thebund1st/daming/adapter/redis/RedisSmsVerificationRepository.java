@@ -1,10 +1,11 @@
-package com.thebund1st.daming.redis;
+package com.thebund1st.daming.adapter.redis;
 
 import com.thebund1st.daming.core.MobilePhoneNumber;
 import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationRepository;
 import com.thebund1st.daming.core.SmsVerificationScope;
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException;
+import com.thebund1st.daming.redis.DeleteFromRedis;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

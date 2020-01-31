@@ -1,9 +1,9 @@
-package com.thebund1st.daming.web.rest;
+package com.thebund1st.daming.adapter.spring.web.rest;
 
+import com.thebund1st.daming.adapter.spring.web.rest.resources.SmsVerifiedJwtResource;
 import com.thebund1st.daming.application.SmsVerificationCommandHandler;
 import com.thebund1st.daming.commands.VerifySmsVerificationCodeCommand;
 import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer;
-import com.thebund1st.daming.web.rest.resources.SmsVerifiedJwtResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.DeleteMapping;

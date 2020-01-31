@@ -6,7 +6,7 @@ import com.thebund1st.daming.core.SmsVerification
 import com.thebund1st.daming.core.SmsVerificationRepository
 import com.thebund1st.daming.adapter.redis.RedisSendSmsVerificationCodeNextWindowRateLimiter
 import com.thebund1st.daming.redis.RedisSmsVerificationCodeMismatchEventHandler
-import com.thebund1st.daming.redis.RedisSmsVerificationRepository
+import com.thebund1st.daming.adapter.redis.RedisSmsVerificationRepository
 import foo.bar.WithCustomizedRedisTemplate
 import foo.bar.WithCustomizedSmsVerificationStore
 import org.springframework.data.redis.core.RedisTemplate

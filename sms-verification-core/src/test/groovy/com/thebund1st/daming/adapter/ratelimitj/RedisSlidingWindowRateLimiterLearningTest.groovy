@@ -1,4 +1,4 @@
-package com.thebund1st.daming.redis
+package com.thebund1st.daming.adapter.ratelimitj
 
 
 import es.moki.ratelimitj.core.limiter.request.RequestLimitRule

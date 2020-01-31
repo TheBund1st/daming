@@ -2,9 +2,8 @@ package com.thebund1st.daming.boot.aliyun.sms
 
 
 import com.aliyuncs.IAcsClient
-import com.thebund1st.daming.aliyun.sms.AliyunSmsVerificationCodeSender
+import com.thebund1st.daming.adapter.aliyun.sms.AliyunSmsVerificationCodeSender
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
-import com.thebund1st.daming.boot.aliyun.AliyunConfiguration
 import com.thebund1st.daming.boot.aliyun.AliyunCredentialsProperties
 import com.thebund1st.daming.boot.aliyun.CustomizedAcsClient
 import foo.bar.WithCustomizedAcsClient

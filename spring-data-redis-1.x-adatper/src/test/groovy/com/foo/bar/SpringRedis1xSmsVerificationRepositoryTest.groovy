@@ -3,7 +3,7 @@ package com.foo.bar
 
 import com.thebund1st.daming.core.TestingVerificationCode
 import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
-import com.thebund1st.daming.redis.RedisSmsVerificationRepository
+import com.thebund1st.daming.adapter.redis.RedisSmsVerificationRepository
 import org.springframework.beans.factory.annotation.Autowired
 
 import java.util.concurrent.TimeUnit

@@ -1,4 +1,4 @@
-package com.thebund1st.daming.web.rest;
+package com.thebund1st.daming.adapter.spring.web.rest;
 
 import com.thebund1st.daming.application.SmsVerificationCommandHandler;
 import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand;

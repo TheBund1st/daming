@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @ComponentScan(basePackages = {
-        "com.thebund1st.daming.web",
+        "com.thebund1st.daming.adapter.spring.web",
 })
 @Import({
         EndpointsConfiguration.class,

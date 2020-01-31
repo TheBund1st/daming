@@ -1,4 +1,4 @@
-package com.thebund1st.daming.aliyun.sms;
+package com.thebund1st.daming.adapter.aliyun.sms;
 
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;

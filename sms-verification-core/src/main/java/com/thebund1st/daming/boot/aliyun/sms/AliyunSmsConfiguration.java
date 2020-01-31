@@ -4,7 +4,7 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import com.thebund1st.daming.aliyun.sms.AliyunSmsVerificationCodeSender;
+import com.thebund1st.daming.adapter.aliyun.sms.AliyunSmsVerificationCodeSender;
 import com.thebund1st.daming.boot.aliyun.AliyunConfiguration;
 import com.thebund1st.daming.boot.aliyun.AliyunCredentialsProperties;
 import lombok.RequiredArgsConstructor;
