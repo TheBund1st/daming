@@ -1,4 +1,4 @@
-package com.thebund1st.daming.eventhandling;
+package com.thebund1st.daming.adapter.spring.event;
 
 import com.thebund1st.daming.events.SmsVerificationCodeVerifiedEvent;
 import com.thebund1st.daming.redis.RedisSmsVerificationCodeMismatchEventHandler;

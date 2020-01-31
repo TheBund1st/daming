@@ -1,4 +1,4 @@
-package com.thebund1st.daming.eventhandling;
+package com.thebund1st.daming.adapter.spring.event;
 
 import com.thebund1st.daming.core.SmsVerification;
 import com.thebund1st.daming.core.SmsVerificationRepository;
