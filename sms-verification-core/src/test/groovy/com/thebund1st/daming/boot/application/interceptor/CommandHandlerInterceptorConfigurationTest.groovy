@@ -1,6 +1,6 @@
 package com.thebund1st.daming.boot.application.interceptor
 
-import com.thebund1st.daming.application.interceptor.SendSmsVerificationCodeCommandHandlerInterceptorAspect
+import com.thebund1st.daming.application.commandhandling.interceptor.SendSmsVerificationCodeCommandHandlerInterceptorAspect
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 
 class CommandHandlerInterceptorConfigurationTest extends AbstractAutoConfigurationTest {

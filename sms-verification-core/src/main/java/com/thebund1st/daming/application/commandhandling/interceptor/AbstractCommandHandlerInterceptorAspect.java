@@ -1,4 +1,4 @@
-package com.thebund1st.daming.application.interceptor;
+package com.thebund1st.daming.application.commandhandling.interceptor;
 
 import lombok.Setter;
 import org.aspectj.lang.ProceedingJoinPoint;

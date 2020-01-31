@@ -1,6 +1,8 @@
-package com.thebund1st.daming.application;
+package com.thebund1st.daming.application.commandhandling.impl;
 
-import com.thebund1st.daming.application.interceptor.CommandHandler;
+import com.thebund1st.daming.application.commandhandling.SendSmsVerificationCodeCommandHandler;
+import com.thebund1st.daming.application.commandhandling.VerifySmsVerificationCodeCommandHandler;
+import com.thebund1st.daming.application.commandhandling.interceptor.CommandHandler;
 import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand;
 import com.thebund1st.daming.commands.VerifySmsVerificationCodeCommand;
 import com.thebund1st.daming.core.DomainEventPublisher;
@@ -21,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
 import java.time.Duration;
 import java.util.UUID;
 
@@ -29,7 +30,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Validated
 @Transactional
-public abstract class SmsVerificationCommandHandler {
+public abstract class SmsVerificationCommandHandler implements
+        SendSmsVerificationCodeCommandHandler,
+        VerifySmsVerificationCodeCommandHandler {
 
     private final SmsVerificationRepository smsVerificationRepository;
 
@@ -43,9 +46,10 @@ public abstract class SmsVerificationCommandHandler {
     @Getter
     private Duration expires = Duration.ofSeconds(60);
 
+    @Override
     @RateLimited(action = "sendSmsVerificationCodeCommand")
     @CommandHandler
-    public SmsVerification handle(@Valid SendSmsVerificationCodeCommand command) {
+    public SmsVerification handle(SendSmsVerificationCodeCommand command) {
         SmsVerificationCode code = smsVerificationCodeGenerator.generate();
         SmsVerification verification = new SmsVerification();
         verification.setCreatedAt(clock.now());
@@ -64,7 +68,8 @@ public abstract class SmsVerificationCommandHandler {
         return UUID.randomUUID().toString();
     }
 
-    public void handle(@Valid VerifySmsVerificationCodeCommand command) {
+    @Override
+    public void handle(VerifySmsVerificationCodeCommand command) {
         SmsVerification smsVerification = smsVerificationRepository
                 .shouldFindBy(command.getMobile(), command.getScope());
         if (smsVerification.matches(command.getCode())) {

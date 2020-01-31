@@ -1,7 +1,7 @@
 package com.thebund1st.daming.adapter.spring.web.rest;
 
 import com.thebund1st.daming.adapter.spring.web.rest.resources.SmsVerifiedJwtResource;
-import com.thebund1st.daming.application.SmsVerificationCommandHandler;
+import com.thebund1st.daming.application.commandhandling.VerifySmsVerificationCodeCommandHandler;
 import com.thebund1st.daming.commands.VerifySmsVerificationCodeCommand;
 import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +17,14 @@ import javax.validation.Valid;
 @RestController
 public class VerifySmsVerificationCodeRestController {
 
-    private final SmsVerificationCommandHandler smsVerificationCommandHandler;
+    private final VerifySmsVerificationCodeCommandHandler verifySmsVerificationCodeCommandHandler;
 
     private final SmsVerifiedJwtIssuer smsVerifiedJwtIssuer;
 
 
     @DeleteMapping("#{endpointProperties.verifySmsVerificationCodePath}")
     public SmsVerifiedJwtResource handle(@Valid @RequestBody VerifySmsVerificationCodeCommand command) {
-        smsVerificationCommandHandler.handle(command);
+        verifySmsVerificationCodeCommandHandler.handle(command);
         return new SmsVerifiedJwtResource(smsVerifiedJwtIssuer.issue(command.getMobile(), command.getScope()));
     }
 }

@@ -1,7 +1,7 @@
 package com.thebund1st.paa.command.interceptor;
 
 
-import com.thebund1st.daming.application.interceptor.CommandHandlerInterceptor;
+import com.thebund1st.daming.application.commandhandling.interceptor.CommandHandlerInterceptor;
 
 public class CommandHandlerWithoutReturnInterceptor implements
         CommandHandlerInterceptor<AnotherCommand, Void> {

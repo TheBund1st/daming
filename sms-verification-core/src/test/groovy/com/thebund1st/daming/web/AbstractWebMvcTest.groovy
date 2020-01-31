@@ -1,6 +1,7 @@
 package com.thebund1st.daming.web
 
-import com.thebund1st.daming.application.SmsVerificationCommandHandler
+import com.thebund1st.daming.application.commandhandling.SendSmsVerificationCodeCommandHandler
+import com.thebund1st.daming.application.commandhandling.VerifySmsVerificationCodeCommandHandler
 import com.thebund1st.daming.boot.http.EndpointsConfiguration
 import com.thebund1st.daming.core.*
 import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer
@@ -22,7 +23,10 @@ class AbstractWebMvcTest extends Specification {
     protected MockMvc mockMvc
 
     @SpringBean
-    protected SmsVerificationCommandHandler smsVerificationHandler = Mock()
+    protected SendSmsVerificationCodeCommandHandler sendSmsVerificationCodeCommandHandler = Mock()
+
+    @SpringBean
+    protected VerifySmsVerificationCodeCommandHandler verifySmsVerificationCodeCommandHandler = Mock()
 
     @SpringBean
     protected SmsVerifiedJwtIssuer smsVerifiedJwtIssuer = Mock()

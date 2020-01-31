@@ -1,6 +1,6 @@
 package com.thebund1st.daming.adapter.redis;
 
-import com.thebund1st.daming.application.interceptor.SendSmsVerificationCodeCommandHandlerInterceptor;
+import com.thebund1st.daming.application.commandhandling.interceptor.SendSmsVerificationCodeCommandHandlerInterceptor;
 import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand;
 import com.thebund1st.daming.core.MobilePhoneNumber;
 import com.thebund1st.daming.core.SmsVerification;

@@ -1,7 +1,7 @@
 package com.thebund1st.paa.command.interceptor;
 
 
-import com.thebund1st.daming.application.interceptor.AbstractCommandHandlerInterceptorAspect;
+import com.thebund1st.daming.application.commandhandling.interceptor.AbstractCommandHandlerInterceptorAspect;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Pointcut;
 public class CommandHandlerWithoutReturnAspect extends AbstractCommandHandlerInterceptorAspect {
 
 
-    @Pointcut("@annotation(com.thebund1st.daming.application.interceptor.CommandHandler) && args(AnotherCommand))")
+    @Pointcut("@annotation(com.thebund1st.daming.application.commandhandling.interceptor.CommandHandler) && args(AnotherCommand))")
     @Override
     protected void commandHandlerMethod() {
 

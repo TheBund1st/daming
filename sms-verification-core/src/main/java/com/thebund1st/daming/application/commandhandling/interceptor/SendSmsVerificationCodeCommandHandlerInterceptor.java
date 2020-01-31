@@ -1,4 +1,4 @@
-package com.thebund1st.daming.application.interceptor;
+package com.thebund1st.daming.application.commandhandling.interceptor;
 
 import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand;
 import com.thebund1st.daming.core.SmsVerification;

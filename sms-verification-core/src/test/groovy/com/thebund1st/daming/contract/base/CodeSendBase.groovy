@@ -20,7 +20,7 @@ class CodeSendBase extends AbstractWebMvcTest {
                 .with(smsVerificationScopeOf("DEMO"))
                 .sendTo(mobilePhoneNumberOf("13912222274"))
                 .build()
-        smsVerificationHandler.handle(command) >> {
+        sendSmsVerificationCodeCommandHandler.handle(command) >> {
             throw new TooManyRequestsException(Errors.empty()
                     .append("Only 1 request is allowed by [DEMO][13912222274] in every 15 seconds"))
         }

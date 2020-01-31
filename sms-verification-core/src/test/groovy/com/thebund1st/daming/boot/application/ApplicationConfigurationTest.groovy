@@ -1,6 +1,6 @@
 package com.thebund1st.daming.boot.application
 
-import com.thebund1st.daming.application.SmsVerificationCommandHandler
+import com.thebund1st.daming.application.commandhandling.impl.SmsVerificationCommandHandler
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 
 import java.time.Duration

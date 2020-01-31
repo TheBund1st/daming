@@ -1,4 +1,4 @@
-package com.thebund1st.daming.application.interceptor
+package com.thebund1st.daming.application.commandhandling.interceptor
 
 import com.thebund1st.paa.command.interceptor.*
 import org.spockframework.spring.SpringBean

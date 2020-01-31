@@ -1,6 +1,6 @@
 package com.thebund1st.daming.adapter.spring.web.rest;
 
-import com.thebund1st.daming.application.SmsVerificationCommandHandler;
+import com.thebund1st.daming.application.commandhandling.SendSmsVerificationCodeCommandHandler;
 import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,11 +16,11 @@ import static org.springframework.http.HttpStatus.ACCEPTED;
 @RestController
 public class SendSmsVerificationCodeRestController {
 
-    private final SmsVerificationCommandHandler smsVerificationCommandHandler;
+    private final SendSmsVerificationCodeCommandHandler sendSmsVerificationCodeCommandHandler;
 
     @PostMapping("#{endpointProperties.sendSmsVerificationCodePath}")
     @ResponseStatus(ACCEPTED)
     public void handle(@Valid @RequestBody SendSmsVerificationCodeCommand command) {
-        smsVerificationCommandHandler.handle(command);
+        sendSmsVerificationCodeCommandHandler.handle(command);
     }
 }

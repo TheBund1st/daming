@@ -1,6 +1,6 @@
 package com.thebund1st.paa.command.interceptor;
 
-import com.thebund1st.daming.application.interceptor.CommandHandler;
+import com.thebund1st.daming.application.commandhandling.interceptor.CommandHandler;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

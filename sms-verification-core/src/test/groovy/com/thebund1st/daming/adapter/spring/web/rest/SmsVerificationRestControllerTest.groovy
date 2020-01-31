@@ -1,6 +1,6 @@
 package com.thebund1st.daming.adapter.spring.web.rest
 
-import com.thebund1st.daming.core.exceptions.MobileIsStillUnderVerificationException
+
 import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
 import com.thebund1st.daming.web.AbstractWebMvcTest
 
@@ -36,7 +36,7 @@ class SmsVerificationRestControllerTest extends AbstractWebMvcTest {
                 .andExpect(status().isAccepted())
 
         and:
-        1 * smsVerificationHandler.handle(command)
+        1 * sendSmsVerificationCodeCommandHandler.handle(command)
 
     }
 
@@ -71,7 +71,7 @@ class SmsVerificationRestControllerTest extends AbstractWebMvcTest {
                 """))
 
         and:
-        1 * smsVerificationHandler.handle(command)
+        1 * verifySmsVerificationCodeCommandHandler.handle(command)
     }
 
     def "it should return 412 when verifying sms verification code given code mismatches"() {
@@ -83,7 +83,7 @@ class SmsVerificationRestControllerTest extends AbstractWebMvcTest {
                 .build()
 
         and:
-        smsVerificationHandler.handle(command) >> {
+        verifySmsVerificationCodeCommandHandler.handle(command) >> {
             throw new SmsVerificationCodeMismatchException(verification, command.code)
         }
 

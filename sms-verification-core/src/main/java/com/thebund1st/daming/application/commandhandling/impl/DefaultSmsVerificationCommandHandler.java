@@ -1,6 +1,5 @@
-package com.thebund1st.daming.application.impl;
+package com.thebund1st.daming.application.commandhandling.impl;
 
-import com.thebund1st.daming.application.SmsVerificationCommandHandler;
 import com.thebund1st.daming.core.DomainEventPublisher;
 import com.thebund1st.daming.core.SmsVerificationCodeGenerator;
 import com.thebund1st.daming.core.SmsVerificationRepository;

@@ -1,8 +1,8 @@
 package com.thebund1st.daming.boot.application;
 
-import com.thebund1st.daming.application.SmsVerificationCommandHandler;
-import com.thebund1st.daming.application.impl.DefaultSmsVerificationCommandHandler;
-import com.thebund1st.daming.application.impl.ValidatedSmsVerificationCommandHandler;
+import com.thebund1st.daming.application.commandhandling.impl.SmsVerificationCommandHandler;
+import com.thebund1st.daming.application.commandhandling.impl.DefaultSmsVerificationCommandHandler;
+import com.thebund1st.daming.application.commandhandling.impl.ValidatedSmsVerificationCommandHandler;
 import com.thebund1st.daming.boot.application.interceptor.CommandHandlerInterceptorConfiguration;
 import com.thebund1st.daming.boot.core.SmsVerificationCodeProperties;
 import com.thebund1st.daming.core.DomainEventPublisher;

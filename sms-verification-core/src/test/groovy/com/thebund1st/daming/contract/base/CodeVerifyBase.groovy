@@ -22,7 +22,7 @@ class CodeVerifyBase extends AbstractWebMvcTest {
                 .codeIs("123456")
                 .build()
 
-        smsVerificationHandler.handle(command) >> {
+        verifySmsVerificationCodeCommandHandler.handle(command) >> {
             throw new MobileIsNotUnderVerificationException(command.mobile, command.scope)
         }
     }
@@ -39,7 +39,7 @@ class CodeVerifyBase extends AbstractWebMvcTest {
                 .codeIs("434434")
                 .build()
 
-        smsVerificationHandler.handle(command) >> {
+        verifySmsVerificationCodeCommandHandler.handle(command) >> {
             throw new SmsVerificationCodeMismatchException(verification, command.code)
         }
     }
