@@ -2,7 +2,7 @@ package com.thebund1st.daming.adapter.spring.web.rest;
 
 import com.thebund1st.daming.adapter.spring.web.rest.resources.SmsVerifiedJwtResource;
 import com.thebund1st.daming.application.commandhandling.VerifySmsVerificationCodeCommandHandler;
-import com.thebund1st.daming.commands.VerifySmsVerificationCodeCommand;
+import com.thebund1st.daming.application.command.VerifySmsVerificationCodeCommand;
 import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

@@ -1,10 +1,10 @@
 package foo.bar
 
 
-import com.thebund1st.daming.core.MobilePhoneNumber
-import com.thebund1st.daming.core.SmsVerification
-import com.thebund1st.daming.core.SmsVerificationRepository
-import com.thebund1st.daming.core.SmsVerificationScope
+import com.thebund1st.daming.application.domain.MobilePhoneNumber
+import com.thebund1st.daming.application.domain.SmsVerification
+import com.thebund1st.daming.application.domain.SmsVerificationRepository
+import com.thebund1st.daming.application.domain.SmsVerificationScope
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

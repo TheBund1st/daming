@@ -1,12 +1,12 @@
 package com.thebund1st.daming.adapter.spring.web.rest
 
 
-import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
+import com.thebund1st.daming.application.domain.exceptions.SmsVerificationCodeMismatchException
 import com.thebund1st.daming.web.AbstractWebMvcTest
 
-import static com.thebund1st.daming.commands.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
-import static com.thebund1st.daming.commands.VerifySmsVerificationCodeCommandFixture.aVerifySmsVerificationCodeCommand
-import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
+import static com.thebund1st.daming.application.command.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
+import static com.thebund1st.daming.application.command.VerifySmsVerificationCodeCommandFixture.aVerifySmsVerificationCodeCommand
+import static com.thebund1st.daming.application.domain.SmsVerificationFixture.aSmsVerification
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post

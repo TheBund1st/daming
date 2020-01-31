@@ -2,8 +2,12 @@ package com.thebund1st.daming.web
 
 import com.thebund1st.daming.application.commandhandling.SendSmsVerificationCodeCommandHandler
 import com.thebund1st.daming.application.commandhandling.VerifySmsVerificationCodeCommandHandler
+import com.thebund1st.daming.application.domain.MobilePhoneNumberPattern
+import com.thebund1st.daming.application.domain.RandomNumberSmsVerificationCode
+import com.thebund1st.daming.application.domain.SmsVerificationCodePattern
+import com.thebund1st.daming.application.domain.SmsVerificationScopePattern
+import com.thebund1st.daming.application.domain.StaticSmsVerificationScopePattern
 import com.thebund1st.daming.boot.http.EndpointsConfiguration
-import com.thebund1st.daming.core.*
 import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer
 import io.restassured.module.mockmvc.RestAssuredMockMvc
 import org.spockframework.spring.SpringBean
@@ -13,7 +17,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
-import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationScopeOf
+import static com.thebund1st.daming.application.domain.SmsVerificationScope.smsVerificationScopeOf
 
 @WebMvcTest
 @Import([EndpointsConfiguration, MockMvcBuilderCustomizers])

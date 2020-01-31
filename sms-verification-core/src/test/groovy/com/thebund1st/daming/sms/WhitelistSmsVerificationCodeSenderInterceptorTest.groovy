@@ -3,8 +3,8 @@ package com.thebund1st.daming.sms
 
 import spock.lang.Specification
 
-import static com.thebund1st.daming.core.MobilePhoneNumber.mobilePhoneNumberOf
-import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
+import static com.thebund1st.daming.application.domain.MobilePhoneNumber.mobilePhoneNumberOf
+import static com.thebund1st.daming.application.domain.SmsVerificationFixture.aSmsVerification
 
 class WhitelistSmsVerificationCodeSenderInterceptorTest extends Specification {
 

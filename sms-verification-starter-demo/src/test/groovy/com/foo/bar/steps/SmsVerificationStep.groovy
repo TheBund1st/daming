@@ -1,8 +1,8 @@
 package com.foo.bar.steps
 
 import com.foo.bar.SmsVerificationCodeSenderStub
-import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand
-import com.thebund1st.daming.core.SmsVerificationCode
+import com.thebund1st.daming.application.command.SendSmsVerificationCodeCommand
+import com.thebund1st.daming.application.domain.SmsVerificationCode
 import io.restassured.response.ValidatableResponse
 import org.springframework.http.HttpStatus
 

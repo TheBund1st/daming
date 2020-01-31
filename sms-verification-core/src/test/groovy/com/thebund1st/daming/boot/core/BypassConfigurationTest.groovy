@@ -1,9 +1,9 @@
 package com.thebund1st.daming.boot.core
 
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
-import com.thebund1st.daming.core.FixedSmsVerificationCode
-import com.thebund1st.daming.core.SmsVerificationCodeGenerator
-import com.thebund1st.daming.core.SmsVerificationCodeSender
+import com.thebund1st.daming.application.domain.FixedSmsVerificationCode
+import com.thebund1st.daming.application.domain.SmsVerificationCodeGenerator
+import com.thebund1st.daming.application.domain.SmsVerificationCodeSender
 import com.thebund1st.daming.sms.DefaultSmsVerificationCodeSender
 import com.thebund1st.daming.sms.SmsVerificationCodeSenderBlocker
 

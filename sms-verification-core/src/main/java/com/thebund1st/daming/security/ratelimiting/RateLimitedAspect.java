@@ -1,6 +1,6 @@
 package com.thebund1st.daming.security.ratelimiting;
 
-import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand;
+import com.thebund1st.daming.application.command.SendSmsVerificationCodeCommand;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

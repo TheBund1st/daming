@@ -1,6 +1,6 @@
 package com.thebund1st.daming.boot.sms;
 
-import com.thebund1st.daming.core.SmsVerificationCodeSender;
+import com.thebund1st.daming.application.domain.SmsVerificationCodeSender;
 import com.thebund1st.daming.sms.DefaultSmsVerificationCodeSender;
 import com.thebund1st.daming.sms.SmsVerificationCodeSenderStub;
 import lombok.RequiredArgsConstructor;

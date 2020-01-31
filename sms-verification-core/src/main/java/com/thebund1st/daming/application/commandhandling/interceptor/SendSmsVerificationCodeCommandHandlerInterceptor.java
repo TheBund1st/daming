@@ -1,7 +1,7 @@
 package com.thebund1st.daming.application.commandhandling.interceptor;
 
-import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand;
-import com.thebund1st.daming.core.SmsVerification;
+import com.thebund1st.daming.application.command.SendSmsVerificationCodeCommand;
+import com.thebund1st.daming.application.domain.SmsVerification;
 
 /**
  * HandlerInterceptor for {@link SendSmsVerificationCodeCommand}.

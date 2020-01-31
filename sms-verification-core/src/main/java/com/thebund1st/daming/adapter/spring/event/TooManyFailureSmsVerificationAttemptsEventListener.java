@@ -1,8 +1,8 @@
 package com.thebund1st.daming.adapter.spring.event;
 
-import com.thebund1st.daming.core.SmsVerification;
-import com.thebund1st.daming.core.SmsVerificationRepository;
-import com.thebund1st.daming.events.TooManyFailureSmsVerificationAttemptsEvent;
+import com.thebund1st.daming.application.domain.SmsVerification;
+import com.thebund1st.daming.application.domain.SmsVerificationRepository;
+import com.thebund1st.daming.application.event.TooManyFailureSmsVerificationAttemptsEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;

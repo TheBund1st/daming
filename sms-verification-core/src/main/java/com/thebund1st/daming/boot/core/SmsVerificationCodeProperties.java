@@ -1,6 +1,6 @@
 package com.thebund1st.daming.boot.core;
 
-import com.thebund1st.daming.core.MobilePhoneNumber;
+import com.thebund1st.daming.application.domain.MobilePhoneNumber;
 import lombok.Data;
 import org.springframework.boot.convert.DurationUnit;
 

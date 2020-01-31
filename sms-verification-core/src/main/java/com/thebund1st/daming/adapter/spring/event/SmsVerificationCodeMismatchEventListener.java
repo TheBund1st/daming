@@ -1,7 +1,7 @@
 package com.thebund1st.daming.adapter.spring.event;
 
-import com.thebund1st.daming.events.SmsVerificationCodeMismatchEvent;
-import com.thebund1st.daming.redis.RedisSmsVerificationCodeMismatchEventHandler;
+import com.thebund1st.daming.application.event.SmsVerificationCodeMismatchEvent;
+import com.thebund1st.daming.adapter.spring.redis.RedisSmsVerificationCodeMismatchEventHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;

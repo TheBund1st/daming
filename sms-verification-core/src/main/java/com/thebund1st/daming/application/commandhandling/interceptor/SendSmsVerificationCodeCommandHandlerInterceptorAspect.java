@@ -1,7 +1,7 @@
 package com.thebund1st.daming.application.commandhandling.interceptor;
 
-import com.thebund1st.daming.commands.SendSmsVerificationCodeCommand;
-import com.thebund1st.daming.core.SmsVerification;
+import com.thebund1st.daming.application.command.SendSmsVerificationCodeCommand;
+import com.thebund1st.daming.application.domain.SmsVerification;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
@@ -15,7 +15,7 @@ public class SendSmsVerificationCodeCommandHandlerInterceptorAspect extends
         AbstractCommandHandlerInterceptorAspect<SendSmsVerificationCodeCommand, SmsVerification> {
 
     @Pointcut("@annotation(com.thebund1st.daming.application.commandhandling.interceptor.CommandHandler) " +
-            "&& args(com.thebund1st.daming.commands.SendSmsVerificationCodeCommand))")
+            "&& args(com.thebund1st.daming.application.command.SendSmsVerificationCodeCommand))")
     @Override
     protected void commandHandlerMethod() {
 

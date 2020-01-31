@@ -1,6 +1,6 @@
 package com.foo.bar
 
-import com.thebund1st.daming.core.DomainEventPublisher
+import com.thebund1st.daming.application.domain.DomainEventPublisher
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import spock.mock.DetachedMockFactory

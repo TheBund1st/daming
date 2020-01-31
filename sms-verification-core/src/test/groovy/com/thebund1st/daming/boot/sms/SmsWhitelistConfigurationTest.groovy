@@ -1,13 +1,13 @@
 package com.thebund1st.daming.boot.sms
 
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
-import com.thebund1st.daming.core.SmsVerificationCodeSender
+import com.thebund1st.daming.application.domain.SmsVerificationCodeSender
 import com.thebund1st.daming.sms.DefaultSmsVerificationCodeSender
 import com.thebund1st.daming.sms.SmsVerificationCodeSenderStub
 import com.thebund1st.daming.sms.WhitelistSmsVerificationCodeSenderInterceptor
 import foo.bar.WithCustomizedSmsVerificationSender
 
-import static com.thebund1st.daming.core.MobilePhoneNumber.mobilePhoneNumberOf
+import static com.thebund1st.daming.application.domain.MobilePhoneNumber.mobilePhoneNumberOf
 
 class SmsWhitelistConfigurationTest extends AbstractAutoConfigurationTest {
 

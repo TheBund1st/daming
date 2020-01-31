@@ -1,6 +1,6 @@
 package com.thebund1st.daming.sms;
 
-import com.thebund1st.daming.core.SmsVerification;
+import com.thebund1st.daming.application.domain.SmsVerification;
 import lombok.extern.slf4j.Slf4j;
 
 /**

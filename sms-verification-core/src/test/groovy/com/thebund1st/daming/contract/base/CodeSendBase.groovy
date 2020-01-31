@@ -5,9 +5,9 @@ import com.thebund1st.daming.security.ratelimiting.Errors
 import com.thebund1st.daming.security.ratelimiting.TooManyRequestsException
 import com.thebund1st.daming.web.AbstractWebMvcTest
 
-import static com.thebund1st.daming.commands.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
-import static com.thebund1st.daming.core.MobilePhoneNumber.mobilePhoneNumberOf
-import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationScopeOf
+import static com.thebund1st.daming.application.command.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
+import static com.thebund1st.daming.application.domain.MobilePhoneNumber.mobilePhoneNumberOf
+import static com.thebund1st.daming.application.domain.SmsVerificationScope.smsVerificationScopeOf
 
 class CodeSendBase extends AbstractWebMvcTest {
 

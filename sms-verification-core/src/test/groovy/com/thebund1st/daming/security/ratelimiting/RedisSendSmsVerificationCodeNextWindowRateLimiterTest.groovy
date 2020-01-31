@@ -2,12 +2,12 @@ package com.thebund1st.daming.security.ratelimiting
 
 
 import com.thebund1st.daming.redis.AbstractDataRedisTest
-import com.thebund1st.daming.adapter.redis.RedisSendSmsVerificationCodeNextWindowRateLimiter
+import com.thebund1st.daming.adapter.spring.redis.RedisSendSmsVerificationCodeNextWindowRateLimiter
 import org.springframework.beans.factory.annotation.Autowired
 
 import java.time.Duration
 
-import static com.thebund1st.daming.commands.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
+import static com.thebund1st.daming.application.command.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
 import static java.util.concurrent.TimeUnit.SECONDS
 import static org.awaitility.Awaitility.await
 

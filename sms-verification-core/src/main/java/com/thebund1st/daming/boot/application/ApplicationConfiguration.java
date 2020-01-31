@@ -5,9 +5,9 @@ import com.thebund1st.daming.application.commandhandling.impl.DefaultSmsVerifica
 import com.thebund1st.daming.application.commandhandling.impl.ValidatedSmsVerificationCommandHandler;
 import com.thebund1st.daming.boot.application.interceptor.CommandHandlerInterceptorConfiguration;
 import com.thebund1st.daming.boot.core.SmsVerificationCodeProperties;
-import com.thebund1st.daming.core.DomainEventPublisher;
-import com.thebund1st.daming.core.SmsVerificationCodeGenerator;
-import com.thebund1st.daming.core.SmsVerificationRepository;
+import com.thebund1st.daming.application.domain.DomainEventPublisher;
+import com.thebund1st.daming.application.domain.SmsVerificationCodeGenerator;
+import com.thebund1st.daming.application.domain.SmsVerificationRepository;
 import com.thebund1st.daming.time.Clock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

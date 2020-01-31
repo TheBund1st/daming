@@ -1,13 +1,13 @@
 package com.thebund1st.daming.boot.eventhandling;
 
-import com.thebund1st.daming.core.DomainEventPublisher;
-import com.thebund1st.daming.core.SmsVerificationCodeSender;
-import com.thebund1st.daming.core.SmsVerificationRepository;
+import com.thebund1st.daming.application.domain.DomainEventPublisher;
+import com.thebund1st.daming.application.domain.SmsVerificationCodeSender;
+import com.thebund1st.daming.application.domain.SmsVerificationRepository;
 import com.thebund1st.daming.adapter.spring.event.SmsVerificationCodeMismatchEventListener;
 import com.thebund1st.daming.adapter.spring.event.SmsVerificationCodeVerifiedEventListener;
 import com.thebund1st.daming.adapter.spring.event.SmsVerificationRequestedEventListener;
 import com.thebund1st.daming.adapter.spring.event.TooManyFailureSmsVerificationAttemptsEventListener;
-import com.thebund1st.daming.redis.RedisSmsVerificationCodeMismatchEventHandler;
+import com.thebund1st.daming.adapter.spring.redis.RedisSmsVerificationCodeMismatchEventHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,15 @@
 package com.thebund1st.daming.boot.core
 
+import com.thebund1st.daming.application.domain.FixedSmsVerificationCode
+import com.thebund1st.daming.application.domain.MobilePhoneNumberPattern
+import com.thebund1st.daming.application.domain.RandomNumberSmsVerificationCode
+import com.thebund1st.daming.application.domain.SmsVerificationCodeGenerator
+import com.thebund1st.daming.application.domain.SmsVerificationCodePattern
+import com.thebund1st.daming.application.domain.SmsVerificationScopePattern
+import com.thebund1st.daming.application.domain.StaticSmsVerificationScopePattern
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
-import com.thebund1st.daming.core.*
 
-import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationScopeOf
+import static com.thebund1st.daming.application.domain.SmsVerificationScope.smsVerificationScopeOf
 
 class CoreConfigurationTest extends AbstractAutoConfigurationTest {
 

@@ -11,8 +11,8 @@ import org.springframework.test.context.ActiveProfiles
 import redis.embedded.RedisServer
 import spock.lang.Specification
 
-import static com.thebund1st.daming.core.MobilePhoneNumber.mobilePhoneNumberOf
-import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationScopeOf
+import static com.thebund1st.daming.application.domain.MobilePhoneNumber.mobilePhoneNumberOf
+import static com.thebund1st.daming.application.domain.SmsVerificationScope.smsVerificationScopeOf
 import static io.restassured.RestAssured.given
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
 import static org.springframework.http.HttpStatus.*

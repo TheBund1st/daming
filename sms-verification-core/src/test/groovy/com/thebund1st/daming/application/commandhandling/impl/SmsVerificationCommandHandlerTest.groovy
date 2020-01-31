@@ -1,14 +1,14 @@
 package com.thebund1st.daming.application.commandhandling.impl
 
-import com.thebund1st.daming.adapter.redis.RedisSendSmsVerificationCodeNextWindowRateLimiter
-import com.thebund1st.daming.core.DomainEventPublisher
-import com.thebund1st.daming.core.SmsVerification
-import com.thebund1st.daming.core.SmsVerificationRepository
-import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
-import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
-import com.thebund1st.daming.events.SmsVerificationCodeMismatchEvent
-import com.thebund1st.daming.events.SmsVerificationCodeVerifiedEvent
-import com.thebund1st.daming.events.SmsVerificationRequestedEvent
+import com.thebund1st.daming.adapter.spring.redis.RedisSendSmsVerificationCodeNextWindowRateLimiter
+import com.thebund1st.daming.application.domain.DomainEventPublisher
+import com.thebund1st.daming.application.domain.SmsVerification
+import com.thebund1st.daming.application.domain.SmsVerificationRepository
+import com.thebund1st.daming.application.domain.exceptions.MobileIsNotUnderVerificationException
+import com.thebund1st.daming.application.domain.exceptions.SmsVerificationCodeMismatchException
+import com.thebund1st.daming.application.event.SmsVerificationCodeMismatchEvent
+import com.thebund1st.daming.application.event.SmsVerificationCodeVerifiedEvent
+import com.thebund1st.daming.application.event.SmsVerificationRequestedEvent
 import com.thebund1st.daming.security.ratelimiting.Errors
 import com.thebund1st.daming.security.ratelimiting.ErrorsFactory
 import com.thebund1st.daming.time.Clock
@@ -21,9 +21,9 @@ import spock.lang.Specification
 import javax.validation.ConstraintViolationException
 import java.time.ZonedDateTime
 
-import static com.thebund1st.daming.commands.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
-import static com.thebund1st.daming.commands.VerifySmsVerificationCodeCommandFixture.aVerifySmsVerificationCodeCommand
-import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
+import static com.thebund1st.daming.application.command.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand
+import static com.thebund1st.daming.application.command.VerifySmsVerificationCodeCommandFixture.aVerifySmsVerificationCodeCommand
+import static com.thebund1st.daming.application.domain.SmsVerificationFixture.aSmsVerification
 
 //FIXME why can't I set this value in applicaiton-commit.properties?
 @SpringBootTest(properties = "daming.sms.verification.scope.valid=SMS_LOGIN")

@@ -4,7 +4,7 @@ import com.thebund1st.daming.boot.core.SmsVerificationCodeConfiguration
 import com.thebund1st.daming.boot.redis.RedisConfiguration
 import com.thebund1st.daming.boot.security.SlidingWindowConfiguration
 import com.thebund1st.daming.boot.time.TimeConfiguration
-import com.thebund1st.daming.core.DomainEventPublisher
+import com.thebund1st.daming.application.domain.DomainEventPublisher
 import org.spockframework.spring.SpringBean
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest
 import org.springframework.context.annotation.Import

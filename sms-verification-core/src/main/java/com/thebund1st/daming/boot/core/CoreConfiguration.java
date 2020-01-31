@@ -1,11 +1,11 @@
 package com.thebund1st.daming.boot.core;
 
-import com.thebund1st.daming.core.MobilePhoneNumberPattern;
-import com.thebund1st.daming.core.RandomNumberSmsVerificationCode;
-import com.thebund1st.daming.core.SmsVerificationCodeGenerator;
-import com.thebund1st.daming.core.SmsVerificationCodePattern;
-import com.thebund1st.daming.core.SmsVerificationScopePattern;
-import com.thebund1st.daming.core.StaticSmsVerificationScopePattern;
+import com.thebund1st.daming.application.domain.MobilePhoneNumberPattern;
+import com.thebund1st.daming.application.domain.RandomNumberSmsVerificationCode;
+import com.thebund1st.daming.application.domain.SmsVerificationCodeGenerator;
+import com.thebund1st.daming.application.domain.SmsVerificationCodePattern;
+import com.thebund1st.daming.application.domain.SmsVerificationScopePattern;
+import com.thebund1st.daming.application.domain.StaticSmsVerificationScopePattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

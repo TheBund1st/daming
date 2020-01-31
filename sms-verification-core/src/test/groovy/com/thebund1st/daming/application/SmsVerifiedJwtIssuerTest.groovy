@@ -13,8 +13,8 @@ import java.security.KeyFactory
 import java.security.PublicKey
 import java.security.spec.X509EncodedKeySpec
 
-import static com.thebund1st.daming.core.TestingMobile.aMobilePhoneNumber
-import static com.thebund1st.daming.core.TestingSmsVerificationScope.anyScope
+import static com.thebund1st.daming.application.domain.TestingMobile.aMobilePhoneNumber
+import static com.thebund1st.daming.application.domain.TestingSmsVerificationScope.anyScope
 
 class SmsVerifiedJwtIssuerTest extends Specification {
 

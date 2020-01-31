@@ -1,7 +1,7 @@
 package com.thebund1st.daming.adapter.spring.web.advice;
 
-import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException;
-import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException;
+import com.thebund1st.daming.application.domain.exceptions.MobileIsNotUnderVerificationException;
+import com.thebund1st.daming.application.domain.exceptions.SmsVerificationCodeMismatchException;
 import com.thebund1st.daming.security.ratelimiting.TooManyRequestsException;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.http.HttpHeaders;

@@ -12,8 +12,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
-import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
-import static com.thebund1st.daming.core.SmsVerificationScope.smsVerificationScopeOf
+import static com.thebund1st.daming.application.domain.SmsVerificationFixture.aSmsVerification
 import static io.restassured.RestAssured.given
 import static org.hamcrest.Matchers.containsString
 import static org.hamcrest.Matchers.equalTo

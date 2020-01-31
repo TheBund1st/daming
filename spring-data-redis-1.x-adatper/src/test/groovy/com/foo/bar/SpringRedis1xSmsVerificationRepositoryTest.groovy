@@ -1,14 +1,13 @@
 package com.foo.bar
 
-
-import com.thebund1st.daming.core.TestingVerificationCode
-import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
-import com.thebund1st.daming.adapter.redis.RedisSmsVerificationRepository
+import com.thebund1st.daming.adapter.spring.redis.RedisSmsVerificationRepository
+import com.thebund1st.daming.application.domain.TestingVerificationCode
+import com.thebund1st.daming.application.domain.exceptions.MobileIsNotUnderVerificationException
 import org.springframework.beans.factory.annotation.Autowired
 
 import java.util.concurrent.TimeUnit
 
-import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
+import static com.thebund1st.daming.application.domain.SmsVerificationFixture.aSmsVerification
 import static java.time.temporal.ChronoUnit.SECONDS
 import static org.awaitility.Awaitility.await
 

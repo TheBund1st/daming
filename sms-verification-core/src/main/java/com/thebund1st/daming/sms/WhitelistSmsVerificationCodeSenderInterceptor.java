@@ -1,7 +1,7 @@
 package com.thebund1st.daming.sms;
 
-import com.thebund1st.daming.core.MobilePhoneNumber;
-import com.thebund1st.daming.core.SmsVerification;
+import com.thebund1st.daming.application.domain.MobilePhoneNumber;
+import com.thebund1st.daming.application.domain.SmsVerification;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

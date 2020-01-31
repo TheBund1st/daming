@@ -1,17 +1,17 @@
 package com.foo.bar
 
-import com.thebund1st.daming.core.SmsVerification
-import com.thebund1st.daming.events.SmsVerificationCodeMismatchEvent
-import com.thebund1st.daming.events.SmsVerificationCodeVerifiedEvent
-import com.thebund1st.daming.events.TooManyFailureSmsVerificationAttemptsEvent
-import com.thebund1st.daming.redis.RedisSmsVerificationCodeMismatchEventHandler
+import com.thebund1st.daming.application.domain.SmsVerification
+import com.thebund1st.daming.application.event.SmsVerificationCodeMismatchEvent
+import com.thebund1st.daming.application.event.SmsVerificationCodeVerifiedEvent
+import com.thebund1st.daming.application.event.TooManyFailureSmsVerificationAttemptsEvent
+import com.thebund1st.daming.adapter.spring.redis.RedisSmsVerificationCodeMismatchEventHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.StringRedisTemplate
 
 import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
-import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
+import static com.thebund1st.daming.application.domain.SmsVerificationFixture.aSmsVerification
 import static java.time.temporal.ChronoUnit.SECONDS
 import static org.awaitility.Awaitility.await
 

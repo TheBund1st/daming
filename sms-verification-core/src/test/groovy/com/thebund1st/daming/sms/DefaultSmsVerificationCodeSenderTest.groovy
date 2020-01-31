@@ -1,10 +1,10 @@
 package com.thebund1st.daming.sms
 
-import com.thebund1st.daming.core.SmsVerification
-import com.thebund1st.daming.core.SmsVerificationCodeSender
+import com.thebund1st.daming.application.domain.SmsVerification
+import com.thebund1st.daming.application.domain.SmsVerificationCodeSender
 import spock.lang.Specification
 
-import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
+import static com.thebund1st.daming.application.domain.SmsVerificationFixture.aSmsVerification
 
 class DefaultSmsVerificationCodeSenderTest extends Specification {
 

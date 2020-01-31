@@ -1,7 +1,7 @@
 package com.thebund1st.daming.adapter.spring.event;
 
-import com.thebund1st.daming.core.SmsVerificationCodeSender;
-import com.thebund1st.daming.events.SmsVerificationRequestedEvent;
+import com.thebund1st.daming.application.domain.SmsVerificationCodeSender;
+import com.thebund1st.daming.application.event.SmsVerificationRequestedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;

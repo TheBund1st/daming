@@ -1,6 +1,6 @@
 package com.thebund1st.daming.application.commandhandling;
 
-import com.thebund1st.daming.commands.VerifySmsVerificationCodeCommand;
+import com.thebund1st.daming.application.command.VerifySmsVerificationCodeCommand;
 
 import javax.validation.Valid;
 

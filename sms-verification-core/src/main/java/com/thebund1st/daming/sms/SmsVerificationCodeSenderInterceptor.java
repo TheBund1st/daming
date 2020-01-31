@@ -1,6 +1,6 @@
 package com.thebund1st.daming.sms;
 
-import com.thebund1st.daming.core.SmsVerification;
+import com.thebund1st.daming.application.domain.SmsVerification;
 
 /**
  * @since 0.9.6

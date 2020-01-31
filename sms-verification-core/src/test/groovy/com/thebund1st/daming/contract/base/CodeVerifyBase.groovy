@@ -1,11 +1,11 @@
 package com.thebund1st.daming.contract.base
 
-import com.thebund1st.daming.core.exceptions.MobileIsNotUnderVerificationException
-import com.thebund1st.daming.core.exceptions.SmsVerificationCodeMismatchException
+import com.thebund1st.daming.application.domain.exceptions.MobileIsNotUnderVerificationException
+import com.thebund1st.daming.application.domain.exceptions.SmsVerificationCodeMismatchException
 import com.thebund1st.daming.web.AbstractWebMvcTest
 
-import static com.thebund1st.daming.commands.VerifySmsVerificationCodeCommandFixture.aVerifySmsVerificationCodeCommand
-import static com.thebund1st.daming.core.SmsVerificationFixture.aSmsVerification
+import static com.thebund1st.daming.application.command.VerifySmsVerificationCodeCommandFixture.aVerifySmsVerificationCodeCommand
+import static com.thebund1st.daming.application.domain.SmsVerificationFixture.aSmsVerification
 
 class CodeVerifyBase extends AbstractWebMvcTest {
 

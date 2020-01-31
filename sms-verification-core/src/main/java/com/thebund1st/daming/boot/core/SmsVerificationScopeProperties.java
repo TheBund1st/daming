@@ -1,6 +1,6 @@
 package com.thebund1st.daming.boot.core;
 
-import com.thebund1st.daming.core.SmsVerificationScope;
+import com.thebund1st.daming.application.domain.SmsVerificationScope;
 import lombok.Data;
 
 import java.util.ArrayList;
