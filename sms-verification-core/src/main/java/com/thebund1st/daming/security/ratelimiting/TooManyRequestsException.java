@@ -8,6 +8,10 @@ import static org.springframework.http.HttpStatus.TOO_MANY_REQUESTS;
 public class TooManyRequestsException extends RuntimeException {
 
     public TooManyRequestsException(Errors errors) {
-        super(errors.toMessage());
+        this(errors.toMessage());
+    }
+
+    public TooManyRequestsException(String message) {
+        super(message);
     }
 }
