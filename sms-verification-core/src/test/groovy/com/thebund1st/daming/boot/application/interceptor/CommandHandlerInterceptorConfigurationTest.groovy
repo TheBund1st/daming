@@ -12,9 +12,23 @@ class CommandHandlerInterceptorConfigurationTest extends AbstractAutoConfigurati
 
         then:
         contextRunner.run { it ->
-            SendSmsVerificationCodeCommandHandlerInterceptorAspect actual = it
-                    .getBean(SendSmsVerificationCodeCommandHandlerInterceptorAspect)
-            assert actual != null
+            Map<String, SendSmsVerificationCodeCommandHandlerInterceptorAspect> aspects = it
+                    .getBeansOfType(SendSmsVerificationCodeCommandHandlerInterceptorAspect)
+            assert aspects.size() == 1
+        }
+    }
+
+    def "it should create a redis sliding window rate limiter"() {
+
+        when:
+        def contextRunner = this.contextRunner
+                .withPropertyValues("daming.sms.verification.code.sliding.window.enabled=true")
+
+        then:
+        contextRunner.run { it ->
+            Map<String, SendSmsVerificationCodeCommandHandlerInterceptorAspect> aspects = it
+                    .getBeansOfType(SendSmsVerificationCodeCommandHandlerInterceptorAspect)
+            assert aspects.size() == 2
         }
     }
 }

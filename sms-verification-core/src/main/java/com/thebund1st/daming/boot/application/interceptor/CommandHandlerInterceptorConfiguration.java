@@ -19,8 +19,8 @@ public class CommandHandlerInterceptorConfiguration {
         SendSmsVerificationCodeCommandHandlerInterceptorAspect aspect =
                 new SendSmsVerificationCodeCommandHandlerInterceptorAspect();
         aspect.setCommandHandlerInterceptor(blockSendingRateLimitingHandler);
+        aspect.setOrder(1000);
         return aspect;
     }
-
 
 }

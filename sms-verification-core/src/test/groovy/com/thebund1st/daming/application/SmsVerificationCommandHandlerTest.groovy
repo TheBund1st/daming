@@ -115,22 +115,6 @@ class SmsVerificationCommandHandlerTest extends Specification {
         assert thrown.getMessage().contains("Invalid sms verification scope [A Fake Scope]")
     }
 
-    def "it should quite sending verification code given rate limited"() {
-        given:
-        def command = aSendSmsVerificationCodeCommand().build()
-
-        and:
-        errorsFactory.empty() >> Errors.empty().append("Too many requests")
-
-        when: "it handles send sms verification code"
-        subject.handle(command)
-
-        then: "it should store the code"
-
-        def thrown = thrown(TooManyRequestsException.class)
-        assert thrown.getMessage().contains("Too many requests")
-    }
-
     def "it should verify the verification code"() {
         given:
         def verification = aSmsVerification().build()

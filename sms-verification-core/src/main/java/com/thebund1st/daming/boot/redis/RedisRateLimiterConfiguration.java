@@ -1,5 +1,6 @@
 package com.thebund1st.daming.boot.redis;
 
+import com.thebund1st.daming.application.interceptor.SendSmsVerificationCodeCommandHandlerInterceptorAspect;
 import com.thebund1st.daming.boot.security.SlidingWindowProperties;
 import com.thebund1st.daming.redis.RedisSlidingWindowByMobileRateLimiter;
 import es.moki.ratelimitj.core.limiter.request.RequestLimitRule;
@@ -51,5 +52,16 @@ public class RedisRateLimiterConfiguration {
                 RequestLimitRule.of(slidingWindowProperties.getDuration(), slidingWindowProperties.getLimit()));
         RequestRateLimiter requestRateLimiter = redisRateLimiterFactory.getInstance(rules);
         return new RedisSlidingWindowByMobileRateLimiter(requestRateLimiter);
+    }
+
+
+    @Bean
+    public SendSmsVerificationCodeCommandHandlerInterceptorAspect slidingWindowRateLimiterForSendSmsVerificationCode(
+            RedisSlidingWindowByMobileRateLimiter redisSlidingWindowByMobileRateLimiter) {
+        SendSmsVerificationCodeCommandHandlerInterceptorAspect aspect =
+                new SendSmsVerificationCodeCommandHandlerInterceptorAspect();
+        aspect.setCommandHandlerInterceptor(redisSlidingWindowByMobileRateLimiter);
+        aspect.setOrder(1001);
+        return aspect;
     }
 }
