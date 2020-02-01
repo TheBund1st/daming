@@ -9,7 +9,7 @@ import com.thebund1st.daming.boot.core.SmsVerificationScopeConfiguration;
 import com.thebund1st.daming.boot.eventhandling.EventHandlingConfiguration;
 import com.thebund1st.daming.boot.http.EndpointsConfiguration;
 import com.thebund1st.daming.boot.jwt.JwtConfiguration;
-import com.thebund1st.daming.boot.redis.RedisConfiguration;
+import com.thebund1st.daming.boot.adapter.redis.spring.RedisConfiguration;
 import com.thebund1st.daming.boot.security.RateLimitingConfiguration;
 import com.thebund1st.daming.boot.sms.DefaultSmsVerificationSenderConfiguration;
 import com.thebund1st.daming.boot.sms.SmsVerificationSenderConfiguration;

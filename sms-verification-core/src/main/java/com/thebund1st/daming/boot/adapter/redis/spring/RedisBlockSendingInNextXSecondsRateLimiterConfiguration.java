@@ -1,6 +1,7 @@
-package com.thebund1st.daming.boot.redis;
+package com.thebund1st.daming.boot.adapter.redis.spring;
 
-import com.thebund1st.daming.adapter.spring.redis.RedisSendSmsVerificationCodeNextWindowRateLimiter;
+import com.thebund1st.daming.adapter.redis.spirng.RedisSendSmsVerificationCodeNextWindowRateLimiter;
+import com.thebund1st.daming.application.commandhandling.interceptor.SendSmsVerificationCodeCommandHandlerInterceptorAspect;
 import com.thebund1st.daming.boot.core.SmsVerificationCodeProperties;
 import com.thebund1st.daming.time.Clock;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -20,5 +21,15 @@ public class RedisBlockSendingInNextXSecondsRateLimiterConfiguration {
                 new RedisSendSmsVerificationCodeNextWindowRateLimiter(redisTemplate, clock);
         handler.setExpires(properties.getBlock());
         return handler;
+    }
+
+    @Bean
+    public SendSmsVerificationCodeCommandHandlerInterceptorAspect oneSmsVerificationEveryXSeconds(
+            RedisSendSmsVerificationCodeNextWindowRateLimiter redisSendSmsVerificationCodeNextWindowRateLimiter) {
+        SendSmsVerificationCodeCommandHandlerInterceptorAspect aspect =
+                new SendSmsVerificationCodeCommandHandlerInterceptorAspect();
+        aspect.setCommandHandlerInterceptor(redisSendSmsVerificationCodeNextWindowRateLimiter);
+        aspect.setOrder(1000);
+        return aspect;
     }
 }

@@ -1,6 +1,6 @@
 package com.foo.bar
 
-import com.thebund1st.daming.adapter.spring.redis.RedisSendSmsVerificationCodeNextWindowRateLimiter
+import com.thebund1st.daming.adapter.redis.spirng.RedisSendSmsVerificationCodeNextWindowRateLimiter
 import com.thebund1st.daming.security.ratelimiting.Errors
 import org.springframework.beans.factory.annotation.Autowired
 

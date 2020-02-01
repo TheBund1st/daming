@@ -1,12 +1,12 @@
-package com.thebund1st.daming.boot.redis
+package com.thebund1st.daming.boot.adapter.redis.spring
 
 
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 import com.thebund1st.daming.application.domain.SmsVerification
 import com.thebund1st.daming.application.domain.SmsVerificationRepository
-import com.thebund1st.daming.adapter.spring.redis.RedisSendSmsVerificationCodeNextWindowRateLimiter
-import com.thebund1st.daming.adapter.spring.redis.RedisSmsVerificationCodeMismatchEventHandler
-import com.thebund1st.daming.adapter.spring.redis.RedisSmsVerificationRepository
+import com.thebund1st.daming.adapter.redis.spirng.RedisSendSmsVerificationCodeNextWindowRateLimiter
+import com.thebund1st.daming.adapter.redis.spirng.RedisSmsVerificationCodeMismatchEventHandler
+import com.thebund1st.daming.adapter.redis.spirng.RedisSmsVerificationRepository
 import foo.bar.WithCustomizedRedisTemplate
 import foo.bar.WithCustomizedSmsVerificationStore
 import org.springframework.data.redis.core.RedisTemplate

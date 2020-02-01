@@ -1,5 +1,6 @@
-package com.thebund1st.daming.adapter.spring.redis
+package com.thebund1st.daming.adapter.redis.spirng
 
+import com.thebund1st.daming.adapter.redis.spirng.RedisSmsVerificationRepository
 import com.thebund1st.daming.application.domain.exceptions.MobileIsNotUnderVerificationException
 import com.thebund1st.daming.application.domain.TestingVerificationCode
 import com.thebund1st.daming.redis.AbstractDataRedisTest

@@ -1,6 +1,6 @@
-package com.thebund1st.daming.adapter.spring.redis
+package com.thebund1st.daming.adapter.redis.spirng
 
-import com.thebund1st.daming.adapter.spring.redis.RedisSmsVerificationCodeMismatchEventHandler
+import com.thebund1st.daming.adapter.redis.spirng.RedisSmsVerificationCodeMismatchEventHandler
 import com.thebund1st.daming.application.domain.SmsVerification
 import com.thebund1st.daming.application.event.SmsVerificationCodeMismatchEvent
 import com.thebund1st.daming.application.event.SmsVerificationCodeVerifiedEvent

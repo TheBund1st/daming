@@ -1,4 +1,4 @@
-package com.thebund1st.daming.boot.redis
+package com.thebund1st.daming.boot.adapter.redis.spring
 
 import com.thebund1st.daming.application.domain.SmsVerification
 import org.springframework.data.redis.core.RedisTemplate

@@ -1,4 +1,4 @@
-package com.thebund1st.daming.boot.redis;
+package com.thebund1st.daming.boot.adapter.redis.spring;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,8 +10,8 @@ import com.thebund1st.daming.application.domain.SmsVerificationRepository;
 import com.thebund1st.daming.adapter.jackson.mixin.SmsVerificationMixin;
 import com.thebund1st.daming.redis.DeleteFromRedis;
 import com.thebund1st.daming.redis.DeleteFromRedisUsingRestTemplate;
-import com.thebund1st.daming.adapter.spring.redis.RedisSmsVerificationCodeMismatchEventHandler;
-import com.thebund1st.daming.adapter.spring.redis.RedisSmsVerificationRepository;
+import com.thebund1st.daming.adapter.redis.spirng.RedisSmsVerificationCodeMismatchEventHandler;
+import com.thebund1st.daming.adapter.redis.spirng.RedisSmsVerificationRepository;
 import com.thebund1st.daming.time.Clock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;

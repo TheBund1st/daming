@@ -4,7 +4,7 @@ import com.thebund1st.daming.application.domain.SmsVerification
 import com.thebund1st.daming.application.event.SmsVerificationCodeMismatchEvent
 import com.thebund1st.daming.application.event.SmsVerificationCodeVerifiedEvent
 import com.thebund1st.daming.application.event.TooManyFailureSmsVerificationAttemptsEvent
-import com.thebund1st.daming.adapter.spring.redis.RedisSmsVerificationCodeMismatchEventHandler
+import com.thebund1st.daming.adapter.redis.spirng.RedisSmsVerificationCodeMismatchEventHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.StringRedisTemplate
 

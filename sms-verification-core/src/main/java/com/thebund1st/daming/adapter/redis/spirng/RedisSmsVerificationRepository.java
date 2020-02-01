@@ -1,4 +1,4 @@
-package com.thebund1st.daming.adapter.spring.redis;
+package com.thebund1st.daming.adapter.redis.spirng;
 
 import com.thebund1st.daming.application.domain.MobilePhoneNumber;
 import com.thebund1st.daming.application.domain.SmsVerification;

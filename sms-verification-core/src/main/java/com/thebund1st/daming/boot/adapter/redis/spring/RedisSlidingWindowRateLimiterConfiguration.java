@@ -1,4 +1,4 @@
-package com.thebund1st.daming.boot.redis;
+package com.thebund1st.daming.boot.adapter.redis.spring;
 
 import com.thebund1st.daming.application.commandhandling.interceptor.SendSmsVerificationCodeCommandHandlerInterceptorAspect;
 import com.thebund1st.daming.boot.security.SlidingWindowProperties;

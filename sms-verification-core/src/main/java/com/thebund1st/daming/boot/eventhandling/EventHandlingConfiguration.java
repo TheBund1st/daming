@@ -7,7 +7,7 @@ import com.thebund1st.daming.adapter.spring.event.SmsVerificationCodeMismatchEve
 import com.thebund1st.daming.adapter.spring.event.SmsVerificationCodeVerifiedEventListener;
 import com.thebund1st.daming.adapter.spring.event.SmsVerificationRequestedEventListener;
 import com.thebund1st.daming.adapter.spring.event.TooManyFailureSmsVerificationAttemptsEventListener;
-import com.thebund1st.daming.adapter.spring.redis.RedisSmsVerificationCodeMismatchEventHandler;
+import com.thebund1st.daming.adapter.redis.spirng.RedisSmsVerificationCodeMismatchEventHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
