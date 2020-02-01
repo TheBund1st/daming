@@ -1,4 +1,4 @@
-package com.thebund1st.daming.boot.aliyun.oss
+package com.thebund1st.daming.boot.adapter.aliyun.oss
 
 import com.aliyun.oss.OSSClient
 import com.aliyun.oss.model.OSSObject

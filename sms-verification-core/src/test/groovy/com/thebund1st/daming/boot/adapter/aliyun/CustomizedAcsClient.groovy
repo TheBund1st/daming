@@ -1,4 +1,4 @@
-package com.thebund1st.daming.boot.aliyun
+package com.thebund1st.daming.boot.adapter.aliyun
 
 import com.aliyuncs.*
 import com.aliyuncs.auth.Credential

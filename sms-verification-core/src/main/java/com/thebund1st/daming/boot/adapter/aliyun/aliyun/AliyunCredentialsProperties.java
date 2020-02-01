@@ -1,4 +1,4 @@
-package com.thebund1st.daming.boot.aliyun;
+package com.thebund1st.daming.boot.adapter.aliyun.aliyun;
 
 import lombok.Data;
 import lombok.Getter;

@@ -1,11 +1,9 @@
-package com.thebund1st.daming.boot.aliyun.oss
+package com.thebund1st.daming.boot.adapter.aliyun.oss
 
-import com.thebund1st.daming.aliyun.oss.OssKeyLoader
+import com.thebund1st.daming.adapter.aliyun.oss.OssKeyLoader
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
-import com.thebund1st.daming.jwt.key.JwtKeyLoader
 import com.thebund1st.daming.jwt.key.KeyBytesLoader
 import foo.bar.WithDumbSmsVerifiedJwtIssuer
-import org.springframework.context.annotation.Bean
 
 class OssJwtKeyConfigurationTest extends AbstractAutoConfigurationTest {
 

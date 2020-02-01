@@ -1,12 +1,12 @@
 package com.thebund1st.daming.boot;
 
-import com.thebund1st.daming.boot.aliyun.sms.AliyunSmsConfiguration;
+import com.thebund1st.daming.boot.adapter.aliyun.sms.AliyunSmsConfiguration;
 import com.thebund1st.daming.boot.application.ApplicationConfiguration;
 import com.thebund1st.daming.boot.core.BypassConfiguration;
 import com.thebund1st.daming.boot.core.CoreConfiguration;
 import com.thebund1st.daming.boot.core.SmsVerificationCodeConfiguration;
 import com.thebund1st.daming.boot.core.SmsVerificationScopeConfiguration;
-import com.thebund1st.daming.boot.eventhandling.EventHandlingConfiguration;
+import com.thebund1st.daming.boot.adapter.event.spring.EventHandlingConfiguration;
 import com.thebund1st.daming.boot.http.EndpointsConfiguration;
 import com.thebund1st.daming.boot.jwt.JwtConfiguration;
 import com.thebund1st.daming.boot.adapter.redis.spring.RedisConfiguration;

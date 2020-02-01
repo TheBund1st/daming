@@ -32,7 +32,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Import({
         RedisAutoConfiguration.class,
         RedisSlidingWindowRateLimiterConfiguration.class,
-        RedisBlockSendingInNextXSecondsRateLimiterConfiguration.class
+        RedisSendSmsVerificationCodeNextWindowRateLimiterConfiguration.class
 })
 public class RedisConfiguration {
 

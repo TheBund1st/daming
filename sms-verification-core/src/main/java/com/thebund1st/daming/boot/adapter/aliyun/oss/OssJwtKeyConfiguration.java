@@ -1,10 +1,9 @@
-package com.thebund1st.daming.boot.aliyun.oss;
+package com.thebund1st.daming.boot.adapter.aliyun.oss;
 
 import com.aliyun.oss.OSSClient;
-import com.thebund1st.daming.aliyun.oss.OssKeyLoader;
-import com.thebund1st.daming.boot.aliyun.AliyunConfiguration;
-import com.thebund1st.daming.boot.aliyun.AliyunCredentialsProperties;
-import com.thebund1st.daming.jwt.key.JwtKeyLoader;
+import com.thebund1st.daming.adapter.aliyun.oss.OssKeyLoader;
+import com.thebund1st.daming.boot.adapter.aliyun.aliyun.AliyunConfiguration;
+import com.thebund1st.daming.boot.adapter.aliyun.aliyun.AliyunCredentialsProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Qualifier;

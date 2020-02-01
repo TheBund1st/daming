@@ -1,4 +1,4 @@
-package com.thebund1st.daming.boot.aliyun;
+package com.thebund1st.daming.boot.adapter.aliyun.aliyun;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;

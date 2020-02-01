@@ -1,9 +1,9 @@
-package com.thebund1st.daming.boot.application.interceptor
+package com.thebund1st.daming.boot.adapter.redis.spring
 
 import com.thebund1st.daming.application.commandhandling.interceptor.SendSmsVerificationCodeCommandHandlerInterceptorAspect
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 
-class CommandHandlerInterceptorConfigurationTest extends AbstractAutoConfigurationTest {
+class RedisSendSmsVerificationCodeNextWindowRateLimiterConfigurationTest extends AbstractAutoConfigurationTest {
 
     def "it should create a SendSmsVerificationCodeCommandHandlerInterceptorAspect"() {
 

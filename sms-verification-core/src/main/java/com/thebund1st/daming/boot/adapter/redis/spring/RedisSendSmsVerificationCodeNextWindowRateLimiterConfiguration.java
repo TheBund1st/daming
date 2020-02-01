@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 @ConditionalOnProperty(prefix = "daming.sms.verification.code.block", name = "enabled",
         havingValue = "true", matchIfMissing = true)
 @Configuration
-public class RedisBlockSendingInNextXSecondsRateLimiterConfiguration {
+public class RedisSendSmsVerificationCodeNextWindowRateLimiterConfiguration {
 
     @Bean
     public RedisSendSmsVerificationCodeNextWindowRateLimiter redisBlockSendingInNextXSecondsRateLimiter(

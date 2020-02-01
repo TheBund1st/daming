@@ -1,4 +1,4 @@
-package com.thebund1st.daming.adapter.spring.event;
+package com.thebund1st.daming.adapter.event.spring;
 
 import com.thebund1st.daming.application.domain.SmsVerificationCodeSender;
 import com.thebund1st.daming.application.event.SmsVerificationRequestedEvent;

@@ -1,11 +1,10 @@
-package com.thebund1st.daming.boot.aliyun.sms
+package com.thebund1st.daming.boot.adapter.aliyun.sms
 
 
 import com.aliyuncs.IAcsClient
 import com.thebund1st.daming.adapter.aliyun.sms.AliyunSmsVerificationCodeSender
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
-import com.thebund1st.daming.boot.aliyun.AliyunCredentialsProperties
-import com.thebund1st.daming.boot.aliyun.CustomizedAcsClient
+import com.thebund1st.daming.boot.adapter.aliyun.CustomizedAcsClient
 import foo.bar.WithCustomizedAcsClient
 
 class AliyunSmsConfigurationTest extends AbstractAutoConfigurationTest {
@@ -23,7 +22,7 @@ class AliyunSmsConfigurationTest extends AbstractAutoConfigurationTest {
             IAcsClient actual = it.getBean(IAcsClient)
             assert actual != null
 
-            def properties = it.getBean(AliyunCredentialsProperties)
+            def properties = it.getBean(com.thebund1st.daming.boot.adapter.aliyun.aliyun.AliyunCredentialsProperties)
             assert properties.accessKeyId == 'foo'
             assert properties.accessKeySecret == 'bar'
         }

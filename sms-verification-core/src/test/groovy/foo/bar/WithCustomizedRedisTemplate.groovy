@@ -1,7 +1,7 @@
 package foo.bar
 
-import com.thebund1st.daming.boot.adapter.redis.redis.CustomizedRedisTemplate
 import com.thebund1st.daming.application.domain.SmsVerification
+import com.thebund1st.daming.boot.adapter.redis.spring.CustomizedRedisTemplate
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.RedisConnectionFactory

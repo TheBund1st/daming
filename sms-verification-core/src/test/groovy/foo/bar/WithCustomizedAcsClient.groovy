@@ -1,6 +1,6 @@
 package foo.bar
 
-import com.thebund1st.daming.boot.aliyun.CustomizedAcsClient
+import com.thebund1st.daming.boot.adapter.aliyun.CustomizedAcsClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
