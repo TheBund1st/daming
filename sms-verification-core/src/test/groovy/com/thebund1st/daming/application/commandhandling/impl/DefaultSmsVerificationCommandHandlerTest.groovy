@@ -1,8 +1,8 @@
 package com.thebund1st.daming.application.commandhandling.impl
 
-import com.thebund1st.daming.adapter.spring.redis.RedisSendSmsVerificationCodeNextWindowRateLimiter
 import com.thebund1st.daming.application.domain.DomainEventPublisher
 import com.thebund1st.daming.application.domain.SmsVerification
+import com.thebund1st.daming.application.domain.SmsVerificationCodeGenerator
 import com.thebund1st.daming.application.domain.SmsVerificationRepository
 import com.thebund1st.daming.application.domain.exceptions.MobileIsNotUnderVerificationException
 import com.thebund1st.daming.application.domain.exceptions.SmsVerificationCodeMismatchException
@@ -10,10 +10,7 @@ import com.thebund1st.daming.application.event.SmsVerificationCodeMismatchEvent
 import com.thebund1st.daming.application.event.SmsVerificationCodeVerifiedEvent
 import com.thebund1st.daming.application.event.SmsVerificationRequestedEvent
 import com.thebund1st.daming.security.ratelimiting.Errors
-import com.thebund1st.daming.security.ratelimiting.ErrorsFactory
 import com.thebund1st.daming.time.Clock
-import org.spockframework.spring.SpringBean
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
@@ -25,30 +22,22 @@ import static com.thebund1st.daming.application.command.SendSmsVerificationCodeC
 import static com.thebund1st.daming.application.command.VerifySmsVerificationCodeCommandFixture.aVerifySmsVerificationCodeCommand
 import static com.thebund1st.daming.application.domain.SmsVerificationFixture.aSmsVerification
 
-//FIXME why can't I set this value in applicaiton-commit.properties?
-@SpringBootTest(properties = "daming.sms.verification.scope.valid=SMS_LOGIN")
-@ActiveProfiles("commit")
-class SmsVerificationCommandHandlerTest extends Specification {
+class DefaultSmsVerificationCommandHandlerTest extends Specification {
 
-    @Autowired
-    private SmsVerificationCommandHandler subject
+    private DefaultSmsVerificationCommandHandler subject
 
-    @SpringBean
     private SmsVerificationRepository smsVerificationStore = Mock()
 
-    @SuppressWarnings("GroovyAssignabilityCheck")
-    @SpringBean
-    private RedisSendSmsVerificationCodeNextWindowRateLimiter rateLimitingHandler =
-            Mock(name: "oneSendSmsVerificationCodeCommandInEveryXSeconds")
-
-    @SpringBean
     private Clock clock = Mock()
 
-    @SpringBean
-    private ErrorsFactory errorsFactory = Mock()
-
-    @SpringBean
     private DomainEventPublisher eventPublisher = Mock()
+
+    private SmsVerificationCodeGenerator smsVerificationCodeGenerator = Mock()
+
+    def setup() {
+        subject = new DefaultSmsVerificationCommandHandler(smsVerificationStore,
+                smsVerificationCodeGenerator, eventPublisher, clock)
+    }
 
     def "it should store and send verification code"() {
         given:
@@ -57,7 +46,9 @@ class SmsVerificationCommandHandlerTest extends Specification {
         def command = aSendSmsVerificationCodeCommand().sendTo(verification.mobile).with(verification.scope).build()
 
         and:
-        errorsFactory.empty() >> Errors.empty()
+        smsVerificationCodeGenerator.generate() >> verification.code
+
+        and:
         clock.now() >> now
 
         when: "it handles send sms verification code"
@@ -77,41 +68,6 @@ class SmsVerificationCommandHandlerTest extends Specification {
 
         and:
         1 * eventPublisher.publish(_ as SmsVerificationRequestedEvent)
-        1 * rateLimitingHandler.postHandle(command, verification)
-    }
-
-    def "it should skip given invalid mobile"() {
-        given:
-        def command = aSendSmsVerificationCodeCommand()
-                .sendTo('12345').build()
-
-        and:
-        errorsFactory.empty() >> Errors.empty()
-
-        when: "it handles send sms verification code"
-        subject.handle(command)
-
-        then: "it throw"
-
-        def thrown = thrown(ConstraintViolationException.class)
-        assert thrown.getMessage().contains("Invalid mobile phone number")
-    }
-
-    def "it should skip given invalid scope"() {
-        given:
-        def command = aSendSmsVerificationCodeCommand()
-                .withScope("A Fake Scope").build()
-
-        and:
-        errorsFactory.empty() >> Errors.empty()
-
-        when: "it handles send sms verification code"
-        subject.handle(command)
-
-        then: "it throw"
-
-        def thrown = thrown(ConstraintViolationException.class)
-        assert thrown.getMessage().contains("Invalid sms verification scope [A Fake Scope]")
     }
 
     def "it should verify the verification code"() {
@@ -136,48 +92,6 @@ class SmsVerificationCommandHandlerTest extends Specification {
         }
 
         1 * eventPublisher.publish(_ as SmsVerificationCodeVerifiedEvent)
-    }
-
-    def "it should skip verifying given invalid mobile"() {
-        given:
-        def command = aVerifySmsVerificationCodeCommand()
-                .sendTo('12345').build()
-
-        when: "it handles send sms verification code"
-        subject.handle(command)
-
-        then: "it throw"
-
-        def thrown = thrown(ConstraintViolationException.class)
-        assert thrown.getMessage().contains("Invalid mobile phone number")
-    }
-
-    def "it should skip verifying given invalid code"() {
-        given:
-        def command = aVerifySmsVerificationCodeCommand()
-                .codeIs("Not a code").build()
-
-        when: "it handles send sms verification code"
-        subject.handle(command)
-
-        then: "it throw"
-
-        def thrown = thrown(ConstraintViolationException.class)
-        assert thrown.getMessage().contains("Invalid sms verification code")
-    }
-
-    def "it should skip verifying given invalid scope"() {
-        given:
-        def command = aVerifySmsVerificationCodeCommand()
-                .withScope("A Fake Scope").build()
-
-        when: "it handles send sms verification code"
-        subject.handle(command)
-
-        then: "it throw"
-
-        def thrown = thrown(ConstraintViolationException.class)
-        assert thrown.getMessage().contains("Invalid sms verification scope [A Fake Scope]")
     }
 
     def "it should throw given the verification code does not match"() {

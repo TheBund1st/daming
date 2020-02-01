@@ -84,6 +84,9 @@ dependencies {
 
     // spring boot meta data
     compileOnly("org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}")
+
+    // arch unit
+    testCompile 'com.tngtech.archunit:archunit:0.10.2'
 }
 
 contracts {
