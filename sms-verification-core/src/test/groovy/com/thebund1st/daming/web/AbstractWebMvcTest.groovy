@@ -8,7 +8,7 @@ import com.thebund1st.daming.application.domain.SmsVerificationCodePattern
 import com.thebund1st.daming.application.domain.SmsVerificationScopePattern
 import com.thebund1st.daming.application.domain.StaticSmsVerificationScopePattern
 import com.thebund1st.daming.boot.http.EndpointsConfiguration
-import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer
+import com.thebund1st.daming.application.jwt.SmsVerifiedJwtIssuer
 import io.restassured.module.mockmvc.RestAssuredMockMvc
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired

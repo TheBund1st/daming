@@ -1,5 +1,7 @@
-package com.thebund1st.daming.sms
+package com.thebund1st.daming.adapter.sms
 
+import com.thebund1st.daming.adapter.sms.DefaultSmsVerificationCodeSender
+import com.thebund1st.daming.adapter.sms.SmsVerificationCodeSenderInterceptor
 import com.thebund1st.daming.application.domain.SmsVerification
 import com.thebund1st.daming.application.domain.SmsVerificationCodeSender
 import spock.lang.Specification

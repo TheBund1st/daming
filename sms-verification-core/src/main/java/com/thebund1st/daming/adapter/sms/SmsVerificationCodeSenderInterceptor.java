@@ -1,4 +1,4 @@
-package com.thebund1st.daming.sms;
+package com.thebund1st.daming.adapter.sms;
 
 import com.thebund1st.daming.application.domain.SmsVerification;
 

@@ -1,6 +1,6 @@
-package com.thebund1st.daming.sms
+package com.thebund1st.daming.adapter.sms
 
-
+import com.thebund1st.daming.adapter.sms.WhitelistSmsVerificationCodeSenderInterceptor
 import spock.lang.Specification
 
 import static com.thebund1st.daming.application.domain.MobilePhoneNumber.mobilePhoneNumberOf

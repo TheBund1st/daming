@@ -1,6 +1,6 @@
 package com.foo.bar
 
-import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer
+import com.thebund1st.daming.application.jwt.SmsVerifiedJwtIssuer
 import io.restassured.RestAssured
 import io.restassured.builder.RequestSpecBuilder
 import io.restassured.filter.log.RequestLoggingFilter

@@ -1,8 +1,8 @@
 package com.thebund1st.daming.boot.sms;
 
 import com.thebund1st.daming.application.domain.SmsVerificationCodeSender;
-import com.thebund1st.daming.sms.DefaultSmsVerificationCodeSender;
-import com.thebund1st.daming.sms.SmsVerificationCodeSenderStub;
+import com.thebund1st.daming.adapter.sms.DefaultSmsVerificationCodeSender;
+import com.thebund1st.daming.adapter.sms.SmsVerificationCodeSenderStub;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;

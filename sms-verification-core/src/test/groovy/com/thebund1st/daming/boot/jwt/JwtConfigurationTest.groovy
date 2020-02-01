@@ -2,7 +2,7 @@ package com.thebund1st.daming.boot.jwt
 
 
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
-import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer
+import com.thebund1st.daming.application.jwt.SmsVerifiedJwtIssuer
 import com.thebund1st.daming.jwt.key.JwtKeyLoader
 import foo.bar.WithCustomizedJwtSigningKeyLoader
 

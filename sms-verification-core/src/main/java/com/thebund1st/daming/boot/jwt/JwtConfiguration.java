@@ -2,7 +2,7 @@ package com.thebund1st.daming.boot.jwt;
 
 import com.thebund1st.daming.boot.aliyun.oss.OssJwtKeyConfiguration;
 import com.thebund1st.daming.boot.jwt.key.file.FileJwtKeyConfiguration;
-import com.thebund1st.daming.jwt.SmsVerifiedJwtIssuer;
+import com.thebund1st.daming.application.jwt.SmsVerifiedJwtIssuer;
 import com.thebund1st.daming.jwt.key.JwtKeyLoader;
 import com.thebund1st.daming.jwt.key.JwtPrivateKeyLoader;
 import com.thebund1st.daming.jwt.key.KeyBytesLoader;

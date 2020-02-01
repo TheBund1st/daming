@@ -1,4 +1,4 @@
-package com.thebund1st.daming.jwt;
+package com.thebund1st.daming.application.jwt;
 
 import com.thebund1st.daming.application.domain.MobilePhoneNumber;
 import com.thebund1st.daming.application.domain.SmsVerificationScope;

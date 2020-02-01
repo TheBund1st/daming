@@ -1,8 +1,8 @@
 package com.thebund1st.daming.boot.sms;
 
 import com.thebund1st.daming.boot.core.SmsVerificationCodeProperties;
-import com.thebund1st.daming.sms.DefaultSmsVerificationCodeSender;
-import com.thebund1st.daming.sms.WhitelistSmsVerificationCodeSenderInterceptor;
+import com.thebund1st.daming.adapter.sms.DefaultSmsVerificationCodeSender;
+import com.thebund1st.daming.adapter.sms.WhitelistSmsVerificationCodeSenderInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

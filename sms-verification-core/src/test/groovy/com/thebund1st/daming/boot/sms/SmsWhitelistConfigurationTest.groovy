@@ -2,9 +2,9 @@ package com.thebund1st.daming.boot.sms
 
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 import com.thebund1st.daming.application.domain.SmsVerificationCodeSender
-import com.thebund1st.daming.sms.DefaultSmsVerificationCodeSender
-import com.thebund1st.daming.sms.SmsVerificationCodeSenderStub
-import com.thebund1st.daming.sms.WhitelistSmsVerificationCodeSenderInterceptor
+import com.thebund1st.daming.adapter.sms.DefaultSmsVerificationCodeSender
+import com.thebund1st.daming.adapter.sms.SmsVerificationCodeSenderStub
+import com.thebund1st.daming.adapter.sms.WhitelistSmsVerificationCodeSenderInterceptor
 import foo.bar.WithCustomizedSmsVerificationSender
 
 import static com.thebund1st.daming.application.domain.MobilePhoneNumber.mobilePhoneNumberOf
