@@ -1,6 +1,6 @@
-package com.thebund1st.daming.adapter.spring.web.rest;
+package com.thebund1st.daming.adapter.web.spring.rest;
 
-import com.thebund1st.daming.adapter.spring.web.rest.resources.SmsVerifiedJwtResource;
+import com.thebund1st.daming.adapter.web.spring.rest.resources.SmsVerifiedJwtResource;
 import com.thebund1st.daming.application.commandhandling.VerifySmsVerificationCodeCommandHandler;
 import com.thebund1st.daming.application.command.VerifySmsVerificationCodeCommand;
 import com.thebund1st.daming.application.jwt.SmsVerifiedJwtIssuer;

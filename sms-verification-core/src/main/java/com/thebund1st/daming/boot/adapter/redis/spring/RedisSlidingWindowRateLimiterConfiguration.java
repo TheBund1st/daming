@@ -1,6 +1,6 @@
 package com.thebund1st.daming.boot.adapter.redis.spring;
 
-import com.thebund1st.daming.application.commandhandling.interceptor.SendSmsVerificationCodeCommandHandlerInterceptorAspect;
+import com.thebund1st.daming.adapter.aspectj.SendSmsVerificationCodeCommandHandlerInterceptorAspect;
 import com.thebund1st.daming.boot.security.SlidingWindowProperties;
 import com.thebund1st.daming.adapter.ratelimitj.RateLimitJSendSmsVerificationCodeSlidingWindowRateLimiter;
 import es.moki.ratelimitj.core.limiter.request.RequestLimitRule;

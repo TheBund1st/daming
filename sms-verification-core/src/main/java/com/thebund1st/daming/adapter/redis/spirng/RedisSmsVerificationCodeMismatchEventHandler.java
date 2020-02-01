@@ -7,7 +7,7 @@ import com.thebund1st.daming.application.event.SmsVerificationCodeMismatchEvent;
 import com.thebund1st.daming.application.event.SmsVerificationCodeVerifiedEvent;
 import com.thebund1st.daming.application.event.TooManyFailureSmsVerificationAttemptsEvent;
 import com.thebund1st.daming.redis.DeleteFromRedis;
-import com.thebund1st.daming.time.Clock;
+import com.thebund1st.daming.application.time.Clock;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

@@ -7,7 +7,7 @@ import com.thebund1st.daming.application.domain.SmsVerification;
 import com.thebund1st.daming.application.domain.SmsVerificationScope;
 import com.thebund1st.daming.security.ratelimiting.Errors;
 import com.thebund1st.daming.security.ratelimiting.TooManyRequestsException;
-import com.thebund1st.daming.time.Clock;
+import com.thebund1st.daming.application.time.Clock;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;

@@ -1,6 +1,7 @@
-package com.thebund1st.daming.application.commandhandling.interceptor;
+package com.thebund1st.daming.adapter.aspectj;
 
 import com.thebund1st.daming.application.command.SendSmsVerificationCodeCommand;
+import com.thebund1st.daming.application.commandhandling.interceptor.SendSmsVerificationCodeCommandHandlerInterceptor;
 import com.thebund1st.daming.application.domain.SmsVerification;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;

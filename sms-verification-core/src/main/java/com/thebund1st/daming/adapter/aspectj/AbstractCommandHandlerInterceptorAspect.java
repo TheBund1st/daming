@@ -1,5 +1,6 @@
-package com.thebund1st.daming.application.commandhandling.interceptor;
+package com.thebund1st.daming.adapter.aspectj;
 
+import com.thebund1st.daming.application.commandhandling.interceptor.CommandHandlerInterceptor;
 import lombok.Setter;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

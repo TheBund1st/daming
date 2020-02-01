@@ -12,7 +12,7 @@ import com.thebund1st.daming.redis.DeleteFromRedis;
 import com.thebund1st.daming.redis.DeleteFromRedisUsingRestTemplate;
 import com.thebund1st.daming.adapter.redis.spirng.RedisSmsVerificationCodeMismatchEventHandler;
 import com.thebund1st.daming.adapter.redis.spirng.RedisSmsVerificationRepository;
-import com.thebund1st.daming.time.Clock;
+import com.thebund1st.daming.application.time.Clock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

@@ -1,4 +1,4 @@
-package com.thebund1st.daming.adapter.spring.web.rest.resources;
+package com.thebund1st.daming.adapter.web.spring.rest.resources;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

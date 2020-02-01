@@ -1,7 +1,7 @@
 package com.thebund1st.daming.boot.time
 
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
-import com.thebund1st.daming.time.Clock
+import com.thebund1st.daming.application.time.Clock
 
 class TimeConfigurationTest extends AbstractAutoConfigurationTest {
 

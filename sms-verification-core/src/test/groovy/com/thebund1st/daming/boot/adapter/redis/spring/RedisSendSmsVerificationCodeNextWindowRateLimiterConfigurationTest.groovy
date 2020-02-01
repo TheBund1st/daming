@@ -1,6 +1,6 @@
 package com.thebund1st.daming.boot.adapter.redis.spring
 
-import com.thebund1st.daming.application.commandhandling.interceptor.SendSmsVerificationCodeCommandHandlerInterceptorAspect
+import com.thebund1st.daming.adapter.aspectj.SendSmsVerificationCodeCommandHandlerInterceptorAspect
 import com.thebund1st.daming.boot.AbstractAutoConfigurationTest
 
 class RedisSendSmsVerificationCodeNextWindowRateLimiterConfigurationTest extends AbstractAutoConfigurationTest {

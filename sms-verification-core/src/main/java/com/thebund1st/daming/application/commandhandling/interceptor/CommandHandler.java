@@ -1,5 +1,7 @@
 package com.thebund1st.daming.application.commandhandling.interceptor;
 
+import com.thebund1st.daming.adapter.aspectj.AbstractCommandHandlerInterceptorAspect;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 

@@ -1,6 +1,6 @@
 package com.thebund1st.daming.boot.http;
 
-import com.thebund1st.daming.adapter.spring.web.advice.DefaultResponseEntityExceptionHandler;
+import com.thebund1st.daming.adapter.web.spring.advice.DefaultResponseEntityExceptionHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;

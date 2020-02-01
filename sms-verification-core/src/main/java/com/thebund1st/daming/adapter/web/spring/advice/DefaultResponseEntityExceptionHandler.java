@@ -1,4 +1,4 @@
-package com.thebund1st.daming.adapter.spring.web.advice;
+package com.thebund1st.daming.adapter.web.spring.advice;
 
 import com.thebund1st.daming.application.domain.exceptions.MobileIsNotUnderVerificationException;
 import com.thebund1st.daming.application.domain.exceptions.SmsVerificationCodeMismatchException;

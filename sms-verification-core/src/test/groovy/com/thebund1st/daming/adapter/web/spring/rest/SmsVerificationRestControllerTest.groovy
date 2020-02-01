@@ -1,4 +1,4 @@
-package com.thebund1st.daming.adapter.spring.web.rest
+package com.thebund1st.daming.adapter.web.spring.rest
 
 
 import com.thebund1st.daming.application.domain.exceptions.SmsVerificationCodeMismatchException

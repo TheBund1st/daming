@@ -6,7 +6,7 @@ import com.thebund1st.daming.application.jwt.SmsVerifiedJwtIssuer;
 import com.thebund1st.daming.jwt.key.JwtKeyLoader;
 import com.thebund1st.daming.jwt.key.JwtPrivateKeyLoader;
 import com.thebund1st.daming.jwt.key.KeyBytesLoader;
-import com.thebund1st.daming.time.Clock;
+import com.thebund1st.daming.application.time.Clock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

@@ -2,7 +2,7 @@ package com.thebund1st.daming.application.jwt;
 
 import com.thebund1st.daming.application.domain.MobilePhoneNumber;
 import com.thebund1st.daming.application.domain.SmsVerificationScope;
-import com.thebund1st.daming.time.Clock;
+import com.thebund1st.daming.application.time.Clock;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

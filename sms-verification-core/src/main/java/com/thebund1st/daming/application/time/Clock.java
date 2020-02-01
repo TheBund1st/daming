@@ -1,4 +1,4 @@
-package com.thebund1st.daming.time;
+package com.thebund1st.daming.application.time;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;

@@ -9,13 +9,9 @@ import com.thebund1st.daming.application.domain.exceptions.SmsVerificationCodeMi
 import com.thebund1st.daming.application.event.SmsVerificationCodeMismatchEvent
 import com.thebund1st.daming.application.event.SmsVerificationCodeVerifiedEvent
 import com.thebund1st.daming.application.event.SmsVerificationRequestedEvent
-import com.thebund1st.daming.security.ratelimiting.Errors
-import com.thebund1st.daming.time.Clock
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
+import com.thebund1st.daming.application.time.Clock
 import spock.lang.Specification
 
-import javax.validation.ConstraintViolationException
 import java.time.ZonedDateTime
 
 import static com.thebund1st.daming.application.command.SendSmsVerificationCodeCommandFixture.aSendSmsVerificationCodeCommand

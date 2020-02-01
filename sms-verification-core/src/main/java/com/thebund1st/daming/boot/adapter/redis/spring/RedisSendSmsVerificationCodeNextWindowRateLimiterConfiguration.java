@@ -1,9 +1,9 @@
 package com.thebund1st.daming.boot.adapter.redis.spring;
 
 import com.thebund1st.daming.adapter.redis.spirng.RedisSendSmsVerificationCodeNextWindowRateLimiter;
-import com.thebund1st.daming.application.commandhandling.interceptor.SendSmsVerificationCodeCommandHandlerInterceptorAspect;
+import com.thebund1st.daming.adapter.aspectj.SendSmsVerificationCodeCommandHandlerInterceptorAspect;
 import com.thebund1st.daming.boot.core.SmsVerificationCodeProperties;
-import com.thebund1st.daming.time.Clock;
+import com.thebund1st.daming.application.time.Clock;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
